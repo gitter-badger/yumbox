@@ -1,5 +1,5 @@
 default:
-  app: tipi
+  app: yumbox
   admin:
     username: admin
     password: admin
@@ -24,7 +24,7 @@ default:
   searchengine:
     host: localhost
     port: 9200
-    name: tipi
+    name: yumbox
     log: debug # error, warning, info, debug, trace
   cache:
     host: 0.0.0.0
@@ -32,13 +32,13 @@ default:
 development:
   databases:
     application:
-      name: tipi
+      name: yumbox
   file:
-    path: /Users/arash/Projects/tipi/shared
+    path: ../../shared
 test:
   databases:
     application:
-      name: tipi
+      name: yumbox
       mock: true
 production:
   server:
