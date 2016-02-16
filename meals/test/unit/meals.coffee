@@ -14,4 +14,3 @@ context 'Meal', ->
       Meal.should.have.property 'price'
     it '\'s side_dish property should be an array', ->
       Meal.side_dish.should.be.an 'array'
-
