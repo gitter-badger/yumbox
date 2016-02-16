@@ -1,0 +1,6 @@
+{
+  "script": "build/server",
+  "watch": ["../api", "../cars"],
+  "ignore": ["build/", "node_modules/"],
+  "ext": "js coffee jade yml json scss"
+}

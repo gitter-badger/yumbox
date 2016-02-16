@@ -1,0 +1,5 @@
+default:
+  web:
+    title: 'Yumbox: Yummy Box'
+    description: 'Yumbox helps you eat new meals & share tips while you have lunch.'
+    keywords: 'food,yummy,yum,meal,lunch,dinner,delivery'

@@ -1,0 +1,3 @@
+plugins:
+#  web: otolist.web
+  cars: otolist.cars
