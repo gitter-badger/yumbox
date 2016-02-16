@@ -5,7 +5,7 @@
   "main": "src/server",
   "private": true,
   "scripts": {
-    "test": "NODE_ENV=test mocha --w"
+    "test": ""
   },
   "repository": {
     "type": "git",
