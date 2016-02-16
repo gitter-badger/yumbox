@@ -1,7 +1,7 @@
 {
-  "name": "my-oto",
+  "name": "yumbox",
   "version": "1.0.0",
-  "description": "Car Sales System",
+  "description": "Yumbox is a box full of yummies",
   "main": "src/server",
   "private": true,
   "scripts": {
