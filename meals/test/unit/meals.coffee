@@ -7,7 +7,7 @@ context 'Meal', ->
       Meal.should.exist
     it 'should have properties correctly added', ->
       Meal.should.have.property 'name'
-      Meal.should.have.property 'key'
+      Meal.should.have.property 'doc_key'
       Meal.should.have.property 'side_dish'
       Meal.should.have.property 'remained'
       Meal.should.have.property 'total'
