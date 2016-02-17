@@ -7,26 +7,26 @@ server = require '../../../api/src/mock'
 Q = require 'q'
 faker = require 'faker'
 
-Meal = require('../../src/models/meal') server,
+MainDish = require('../../src/models/main_dish') server,
 
-context 'Meal', ->
+context 'MainDish', ->
   describe 'Souce Adapter', ->
     describe 'PREFIX', ->
       it 'should have PREFIX set to \'m\'', ->
-        Meal::PREFIX.should.exist
-        Meal::PREFIX.should.be.eq 'm'
+        MainDish::PREFIX.should.exist
+        MainDish::PREFIX.should.be.eq 'm'
  
     describe 'IMAGE', ->
       it 'should be an Object', ->
-        Meal::IMAGE.should.be.an 'Object'
+        MainDish::IMAGE.should.be.an 'Object'
 
       it 'should have SMALL, MEDIUM, LARGE set with an array', ->
-        Meal::IMAGE.SIZE.SMALL.should.be.an 'Array'
-        Meal::IMAGE.SIZE.MEDIUM.should.be.an 'Array'
-        Meal::IMAGE.SIZE.LARGE.should.be.an 'Array'
+        MainDish::IMAGE.SIZE.SMALL.should.be.an 'Array'
+        MainDish::IMAGE.SIZE.MEDIUM.should.be.an 'Array'
+        MainDish::IMAGE.SIZE.LARGE.should.be.an 'Array'
   
   describe 'Structure', ->
-    meal = null
+    main_dish = null
     data = null
     beforeEach () ->
       data =
@@ -38,43 +38,81 @@ context 'Meal', ->
         calories: faker.random.number()
         description:faker.hacker.phrase()
 
-      meal = new Meal data
+      main_dish = new MainDish data
 
     describe 'Properties', ->
       it 'should have properties correctly added', ->
-        meal.doc.should.contain.all.keys [
+        main_dish.doc.should.contain.all.keys [
           'name','side_dishes','price'
           'doc_key', 'doc_type'
           ]
 
       it 'should not accept some props', ->
-        meal.doc.should.not.contain.any.keys [
+        main_dish.doc.should.not.contain.any.keys [
           'calories', 'description', 'total', 'remained'
           ]
       
       it 'should not accept unknown props' , ->
-        invalid_meal = new Meal
+        invalid_main_dish = new MainDish
           unknown_prop: faker.name.firstName()
 
-        invalid_meal.doc.should.not.have.key 'unknown_prop'
+        invalid_main_dish.doc.should.not.have.key 'unknown_prop'
 
       it 'should have correct values set', ->
-        meal.doc.name.should.be.eq data.name
+        main_dish.doc.name.should.be.eq data.name
         # to be completed for other fields..
 
-    describe 'Methods', ->
-      it 'should create a meal', ->
-        key = meal.key
-        key.should.be.eq meal.doc.doc_key
-
-        meal.create()
+    describe 'Behavior', ->
+      it 'should create a main_dish', ->
+        key = main_dish.key
+        main_dish.create()
           .then (result) ->
-            Meal.get(key)
+            MainDish.get(key)
           .then (result) ->
-            result.doc.should.be.deep.eq meal.doc
+            result.doc.should.be.deep.eq main_dish.doc
+            key.should.be.eq main_dish.doc.doc_key
             
-      it 'should have correct values when inserted'
-
-      it 'should have correct updated values when edited'
+      it 'should edit a main_dish', ->
+        key = main_dish.key
+        old_main_dish = null
+        main_dish.create()
+          .then ->
+            MainDish.get(key)
+          .then (result) ->
+            old_main_dish = result.doc
+            updated_main_dish = new MainDish result.doc.doc_key, {
+              name : 'new_name'
+              side_dishes : ['new_side1', 'new_side2', 'new_side3']
+              price : 15000
+            }
+            updated_main_dish.update()
+          .then ->
+            MainDish.get(key)
+              .then (result) ->
+                old_main_dish.should.not.be.eq result.doc
+                result.doc.name.should.be.eq 'new_name'
+                result.doc.side_dishes.should.be.deep.eq ['new_side1', 'new_side2', 'new_side3']
+                result.doc.price.should.be.eq 15000
       
-      it 'should not exist after deletation'
+      it 'should delete a main_dish', ->
+        main_dish = null
+        data =
+          name:faker.name.firstName()
+          side_dishes: faker.company.suffixes()
+          total: faker.random.number()
+          remained: faker.random.number()
+          price: faker.random.number()
+          calories: faker.random.number()
+          description:faker.hacker.phrase()
+
+        main_dish = new MainDish data
+
+
+        key = main_dish.key
+        main_dish.create()
+          .then (result) ->
+            MainDish.remove(key)
+          .then (is_deleted) ->
+        MainDish.get(key)
+          .then (result) ->
+            result.should.be.an 'Error'
