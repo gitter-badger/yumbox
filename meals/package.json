@@ -4,7 +4,7 @@
   "description": "yumbox meals delievery",
   "main": "init",
   "scripts": {
-    "test": "mocha"
+    "test": "NODE_ENV=test mocha"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,11 @@
   "license": "ISC",
   
   "devDependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "faker": "^3.0.1",
+    "fs-extra": "^0.26.5",
+    "moment": "^2.11.2",
+    "sinon": "^1.17.3"
   },
   
   "dependencies": {

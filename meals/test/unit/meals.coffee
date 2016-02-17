@@ -1,17 +1,57 @@
 should = require('chai').should()
-Meal = require '../../src/models/meal'
+moment = require 'moment'
+_ = require 'lodash'
+fs = require 'fs-extra'
+sinon = require 'sinon'
+server = require '../../../api/src/mock'
+Q = require 'q'
+faker = require 'faker'
 
+Meal = require('../../src/models/meal') server,
 context 'Meal', ->
-	describe 'Structure', ->
-    it 'should exist', ->
-      Meal.should.exist
+  describe 'Structure', ->
+    meal = null
+    data = null
+    beforeEach () ->
+      data =
+        name:faker.name.firstName()
+        side_dishes: faker.company.suffixes()
+        total: faker.random.number()
+        remained: faker.random.number()
+        price: faker.random.number()
+        calories: faker.random.number()
+        description:faker.hacker.phrase()
+
+      meal = new Meal data
     
     it 'should have properties correctly added', ->
-      meal = new Meal()
-      meal.should.have.all.keys ['name', 'doc_key', 'remained', 'price']
-      
+      meal.doc.should.contain.all.keys [
+        'name','side_dishes','price'
+        'doc_key', 'doc_type'
+        ]
 
-    it 'should have a list of side_dishes', ->
-      meal = new Meal()
-      Meal.side_dish.should.be.instanceof 'Array'
-      Meal.should.have.property 'side_dishes'
+    it 'should not accept some props', ->
+      meal.doc.should.not.contain.any.keys [
+        'calories', 'description', 'total', 'remained'
+        ]
+    
+    it 'should not accept unknown props' , ->
+      invalid_meal = new Meal
+        unknown_prop: faker.name.firstName()
+
+      invalid_meal.doc.should.not.have.key 'unknown_prop'
+
+    it 'should have correct values set', ->
+      meal.doc.name.should.be.eq data.name
+      # to be completed for other fields..
+
+    it 'should create a meal', ->
+      key = meal.key
+      key.should.be.eq meal.doc.doc_key
+
+      meal.create()
+        .then (result) ->
+          Meal.get(key)
+        .then (result) ->
+          result.doc.should.be.deep.eq meal.doc
+    
