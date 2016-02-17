@@ -23,7 +23,7 @@ context 'DailyMeal', ->
       data =
         main_dish: faker.name.firstName()
         side_dishes: faker.company.suffixes()
-        at: faker.date.future()
+        at: "#{faker.date.future()}"
         total: faker.random.number()
         remained: faker.random.number()
 
