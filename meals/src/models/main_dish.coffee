@@ -16,13 +16,13 @@ module.exports = (server, options) ->
 
     props:
       name: on
-      remained: off
       total: off
       price: on
+      remained: off
       contains: off
       description: off
-      images:  off
       calories: off 
+      images: off
 
   before_save: ->
       return true unless @doc.image_files?
