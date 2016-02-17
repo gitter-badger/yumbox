@@ -11,7 +11,7 @@ module.exports = (server, options) ->
     IMAGE:
       SIZE:
         SMALL: [250, 200]
-        MEDIUM: [500, 400]
+        MEDIUM: [300, 300]
         LARGE: [500, 400]
 
     props:
@@ -44,4 +44,5 @@ module.exports = (server, options) ->
       Q.allSettled(savers)
         .then (paths) ->
           names = _.map paths, (path) -> _.last path.value.split "/"
-    
+   
+   

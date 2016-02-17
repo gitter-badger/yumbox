@@ -15,6 +15,7 @@
   ],
   "author": "mahdie",
   "license": "ISC",
+  
   "devDependencies": {
     "chai": "^3.5.0",
     "faker": "^3.0.1",
@@ -22,6 +23,7 @@
     "moment": "^2.11.2",
     "sinon": "^1.17.3"
   },
+  
   "dependencies": {
     "boom": "^3.1.2",
     "lodash": "^4.4.0",
