@@ -43,7 +43,7 @@ context 'MainDish', ->
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         main_dish.doc.should.contain.all.keys [
-          'name','side_dishes','price'
+          'name','price'
           'doc_key', 'doc_type'
           ]
 
@@ -82,7 +82,6 @@ context 'MainDish', ->
             old_main_dish = result.doc
             updated_main_dish = new MainDish result.doc.doc_key, {
               name : 'new_name'
-              side_dishes : ['new_side1', 'new_side2', 'new_side3']
               price : 15000
             }
             updated_main_dish.update()
@@ -91,14 +90,12 @@ context 'MainDish', ->
               .then (result) ->
                 old_main_dish.should.not.be.eq result.doc
                 result.doc.name.should.be.eq 'new_name'
-                result.doc.side_dishes.should.be.deep.eq ['new_side1', 'new_side2', 'new_side3']
                 result.doc.price.should.be.eq 15000
       
       it 'should delete a main_dish', ->
         main_dish = null
         data =
           name:faker.name.firstName()
-          side_dishes: faker.company.suffixes()
           total: faker.random.number()
           remained: faker.random.number()
           price: faker.random.number()

@@ -16,7 +16,7 @@ module.exports = (server, options) ->
 
     props:
       name: on
-      total: on
+      total: off
       price: on
       remained: off
       contains: off
