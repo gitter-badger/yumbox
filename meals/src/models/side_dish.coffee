@@ -4,9 +4,9 @@ Q       = require 'q'
 ShortID = require 'shortid'
 
 module.exports = (server, options) ->
-  return class Meal extends server.methods.model.Base()
+  return class SideDish extends server.methods.model.Base()
     
-    PREFIX: 'm'
+    PREFIX: 's'
 
     IMAGE:
       SIZE:
@@ -16,12 +16,12 @@ module.exports = (server, options) ->
 
     props:
       name: on
-      side_dishes: on
-      remained: on
-      total: on
-      price: on
-      constains: off
+      images:  on
+      remained: off
+      total: off
+      price: off
       description: off
+     
 
   before_save: ->
       return true unless @doc.image_files?
@@ -39,10 +39,9 @@ module.exports = (server, options) ->
 
       savers = []
       for file in @image_files
-        savers.push @save_image file, ShortID.generate(), Meal::IMAGE.SIZE.MEDIUM
+        savers.push @save_image file, ShortID.generate(), SideDish::IMAGE.SIZE.MEDIUM
 
       Q.allSettled(savers)
         .then (paths) ->
           names = _.map paths, (path) -> _.last path.value.split "/"
-   
    
