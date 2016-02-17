@@ -16,12 +16,12 @@ module.exports = (server, options) ->
 
     props:
       name: on
-      remained: on
+      remained: off
       total: on
       price: on
-      constains: off
+      contains: off
       description: off
-      images:  on
+      images:  off
      
 
   before_save: ->
