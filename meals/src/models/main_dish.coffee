@@ -21,9 +21,9 @@ module.exports = (server, options) ->
       remained: off
       contains: off
       description: off
-      calories: off 
+      calories: off
       images: off
-
+     
   before_save: ->
       return true unless @doc.image_files?
       @image_files = @doc.image_files
