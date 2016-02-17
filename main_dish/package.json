@@ -1,7 +1,7 @@
 {
-  "name": "yumbox.meals",
+  "name": "yumbox.main_dish",
   "version": "0.0.0",
-  "description": "yumbox meals delievery",
+  "description": "yumbox main meals delievery",
   "main": "init",
   "scripts": {
     "test": "NODE_ENV=test mocha"
