@@ -23,7 +23,7 @@ context 'DailyMeal', ->
       data =
         main_dish: faker.name.firstName()
         side_dishes: faker.company.suffixes()
-        at: faker.date.future()
+        at: "#{faker.date.future()}"
         total: faker.random.number()
         remained: faker.random.number()
 
@@ -58,7 +58,7 @@ context 'DailyMeal', ->
           .then (result) ->
             DailyMeal.get(key)
           .then (result) ->
-            result.doc.should.be.deep.eq daily_meal.doc
+            result.doc.at.should.be.deep.eq daily_meal.doc.at
             key.should.be.eq daily_meal.doc.doc_key
             
       it 'should edit a daily_meal', ->
