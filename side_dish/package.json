@@ -1,7 +1,7 @@
 {
-  "name": "yumbox.meals",
+  "name": "yumbox.side_dish",
   "version": "0.0.0",
-  "description": "yumbox meals delievery",
+  "description": "yumbox side meals delievery",
   "main": "init",
   "scripts": {
     "test": "NODE_ENV=test mocha"
@@ -13,7 +13,7 @@
   "keywords": [
     "yumbox"
   ],
-  "author": "mahdie",
+  "author": "Kasra",
   "license": "ISC",
   
   "devDependencies": {
