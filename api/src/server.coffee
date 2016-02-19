@@ -9,7 +9,16 @@ config_path = "#{__dirname}/config"
 config = require("#{config_path}/config").config
 #this is config.coffe inside src/config
 
-server = new Hapi.Server()
+server = new Hapi.Server
+
+###{
+    cache: {
+      engine: require('catbox-redis')
+      host:   config.cache.host
+      port:   config.cache.port
+    }
+  }
+###  
 server.connection { port: Number(config.server.api.port), labels: 'api' }
 server.connection { port: Number(config.server.web.port), labels: 'web' }
 server.connection { port: Number(config.server.notification.port), labels: 'notification' }

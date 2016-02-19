@@ -23,7 +23,7 @@ build = (plugins, is_src)->
   reportOptions = {
     err: true
     stderr: true
-    stdout: true
+    stdout: true 
   }
   root = '../'
   

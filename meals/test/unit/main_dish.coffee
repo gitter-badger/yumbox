@@ -6,8 +6,9 @@ sinon = require 'sinon'
 server = require '../../../api/src/mock'
 Q = require 'q'
 faker = require 'faker'
+Path = require 'path'
 
-MainDish = require('../../src/models/main_dish') server,
+MainDish = require("../../src/models/main_dish") server,
 
 context 'MainDish', ->
   describe 'Souce Adapter', ->

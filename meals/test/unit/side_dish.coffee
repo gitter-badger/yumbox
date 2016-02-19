@@ -6,8 +6,9 @@ sinon  = require 'sinon'
 server = require '../../../api/src/mock'
 Q      = require 'q'
 faker  = require 'faker'
+Path = require 'path'
 
-SideDish = require('../../src/models/side_dish') server,
+SideDish = require("../../src/models/side_dish") server,
 
 context 'SideDish', ->
   describe 'Souce Adapter', ->
@@ -63,7 +64,7 @@ context 'SideDish', ->
     describe 'Behavior', ->
       it 'should create a side_dish', ->
         key = side_dish.key
-        side_dish.create()
+        side_dish.create(true)
           .then (result) ->
             SideDish.get(key)
           .then (result) ->

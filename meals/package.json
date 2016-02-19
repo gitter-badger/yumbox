@@ -1,7 +1,7 @@
 {
-  "name": "yumbox.side_dish",
+  "name": "yumbox",
   "version": "0.0.0",
-  "description": "yumbox side meals delievery",
+  "description": "yumbox daily meal",
   "main": "init",
   "scripts": {
     "test": "NODE_ENV=test mocha"
@@ -13,9 +13,8 @@
   "keywords": [
     "yumbox"
   ],
-  "author": "Kasra",
+  "author": "mahdie",
   "license": "ISC",
-  
   "devDependencies": {
     "chai": "^3.5.0",
     "faker": "^3.0.1",
@@ -23,11 +22,14 @@
     "moment": "^2.11.2",
     "sinon": "^1.17.3"
   },
-  
   "dependencies": {
     "boom": "^3.1.2",
     "lodash": "^4.4.0",
+    "odme": "^1.1.2",
     "q": "^1.4.1",
     "shortid": "^2.2.4"
+  },
+  "directories": {
+    "test": "test"
   }
 }

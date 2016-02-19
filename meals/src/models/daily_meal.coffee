@@ -11,7 +11,7 @@ module.exports = (server, options) ->
     props:
       main_dish: on
       side_dishes: on
-      at: on
+      date: on
       total: on
       remained: off
  

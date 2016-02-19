@@ -6,8 +6,9 @@ sinon = require 'sinon'
 server = require '../../../api/src/mock'
 Q = require 'q'
 faker = require 'faker'
+Path = require 'path'
 
-DailyMeal = require('../../src/models/daily_meal') server,
+DailyMeal = require("../../src/models/daily_meal") server, 
 
 context 'DailyMeal', ->
   describe 'Souce Adapter', ->
@@ -23,7 +24,7 @@ context 'DailyMeal', ->
       data =
         main_dish: faker.name.firstName()
         side_dishes: faker.company.suffixes()
-        at: "#{faker.date.future()}"
+        date: 'today'#faker.date.future()
         total: faker.random.number()
         remained: faker.random.number()
 
@@ -32,7 +33,7 @@ context 'DailyMeal', ->
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         daily_meal.doc.should.contain.all.keys [
-          'main_dish', 'side_dishes', 'at'
+          'main_dish', 'side_dishes', 'date'
           'total', 'doc_key', 'doc_type'
           ]
 
@@ -54,11 +55,11 @@ context 'DailyMeal', ->
     describe 'Behavior', ->
       it 'should create a daily_meal', ->
         key = daily_meal.key
-        daily_meal.create()
+        daily_meal.create(true)
           .then (result) ->
             DailyMeal.get(key)
           .then (result) ->
-            result.doc.at.should.be.deep.eq daily_meal.doc.at
+            result.doc.date.should.be.deep.eq daily_meal.doc.date
             key.should.be.eq daily_meal.doc.doc_key
             
       it 'should edit a daily_meal', ->
@@ -72,7 +73,7 @@ context 'DailyMeal', ->
             updated_daily_meal = new DailyMeal result.doc.doc_key, {
               main_dish : 'new_name'
               side_dishes : [ 'item1', 'item2', 'item3']
-              at : 'Sat Feb 20 2016 21:58:24 GMT+0330 (IRST)'
+              date : 'Sat Feb 20 2016 21:58:24 GMT+0330 (IRST)'
               total: 400
             }
             updated_daily_meal.update()
@@ -82,7 +83,7 @@ context 'DailyMeal', ->
                 old_daily_meal.should.not.be.eq result.doc
                 result.doc.main_dish.should.be.eq 'new_name'
                 result.doc.side_dishes.should.be.deep.eq [ 'item1', 'item2', 'item3' ]
-                result.doc.at.should.be.eq  'Sat Feb 20 2016 21:58:24 GMT+0330 (IRST)'
+                result.doc.date.should.be.eq  'Sat Feb 20 2016 21:58:24 GMT+0330 (IRST)'
                 result.doc.total.should.be.eq 400
       
       it 'should delete a daily_meal', ->

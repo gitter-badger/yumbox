@@ -7,9 +7,16 @@ module.exports = (server) ->
 
   db        = require('puffer').instances[config.databases.application.name]
   analytics = require('puffer').instances[config.databases.analytics.name]
+ # redis     = require("redis").createClient config.cache.port, config.cache.host
 
   api = server.select 'api'
   web = server.select 'web'
+
+ # redis.get "#{config.app}.cacheserver", (err, res) ->
+ #   if err
+ #     console.warn 'Cache server is not working ...'
+ #   else
+ #     console.info "Cache server is at #{config.cache.host}:#{config.cache.port}"
 
   server.register [
     { register: require('hapi-auth-cookie') }
@@ -52,7 +59,16 @@ module.exports = (server) ->
   ], (err) ->
        throw err if err
 
-  server.select(['web', 'api']).register [], (err) ->
+  server.select(['web', 'api']).register [
+   # {
+     #register: require('otolist.cars')
+     # options:
+     #   database: db
+     #   mobile: defaults.mobile
+     #   cars: defaults.cars
+     #   colors: defaults.colors
+   # }
+  ], (err) ->
         throw err if err
       server.start () ->
         console.info 'API server started at ' + server.select('api').info.uri
