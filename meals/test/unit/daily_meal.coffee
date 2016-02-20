@@ -24,7 +24,7 @@ context 'DailyMeal', ->
       data =
         main_dish: faker.name.firstName()
         side_dishes: faker.company.suffixes()
-        date: 'today'#faker.date.future()
+        at: "#{faker.date.future()}"
         total: faker.random.number()
         remained: faker.random.number()
 
@@ -33,7 +33,7 @@ context 'DailyMeal', ->
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         daily_meal.doc.should.contain.all.keys [
-          'main_dish', 'side_dishes', 'date'
+          'main_dish', 'side_dishes', 'at'
           'total', 'doc_key', 'doc_type'
           ]
 
@@ -59,7 +59,7 @@ context 'DailyMeal', ->
           .then (result) ->
             DailyMeal.get(key)
           .then (result) ->
-            result.doc.date.should.be.deep.eq daily_meal.doc.date
+            result.doc.at.should.be.deep.eq daily_meal.doc.at
             key.should.be.eq daily_meal.doc.doc_key
             
       it 'should edit a daily_meal', ->
@@ -73,7 +73,7 @@ context 'DailyMeal', ->
             updated_daily_meal = new DailyMeal result.doc.doc_key, {
               main_dish : 'new_name'
               side_dishes : [ 'item1', 'item2', 'item3']
-              date : 'Sat Feb 20 2016 21:58:24 GMT+0330 (IRST)'
+              at : 'Sat Feb 20 2016 21:58:24 GMT+0330 (IRST)'
               total: 400
             }
             updated_daily_meal.update()
@@ -83,7 +83,7 @@ context 'DailyMeal', ->
                 old_daily_meal.should.not.be.eq result.doc
                 result.doc.main_dish.should.be.eq 'new_name'
                 result.doc.side_dishes.should.be.deep.eq [ 'item1', 'item2', 'item3' ]
-                result.doc.date.should.be.eq  'Sat Feb 20 2016 21:58:24 GMT+0330 (IRST)'
+                result.doc.at.should.be.eq  'Sat Feb 20 2016 21:58:24 GMT+0330 (IRST)'
                 result.doc.total.should.be.eq 400
       
       it 'should delete a daily_meal', ->
