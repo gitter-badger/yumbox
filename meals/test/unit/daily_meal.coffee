@@ -8,7 +8,7 @@ Q = require 'q'
 faker = require 'faker'
 Path = require 'path'
 
-DailyMeal = require("../../src/models/daily_meal") server, 
+DailyMeal = require("../../src/models/daily_meal") server,
 
 context 'DailyMeal', ->
   describe 'Souce Adapter', ->
