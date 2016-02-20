@@ -4,7 +4,7 @@ _ = require 'lodash'
 moment = require 'moment'
 
 module.exports = (server, options) ->
-  Meal = require('../models/daily_meal') server, options
+  DailyMeal = require('../models/daily_meal') server, options
 
   return
     create: (request, reply) ->
