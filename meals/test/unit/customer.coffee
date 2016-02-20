@@ -24,8 +24,8 @@ context 'Customer', ->
       data =
         name:             faker.name.firstName()
         location:
-          latitude:       faker.address.latitude()
-          longtitude:     faker.address.longitude()
+          latitude : faker.address.latitude()
+          longitude: faker.address.longitude()
         phone:            faker.phone.phoneNumberFormat()
         mobile:           faker.phone.phoneNumberFormat()
         email:            faker.internet.email()
@@ -78,7 +78,7 @@ context 'Customer', ->
             updated_customer = new Customer result.doc.doc_key, {
               location:
                 latitude: '17.9435'
-                logitude: '-17.9435'
+                longitude:'-17.9435'
               phone:      '02128024679'
               mobile:     '09128024679'
               customer_avatar: 'adadq22e89v sfsDFS(fSDFVSFSD)TWB$<T$TBOWTKSMV GS$# &N# $  v'
@@ -89,7 +89,7 @@ context 'Customer', ->
             Customer.get(key)
               .then (result) ->
                 old_customer.should.not.be.eq result.doc
-                result.doc.location.latitude.should.be.eq '17.9435'
+                result.doc.location['latitude'].should.be.eq '17.9435'
                 result.doc.location.longitude.should.be.eq '-17.9435'
                 result.doc.phone.should.be.eq '02128024679'
                 result.doc.mobile.should.be.eq '09128024679'
