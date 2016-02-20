@@ -8,14 +8,14 @@ Q      = require 'q'
 faker  = require 'faker'
 Path = require 'path'
 
-order = require("../../src/models/order") server,
+Order = require("../../src/models/order") server,
 
 context 'order', ->
   describe 'Souce Adapter', ->
     describe 'PREFIX', ->
-      it 'should have PREFIX set to \'s\'', ->
-        order::PREFIX.should.exist
-        order::PREFIX.should.be.eq 'o'
+      it 'should have PREFIX set to \'o\'', ->
+        Order::PREFIX.should.exist
+        Order::PREFIX.should.be.eq 'o'
  
   describe 'Structure', ->
     order = null
@@ -29,7 +29,7 @@ context 'order', ->
         status:        faker.hacker.phrase()
         price:         faker.commerce.price()
 
-      order = new order data
+      order = new Order data
 
     describe 'Properties', ->
       it 'should have properties correctly added', ->
@@ -39,7 +39,7 @@ context 'order', ->
           ]
 
       it 'should not accept unknown props' , ->
-        invalid_order = new order
+        invalid_order = new Order
           unknown_prop: faker.name.firstName()
 
         invalid_order.doc.should.not.have.key 'unknown_prop'
@@ -103,6 +103,6 @@ context 'order', ->
           .then (result) ->
             order.remove(key)
           .then (is_deleted) ->
-        order.get(key)
+        Order.get(key)
           .then (result) ->
             result.should.be.an 'Error'
