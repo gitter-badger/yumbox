@@ -9,6 +9,7 @@ module.exports = (server, options) ->
     
     PREFIX:       'c'
 
+  props:
     location:on
     phone: on
     mobile: on
@@ -36,5 +37,3 @@ module.exports = (server, options) ->
       return Q() unless @reception_avatar?
       file = @reception_avatar
       @customer= null # This will prevent double call on creates
- 
-
