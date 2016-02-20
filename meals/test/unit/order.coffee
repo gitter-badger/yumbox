@@ -25,7 +25,7 @@ context 'order', ->
         customer_key:  faker.random.uuid()
         daily_meal_key:faker.random.number()
         quantity:      faker.random.number()
-        at:            faker.date.recent()
+        at:            "#{faker.date.recent()}"
         status:        faker.hacker.phrase()
         price:         faker.commerce.price()
 
@@ -45,28 +45,28 @@ context 'order', ->
         invalid_order.doc.should.not.have.key 'unknown_prop'
 
       it 'should have correct values set', ->
-        order.doc.name.should.be.eq data.name
+        order.doc.customer_key.should.be.eq data.customer_key
         # to be completed for other fields..
 
     describe 'Behavior', ->
-      it 'should create a order', ->
+      it 'should create an order', ->
         key = order.key
         order.create(true)
           .then (result) ->
-            order.get(key)
+            Order.get(key)
           .then (result) ->
             result.doc.should.be.deep.eq order.doc
             key.should.be.eq order.doc.doc_key
             
-      it 'should edit a order', ->
+      it 'should edit an order', ->
         key = order.key
         old_order = null
         order.create()
           .then ->
-            order.get(key)
+            Order.get(key)
           .then (result) ->
             old_order = result.doc
-            updated_order = new order result.doc.doc_key, {
+            updated_order = new Order result.doc.doc_key, {
               customer_key : 'c_231934221'
               daily_meal_key : 'd_8374656'
               quantity: '200'
@@ -76,13 +76,13 @@ context 'order', ->
             }
             updated_order.update()
           .then ->
-            order.get(key)
+            Order.get(key)
               .then (result) ->
                 old_order.should.not.be.eq result.doc
                 result.doc.customer_key.should.be.eq 'c_231934221'
                 result.doc.daily_meal_key.should.be.eq 'd_8374656'
                 result.doc.quantity.should.be.eq '200'
-                result.doc.at.shoul.be.eq 'Feb 20 2016 06:22:38 GMT+0330 (IRST)'
+                result.doc.at.should.be.eq 'Feb 20 2016 06:22:38 GMT+0330 (IRST)'
                 result.doc.status.should.be.eq 'delivered'
                 result.doc.price.should.be.eq '22500'
 
@@ -96,7 +96,7 @@ context 'order', ->
           status:        faker.hacker.phrase()
           price:         faker.commerce.price()
  
-        order = new order data
+        order = new Order data
 
         key = order.key
         order.create()
