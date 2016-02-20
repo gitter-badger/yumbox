@@ -1,5 +1,5 @@
 {
-  "name": "yumbox",
+  "name": "yumbox.customer",
   "version": "0.0.0",
   "description": "yumbox daily meal",
   "main": "init",
@@ -13,7 +13,7 @@
   "keywords": [
     "yumbox"
   ],
-  "author": "mahdie",
+  "author": "Kasra",
   "license": "ISC",
   "devDependencies": {
     "chai": "^3.5.0",
