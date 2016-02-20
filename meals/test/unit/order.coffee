@@ -8,7 +8,7 @@ Q      = require 'q'
 faker  = require 'faker'
 Path = require 'path'
 
-order = require("../../src/models/order") server,
+Order = require("../../src/models/order") server,
 
 context 'order', ->
   describe 'Souce Adapter', ->
@@ -29,7 +29,7 @@ context 'order', ->
         status:        faker.hacker.phrase()
         price:         faker.commerce.price()
 
-      order = new order data
+      order = new Order data
 
     describe 'Properties', ->
       it 'should have properties correctly added', ->

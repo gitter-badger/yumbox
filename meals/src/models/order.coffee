@@ -4,7 +4,7 @@ Q       = require 'q'
 ShortID = require 'shortid'
 
 module.exports = (server, options) ->
-  return class DailyMeal extends server.methods.model.Base()
+  return class Order extends server.methods.model.Base()
     
     PREFIX: 'o'
 
