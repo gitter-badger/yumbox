@@ -22,6 +22,7 @@ context 'Customer', ->
     data = null
     beforeEach () ->
       data =
+        name:             faker.name.firstName()
         location:
           latitude:       faker.address.latitude()
           longtitude:     faker.address.longitude()
@@ -37,8 +38,8 @@ context 'Customer', ->
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         customer.doc.should.contain.all.keys [
-          'location.latitude', 'location.longitude', 'mobile'
-          'phone', 'name', 'customer_avatar', 'order'
+          'location', 'mobile', 'phone', 'name'
+          'customer_avatar', 'orders'
           ]
 
       it 'should not accept some props', ->
