@@ -8,20 +8,20 @@ module.exports = (server, options) ->
   return class Customer extends server.methods.model.Base()
     
     PREFIX:       'c'
-
-  props:
-    location:on
-    phone: on
-    mobile: on
-    email: off
-    name: on
-    customer_avatar: on
-    dob: off
-    orders: on
-
+  
     AVATAR:
       SMALL:      "savatar"
       MEDIUM:     "mavatar"
+    
+    props:
+      location:on
+      phone: on
+      mobile: on
+      email: off
+      name: on
+      customer_avatar: on
+      dob: off
+      orders: on
 
     before_save: ->
       delete @doc.customer_avatar?
