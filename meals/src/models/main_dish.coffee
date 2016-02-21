@@ -23,7 +23,8 @@ module.exports = (server, options) ->
       description: off
       calories: off
       images: off
-     
+      images_file: on
+
   before_save: ->
       return true unless @doc.image_files?
       @image_files = @doc.image_files
@@ -45,5 +46,3 @@ module.exports = (server, options) ->
       Q.allSettled(savers)
         .then (paths) ->
           names = _.map paths, (path) -> _.last path.value.split "/"
-   
-   
