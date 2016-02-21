@@ -28,12 +28,12 @@ module.exports = (server, options) ->
     return true unless @doc.image_files?
 
   @image_files = @doc.image_files
-    delete @doc.image_files
-    @doc.images ?= []
-    @_save_image()
-      .then (file_names) =>
-        @doc.images = _.union @doc.images, file_names
-        true
+  delete @doc.image_files
+  @doc.images ?= []
+  @_save_image()
+    .then (file_names) =>
+      @doc.images = _.union @doc.images, file_names
+      true
 
   after_save: (data) ->
     return data if data instanceof Error
