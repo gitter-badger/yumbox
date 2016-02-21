@@ -45,8 +45,12 @@ context 'order', ->
         invalid_order.doc.should.not.have.key 'unknown_prop'
 
       it 'should have correct values set', ->
-        order.doc.customer_key.should.be.eq data.customer_key
-        # to be completed for other fields..
+        order.doc.customer_key.should.be.eq   data.customer_key
+        order.doc.daily_meal_key.should.be.eq data.daily_meal_key
+        order.doc.quantity.should.be.eq       data.quantity
+        order.doc.at.should.be.eq             data.at
+        order.doc.status.should.be.eq         data.status
+        order.doc.price.should.be.eq          data.price
 
     describe 'Behavior', ->
       it 'should create an order', ->
