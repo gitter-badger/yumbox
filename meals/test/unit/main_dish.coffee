@@ -31,13 +31,13 @@ context 'MainDish', ->
     data = null
     beforeEach () ->
       data =
-        name:faker.name.firstName()
+        name:        faker.name.firstName()
         side_dishes: faker.company.suffixes()
-        total: faker.random.number()
-        remained: faker.random.number()
-        price: faker.random.number()
-        calories: faker.random.number()
-        description:faker.hacker.phrase()
+        total:       faker.random.number()
+        remained:    faker.random.number()
+        price:       faker.random.number()
+        calories:    faker.random.number()
+        description: faker.hacker.phrase()
 
       main_dish = new MainDish data
 

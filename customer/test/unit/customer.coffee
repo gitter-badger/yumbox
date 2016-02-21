@@ -29,16 +29,17 @@ context 'Customer', ->
         phone:            faker.phone.phoneNumberFormat()
         mobile:           faker.phone.phoneNumberFormat()
         email:            faker.internet.email()
-        customer_avatar:  faker.random.number()
+        customer_avatar:  [ "#{__dirname}/images/example_image.jpg" ]
         dob:              "#{faker.date.past()}"
         orders:           faker.company.suffixes()
+        image_files:      []
 
       customer = new Customer data
 
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         customer.doc.should.contain.all.keys [
-          'location', 'mobile', 'phone', 'name', 'customer_avatar', 'orders'
+          'location', 'mobile', 'phone', 'name', 'customer_avatar', 'orders', 'image_files'
           ]
 
       it 'should not accept some props', ->
@@ -111,3 +112,19 @@ context 'Customer', ->
         Customer.get(key)
           .then (result) ->
             result.should.be.an 'Error'
+
+      it "should remove image_files on create and update", ->
+        customer.create()
+          .then (o) ->
+            Customer.get(customer.key)
+              .then (obj) ->
+                obj.doc.should.have.property "customer_avatar"
+                obj.doc.should.not.have.property "image_files"
+                obj.doc.image_files = data.image_files
+                obj.update()
+                  .then (o) ->
+                    Customer.get(customer.key)
+                      .then (obj) ->
+                        obj.doc.should.not.have.property "image_files"
+
+

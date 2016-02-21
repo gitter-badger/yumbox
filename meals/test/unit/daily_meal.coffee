@@ -49,8 +49,11 @@ context 'DailyMeal', ->
         invalid_daily_meal.doc.should.not.have.key 'unknown_prop'
 
       it 'should have correct values set', ->
-        daily_meal.doc.main_dish.should.be.eq data.main_dish
-        # to be completed for other fields..
+        daily_meal.doc.main_dish.should.be.eq        data.main_dish
+        daily_meal.doc.side_dishes.should.be.deep.eq data.side_dishes
+        daily_meal.doc.at.should.be.eq               data.at
+        daily_meal.doc.total.should.be               data.total
+        daily_meal.doc.remained.should.be.eq         data.remained
 
     describe 'Behavior', ->
       it 'should create a daily_meal', ->
@@ -72,7 +75,7 @@ context 'DailyMeal', ->
             old_daily_meal = result.doc
             updated_daily_meal = new DailyMeal result.doc.doc_key, {
               main_dish : 'new_name'
-              side_dishes : [ 'item1', 'item2', 'item3']
+              side_dishes : ['item1', 'item2', 'item3']
               at : 'Sat Feb 20 2016 21:58:24 GMT+0330 (IRST)'
               total: 400
             }
