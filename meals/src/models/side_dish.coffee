@@ -30,14 +30,14 @@ module.exports = (server, options) ->
           true
 
  
-    _save_image: ->
-      @image_files  = [@image_files] unless _.isArray @image_files
+  _save_image: ->
+    @image_files  = [@image_files] unless _.isArray @image_files
 
-      savers = []
-      for file in @image_files
-        savers.push @save_image file, ShortID.generate(), SideDish::IMAGE.SIZE.MEDIUM
+    savers = []
+    for file in @image_files
+      savers.push @save_image file, ShortID.generate(), SideDish::IMAGE.SIZE.MEDIUM
 
-      Q.allSettled(savers)
-        .then (paths) ->
-          names = _.map paths, (path) -> _.last path.value.split "/"
-   
+    Q.allSettled(savers)
+      .then (paths) ->
+        names = _.map paths, (path) -> _.last path.value.split "/"
+ 
