@@ -41,7 +41,6 @@ context 'order', ->
       it 'should not accept unknown props' , ->
         invalid_order = new Order
           unknown_prop: faker.name.firstName()
-
         invalid_order.doc.should.not.have.key 'unknown_prop'
 
       it 'should have correct values set', ->
