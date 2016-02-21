@@ -1,0 +1,185 @@
+include ../../../partials/common/html/no_access.jade
+.container-fluid(ng-controller='homeCtrl')
+  .col-md-12.col-lg-6(ng-intro-options="introOptions" ng-intro-method="intro" ng-intro-oncomplete="introDone" ng-intro-onexit="introSkipped" ng-intro-autostart="introStart")
+    .card.card-todo(ng-show="!currentUser.settings.walkthrough.pms && currentUser.settings.walkthrough.first_time")
+      .card-header
+        h2
+          i.zmdi.zmdi-graduation-cap.p-r-5
+          | No Connection
+          small Connect to Property Management System
+      .card-body
+        p In order to have a better experience and make sure your guests are listed here automatically, please connect your PMS. You can easily connect to any of follwoing 3rd parties:
+        .row.pms-list.p-b-20
+          .col-sm-6(ng-repeat="pms in pmses") 
+            i.zmdi.zmdi-circle.p-5
+            span {{pms}}
+          .clearfix.visible-sm-block(ng-repeat-end ng-if="$odd")
+        p
+          | You can always change this in 
+          a(ui-sref='settings') Settings
+          |  page.
+        .p-t-5
+          button.btn.bgm-blue.waves-effect(ui-sref="settings") Connect now
+          small.p-l-5
+            |  Or 
+            a(href="" ng-click="skip('pms', true)" data-snackbar snackbar-show="skipped_walkthroughs.pms" data-title="PMS Skipped: " data-message="You can add it later in <a ui-sref='settings'>settings</a>" data-type="inverse" data-animation-in="animated fadeInUp"  data-animation-Out="animated fadeOutUp") skip it
+    .card#guests
+      .card-header.slim
+        .p-header
+          ul.p-menu
+            li.pm-search
+              .pms-inner
+                i.zmdi.zmdi-search
+                input(type="text" placeholder="Search by name ...")
+          ul.actions.m-t-20.hidden-xs
+            li.dropdown
+              a(href="" ng-click="scanner.shoot()" ng-show="camera.working")
+                i.zmdi.zmdi-center-focus-strong(ng-class="camera.scanning ? 'c-green' : ''")
+            li.dropdown
+              a(ui-sref="guests")
+                i.zmdi.zmdi-apps
+      .card-body.p-b-5
+        .scanner.p-b-10.text-center(ng-show="camera.scanning && camera.working")
+          h4 
+            | Scan Guest's QR Code
+            small Ask guest to open their Tipi's menu and place their QR Code in front of camera.
+          qrcode(success='success' error='error' scanning='camera.scanning' data-snackbar snackbar-show="camera.snackbar" data-title="Camera " data-message="{{camera.message}}" data-type="warning" data-align="left" data-animation-in="animated fadeInUp" data-animation-Out="animated fadeOutUp")
+        .guests-shortlist(ng-hide="camera.scanning && camera.working")
+          +noAccess('guests', '')
+          .container-fluid(ng-if="views.guests.state == views.states.loaded")
+            .row
+              .col-sm-6.grid
+                h5.hint.center.p-b-10 Today's Check-ins
+                .row
+                  p.text-center.p-t-10(ng-show='guests.checkins.total==0') 
+                    img(src='/assets/img/check-ins.png')
+                    span.block No more check-in today.
+                  div(ng-repeat="guest in guests.checkins.list | limitTo: (guests.checkins.total>12? 11 : 12)")
+                    div(ng-if="$index % 4 == 0" class="clearfix")
+                    .col-sm-3
+                      img.avatar.img-circle(ng-src='/cdn/user/{{guest.user_key}}/savatar.jpg' ui-sref="guest({ id: guest.doc_key, user_key: guest.user_key })" err-src='/assets/img/defaultsavatar.jpg')
+                  .col-sm-3(ng-if="guests.checkins.total>12")
+                    .more(ui-sref='guests')
+                      img.avatar.img-circle(src='/assets/img/circle.png')
+                      span +{{guests.checkins.total-11}}
+              .col-sm-6.grid
+                h5.hint.center.p-b-10 Today's Check-outs
+                .row
+                  p.text-center.p-t-10(ng-show='guests.checkouts.total==0') 
+                    img(src='/assets/img/check-outs.png')
+                    span.block No more check-out today.
+                  div(ng-repeat="guest in guests.checkouts.list | limitTo: (guests.checkouts.total>12? 11 : 12)")
+                    div(ng-if="$index % 4 == 0" class="clearfix")
+                    .col-sm-3
+                      img.avatar.img-circle(ng-src='/cdn/user/{{guest.user_key}}/savatar.jpg' ui-sref="guest({ id: guest.doc_key, user_key: guest.user_key })" err-src='/assets/img/defaultsavatar.jpg')
+                  .col-sm-3(ng-if="guests.checkouts.total>12")
+                    .more(ui-sref='guests')
+                      img.avatar.img-circle(src='/assets/img/circle.png')
+                      span +{{guests.checkouts.total-11}}
+    .row
+      .col-sm-6
+        #reviews.card.card-minimal
+          .card-header
+            h2 Reviews
+          .card-body.card-padding
+            +noAccess('reviews', '')
+            .listview(ng-if="views.feed.state == views.states.loaded")
+              div.center(ng-show='reviews.total==0')
+                img(src='/assets/img/reviews.png')
+                small.block
+                  | No unseen reviews. You can have your reviews published to your website by using Tipi's 
+                  a(ui-sref='settings') review add-on
+                  | .
+              .lv-item.p-10-0(href="" ng-repeat='review in reviews.list')
+                .media
+                  .pull-left
+                    img.lv-img-sm(ng-src='/cdn/user/{{review.user_key}}/savatar.jpg')
+                  .media-body
+                    .lv-title {{review.user.name}}
+                    small.lv-small.c-bluegray(am-time-ago="review.created_at")
+                    small {{review.comment}}
+                    .lv-actions.actions.dropdown
+                      a(href="" ng-click='seen(review.doc_key, $index)')
+                        i.zmdi.zmdi-check
+      .col-sm-6
+        #bookings.card.card-minimal
+          .card-header
+            h2 Claimed Bookings
+            ul.actions
+              li
+                a(popover-trigger="mouseenter" popover-placement="top" popover="This is where you can see guests who have claimed a booking in your hostel. You can copy the Booking Number by clicking once on it and search it in your booking website or emails. Once you have verified the booking press accept or reject if it's not valid." popover-title="Bookings" popover-append-to-body="true")
+                  i.zmdi.zmdi-help
+          .card-body.card-padding
+            +noAccess('bookings', '')
+            .listview.bookings(ng-if="views.bookings.state == views.states.loaded")
+              div.center(ng-show='bookings.length==0')
+                img(src='/assets/img/bookings.png')
+                small.block No user entered a new booking. Only bookings which are not listed via integrated PMS or CMS are shown here.
+              div.lv-item.p-10-0(href="" ng-repeat='booking in bookings' ng-class="booking.is_new ? 'animated bounceInUp' : '' ")
+                .media
+                  .pull-left
+                    img.lv-img-sm(ng-src='/cdn/user/{{booking.user_key}}/savatar.jpg')
+                  .media-body
+                    .lv-title {{booking.user.name}}
+                    small.lv-small.c-bluegray(am-time-ago="booking.created_at")
+                    small.lv-small(clip-copy="booking.reference_number" ng-click="booking.copied=true" data-snackbar snackbar-show="booking.copied" data-title="Copied: " data-message="{{booking.reference_number}} is copied to clipboard" data-type="inverse" data-animation-in="animated fadeInUp"  data-animation-Out="animated fadeOutUp") {{booking.reference_number}}
+                    .lv-actions.actions.dropdown
+                      a(href="" data-toggle="dropdown" aria-expanded="true")
+                        i.zmdi.zmdi-more-vert
+                      ul.dropdown-menu.dm-icon.pull-right
+                        li
+                          a(href="" ng-click='accept_booking(booking, $index)') 
+                            i.zmdi.zmdi-check
+                            | Accept
+                        li
+                          a(href="" ng-click='reject_booking(booking, $index)')
+                            i.zmdi.zmdi-block
+                            | Reject
+  .clearfix.visible-md-block.visible-sm-block
+  .col-sm-6.col-lg-3
+    +noAccess('activities', '')
+    #activities(ng-if="views.activities.state == views.states.loaded")
+      .dash-widget-item.m-b-10(ng-repeat='activity in activities')
+        .dash-widget-header
+          .dash-widget-title {{activity.attendees.length || 0}} Going
+          img(ng-src='/cdn/activity/{{activity.doc_key}}/{{activity.images[0]}}')
+          .main-item
+            small(am-time-ago='activity.at')
+            h2 {{activity.title}}
+            .actions.text-center
+              button.btn.btn-success.btn-icon.waves-circle.waves-effect(ui-sref='edit_activity({id:activity.doc_key})')
+                i.zmdi.zmdi-edit
+      .dash-widget-item#new-activity-btn
+        .dash-widget-header
+          .new.bgm-blue.c-white
+            .content(ui-sref='new_activity')
+              .cell
+                i.zmdi.zmdi-plus
+                .title.p-t-5 NEW ACTIVITY
+                small.animated click to create an activity
+          .new-block
+  .col-sm-6.col-lg-3
+    +noAccess('analytics', '')
+    #analytics
+      .mini-charts-item.bgm-green
+        .clearfix
+          .chart.guests-stats-line
+          .count
+            small Check-ins
+            h2 {{analytics.guests.count}}
+      #pie-charts.dash-widget-item
+        .bgm-pink
+          .dash-widget-header
+            .dash-widget-title Activities Statistics
+          .clearfix
+          .text-center.p-20.m-t-25
+            .easy-pie.main-pie(data-percent="{{(analytics.activities.attendees_average+analytics.activities.views_average)*100/2| number:0}}")
+              .percent {{(analytics.activities.attendees_average+analytics.activities.views_average)*100/2| number:0}}
+              .pie-title Total Engagement
+        .p-t-20.p-b-20.text-center
+          .easy-pie.sub-pie-1(data-percent="{{analytics.activities.attendees_average*100| number:0}}")
+            .percent {{analytics.activities.attendees_average*100| number:0}}
+            .pie-title Attendees
+          .easy-pie.sub-pie-2(data-percent="{{analytics.activities.views_average*100| number:0}}")
+            .percent {{analytics.activities.views_average*100| number:0}}
+            .pie-title Views

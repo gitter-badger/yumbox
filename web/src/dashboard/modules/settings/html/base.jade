@@ -1,0 +1,147 @@
+.container-fluid(ng-controller='settingsCtrl')
+  ol.breadcrumb
+    li 
+      a(ui-sref='home') Dashboard
+    li.active Settings
+    ul.actions.m-t--5.hidden-xs.pull-right
+      li
+        a(ui-sref="home") 
+          i.zmdi.zmdi-close
+  .container-fluid
+    .row.p-25
+      .col-sm-6
+        H2 BASIC INFORMATION
+        p.p-t-20.f-14.f-100 Manage your basic information - your hostel name, country, city and address - to help guests to find you on Tipi and to make it easier to get in touch with you.
+        p.center.p-t-20.p-b-10
+          img.img-200(src='/assets/img/basic-info.png')
+      .col-sm-6
+        .card
+          .card-header.m-b-15
+            img.img-circle.avatar-sm(ng-src='/cdn/hostel/{{hostel.doc_key}}/savatar.jpg' err-src='/assets/img/defaultsavatar.jpg')
+            h2.h-inline
+              | CUSTOMIZE YOUR PROFILE
+              small Make sure your information is always up-to-date.
+            button.btn.btn-float.waves-effect.bgm-pink(ui-sref="profile")
+              i.zmdi.zmdi-edit
+          .card-body.table-responsive.p-t-20
+            table.table
+              tbody
+                tr
+                  th Name
+                  th.f-100 {{hostel.name}}
+                tr
+                  th Country
+                  th.f-100 {{hostel.country}}
+                tr
+                  th City
+                  th.f-100 {{hostel.city}}
+                tr
+                  th Address
+                  th.f-100 {{hostel.address}}
+                tr
+                  th Phone
+                  th.f-100 {{hostel.phone}}
+                tr
+                  th Reception Name
+                  th.f-100 {{hostel.reception_name}}
+                tr
+                  th Description
+                  th.f-100 {{hostel.description}}
+    hr.hr-darker
+    .row.p-25
+      .col-sm-6
+        .card
+          .card-header.m-b-15
+            h2 
+              | Email & Password
+              small Change your password every few months.
+            button.btn.btn-float.waves-effect.bgm-pink(ui-sref="password")
+              i.zmdi.zmdi-edit
+          .card-body.table-responsive.p-t-20
+            table.table
+              tbody
+                tr
+                  th Email
+                  th.f-100 {{hostel.email}}
+                tr
+                  th Password
+                  th.f-100 *****
+      .col-sm-6
+        H2 SECURITY
+        p.p-t-20.f-14.f-100 Keep your password safe and only share it with staff who will be using GMS Dashboard. Generally we don't allow email changes. But if you really need to update your email contact our support at hello@tipi.me and see if our staff can help you with it. 
+        p.center.p-t-10.p-b-10
+          img.img-200(src='/assets/img/security.png')
+    hr.hr-darker
+    .row.p-25
+      .col-sm-6
+        H2 PMS INTEGRATION
+        p.p-t-20.f-14.f-100 Connect your Tipi GMS to your PMS or IMS. Have your bookings flow from your PMS to GMS and get in touch with your guests as soon as they book your hostel.
+        p.center.p-t-10.p-b-10
+          img.img-200(src='/assets/img/api.png')
+      .col-sm-6
+        .card
+          .card-header.m-b-15
+            h2
+              | Settings
+              small Connect your PMS to GMS with few clicks.
+            button.btn.btn-float.waves-effect.bgm-pink(data-swal-confirm data-message="You are about to change your API key. This means after this action your PMS connection will stop working till you use the new generated API key in your PMS." data-confirm-button="Yes, change it!" data-confirm="change_server_api('{{hostel.server_api_key}}', 'server', done)" data-success-title="Done!" data-success-message="A new key is generated for you! Please provide this new key to your developers to get your PMS connection back on.")
+              i.zmdi.zmdi-refresh
+          .card-body.table-responsive.p-t-20
+            table.table
+              tbody
+                tr
+                  th API Key
+                  th.f-100 {{hostel.server_api_key}}
+        .card
+          .card-header.m-b-15
+            h2
+              | Self Check-in
+              small Android Self Check-in app for tablets
+            a.btn.btn-float.waves-effect.bgm-pink(href="https://github.com/Tipime/self-checkin/releases/download/v1.0.3/tipi-check-in-1.0.3.apk" target='_blank')
+              i.zmdi.zmdi-chevron-down
+          .card-body.card-padding
+            .f-100 
+              | Installation instructions:
+              ol
+                li Open this page on your tablet
+                li
+                  | Click on the download button or 
+                  a(href='https://github.com/Tipime/self-checkin/releases/download/v1.0.3/tipi-check-in-1.0.3.apk') here
+                li Tap on the downloaded file and give permission to install from "Unknown Sources"
+                li Now the application is installed and you can open it from your apps screen
+        .card
+    hr.hr-darker
+    .row.p-25
+      .col-sm-6
+        .card
+          .card-header.m-b-15
+            h2
+              | All Plugins
+              small Press on edit button to customize or turn them on and off here.
+            button.btn.btn-float.waves-effect.bgm-pink(ui-sref="plugins")
+              i.zmdi.zmdi-edit
+          .card-body.table-responsive.p-t-20
+            table.table
+              tbody
+                tr
+                  th API Key
+                  th.f-100 {{hostel.browser_api_key}}
+                tr
+                  th Guest Plugin
+                  th
+                    .pull-right
+                      .toggle-switch.title(data-ts-color="blue" ng-class="plugins.guests.enabled ? 'on' : ''")
+                        input#plugin_guests(type="checkbox" hidden="hidden" ng-model="plugins.guests.enabled" ng-false-value='false' ng-true-value='true' disabled='disabled')
+                        label.ts-helper(for="plugin_guests")
+                tr
+                  th Review Plugin
+                  th
+                    .pull-right
+                      .toggle-switch.title(data-ts-color="blue" ng-class="plugins.reviews.enabled ? 'on' : ''")
+                        input#plugin_reviews(type="checkbox" hidden="hidden" ng-model="plugins.reviews.enabled" ng-false-value='false' ng-true-value='true' disabled='disabled')
+                        label.ts-helper(for="plugin_reviews")
+      .col-sm-6
+        H2 Web Plugins
+        p.p-t-20.f-14.f-100 Show your current guests, reviews, rating and weather in your website or affiliate websites. This can increase your social credibility.
+        p.center.p-t-10.p-b-10
+          img.img-200(src='/assets/img/connectivity.png')

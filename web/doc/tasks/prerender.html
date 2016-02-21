@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="en"><head><title>tasks/prerender</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="tasks/prerender"><meta name="groc-project-path" content="tasks/prerender.coffee"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">tasks/prerender.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper">gulp       = <span class="hljs-built_in">require</span> <span class="hljs-string">'gulp'</span>
+exec       = <span class="hljs-built_in">require</span> <span class="hljs-string">'gulp-exec'</span>
+util       = <span class="hljs-built_in">require</span> <span class="hljs-string">'gulp-util'</span>
+newer      = <span class="hljs-built_in">require</span> <span class="hljs-string">'gulp-newer'</span>
+argv       = <span class="hljs-built_in">require</span>(<span class="hljs-string">'yargs'</span>).argv</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><h2 id="prerender-pages">Prerender pages</h2>
+<p>Prerender all web pages. The home page url and destination should be passed. You should have PhantomJS installed on your machine and it uses <a href="phantom.html">phantom.coffee script</a> internally to do its task.</p>
+<p>Example:</p>
+<pre><code>gulp web:prerender -u=&#39;http://site.com/&#39; -o=&#39;/var/www/snapshots&#39;
+gulp web:prerender -u=&#39;http://localhost:3000&#39; -o=&#39;./snapshots&#39;</code></pre></div></div><div class="code"><div class="wrapper">gulp.task <span class="hljs-string">'web:prerender'</span>, <span class="hljs-function">-&gt;</span>
+  <span class="hljs-built_in">console</span>.log <span class="hljs-string">"Creating snapshots <span class="hljs-subst">#{argv.u}</span> ====&gt; <span class="hljs-subst">#{argv.o}</span>"</span>
+
+  reportOptions = {
+    <span class="hljs-attribute">err</span>: <span class="hljs-literal">true</span>
+    <span class="hljs-attribute">stderr</span>: <span class="hljs-literal">true</span>
+    <span class="hljs-attribute">stdout</span>: <span class="hljs-literal">true</span> 
+  }
+  gulp.src(<span class="hljs-string">'./tasks'</span>)
+    .pipe( exec <span class="hljs-string">"cd &lt;%= file.path %&gt; &amp;&amp; phantomjs phantom.coffee '<span class="hljs-subst">#{argv.u}</span>' '<span class="hljs-subst">#{argv.o}</span>'"</span>, {<span class="hljs-attribute">continueOnError</span>: <span class="hljs-literal">false</span>} )
+    .pipe( exec.reporter reportOptions )
+  </div></div></div></div></body></html>

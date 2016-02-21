@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="en"><head><title>tasks/phantom</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="tasks/phantom"><meta name="groc-project-path" content="tasks/phantom.coffee"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">tasks/phantom.coffee</div></div><div id="document"><div class="segment"><div class="comments "><div class="wrapper"><h2 id="prerender-all-pages">Prerender all pages</h2>
+<p>This uses PhantomJS to prerender for search engine crawling. You should use the <strong><a href="./prerender.html">gulp task</a></strong> to call it but if you wanna try it and see how it works execute something like this:</p>
+<pre><code>  phantomjs phantom.coffee &#39;http://localhost:3000&#39; &#39;./snapshots&#39;</code></pre></div></div><div class="code"><div class="wrapper">Page    = <span class="hljs-built_in">require</span> <span class="hljs-string">'webpage'</span>
+fs      = <span class="hljs-built_in">require</span> <span class="hljs-string">'fs'</span>
+args    = <span class="hljs-built_in">require</span>(<span class="hljs-string">'system'</span>).args;</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="home-page">Home Page</h3>
+<p>Set <strong>array</strong> of urls, from where phantom should start crawling. Usually it is only home page</p></div></div><div class="code"><div class="wrapper">root = [<span class="hljs-string">"<span class="hljs-subst">#{args[<span class="hljs-number">1</span>]}</span>/#!/"</span>]</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h3 id="prerender-destination">Prerender Destination</h3>
+<p>Update this path if you are willing to store files in a different location</p></div></div><div class="code"><div class="wrapper">saveDir = args[<span class="hljs-number">2</span>] || <span class="hljs-string">"./snapshots"</span></div></div></div><div class="segment"><div class="comments doc-section doc-section-private"><div class="wrapper"><p><span class='doc-section-header'>Private method</span></p>
+<h2 id="save-snapshots">Save snapshots</h2>
+<p>Create a snapshot of page as html file in destination folder</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>uri must be a String.</strong><br/>(Url of the page which be converted relative to saveDir variable)</p>
+</li>
+<li><p><strong>body must be a String.</strong><br/>(Page content to save in the path)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-title">saveSnapshot</span> = <span class="hljs-params">(uri, body)</span> -&gt;</span>
+  lastIdx = uri.lastIndexOf <span class="hljs-string">'#!/'</span>
+  path = uri.substring(lastIdx + <span class="hljs-number">2</span>, uri.length);
+  path = <span class="hljs-string">"/index.html"</span> <span class="hljs-keyword">if</span> path == <span class="hljs-string">'/'</span>
+  path += <span class="hljs-string">".html"</span> <span class="hljs-keyword">if</span> path.indexOf(<span class="hljs-string">'.html'</span>) == -<span class="hljs-number">1</span>
+  filename = saveDir + path
+  <span class="hljs-built_in">console</span>.log <span class="hljs-string">"saving as '<span class="hljs-subst">#{filename}</span>'"</span>
+  fs.write filename, body, <span class="hljs-string">'w'</span></div></div></div><div class="segment"><div class="comments doc-section doc-section-public"><div class="wrapper"><p><span class='doc-section-header'>Public method</span></p>
+<h2 id="crawler">Crawler</h2>
+<p>Recursive parser to parse the current url and find all other pages to create snapshot of them. Also avoid parsing already parsed URLs in current session.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>idx must be an Integer.</strong><br/>(Current index of page which is about to be parsed)</p>
+</li>
+<li><p><strong>pages must be an Array.</strong><br/>(List of urls which should be parsed)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-function"><span class="hljs-title">crawlPage</span> = <span class="hljs-params">(idx, pages)</span> -&gt;</span>
+  <span class="hljs-keyword">if</span> (idx &lt; pages.length) 
+    uri = pages[idx]
+    page = Page.create()
+    page.settings.userAgent = <span class="hljs-string">'SpecialAgent'</span>
+    page.viewportSize = {
+      <span class="hljs-attribute">width</span>: <span class="hljs-number">1000</span>
+      <span class="hljs-attribute">height</span>: <span class="hljs-number">800</span>
+    }
+    page.open uri, <span class="hljs-function">-&gt;</span>
+      urls = page.evaluate( <span class="hljs-function"><span class="hljs-params">(uri)</span> -&gt;</span>
+        links = <span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'a[href]'</span>)
+        <span class="hljs-keyword">return</span> [] <span class="hljs-keyword">if</span> links.lenght &lt; <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> [].map.call links, <span class="hljs-function"><span class="hljs-params">(link)</span> -&gt;</span>
+          href = link.getAttribute <span class="hljs-string">'href'</span></div></div></div><div class="segment"><div class="comments doc-section doc-section-private"><div class="wrapper"><p><span class='doc-section-header'>Private method</span></p>
+<h2 id="url-resolver">Url Resolver</h2>
+<p>Try to create absolute path for any give url</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>base must be a String.</strong><br/>(Base url to be used to create absolute url, it can be dirty)</p>
+</li>
+<li><p><strong>url must be a String.</strong><br/>(Url which be converted to absolute url.)</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre><code>resolve &#39;http://server.com/users&#39;, &#39;experiences&#39;
+// &#39;http://server.com/experiences&#39;</code></pre></div></div><div class="code"><div class="wrapper"><span class="hljs-function">          <span class="hljs-title">resolve</span> = <span class="hljs-params">(base, url)</span> -&gt;</span>
+            base_regex = <span class="hljs-regexp">/^https?:\/\/[^\/]+/i</span>
+            base = base.match(base_regex)[<span class="hljs-number">0</span>]
+            url = <span class="hljs-string">'/'</span>+url <span class="hljs-keyword">if</span> url.charAt(<span class="hljs-number">0</span>) <span class="hljs-keyword">isnt</span> <span class="hljs-string">'/'</span>
+            <span class="hljs-keyword">return</span> base + url
+
+          absUrl = resolve uri, href
+          link.setAttribute <span class="hljs-string">'href'</span>, absUrl
+          <span class="hljs-keyword">return</span> absUrl
+      , uri)
+      saveSnapshot uri, page.content
+      <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> urls
+        <span class="hljs-keyword">if</span> (pages.indexOf(url) &lt; <span class="hljs-number">0</span>) 
+            pages.push url
+      crawlPage( idx+<span class="hljs-number">1</span>, pages)
+  <span class="hljs-keyword">else</span>
+    phantom.exit()
+
+crawlPage(<span class="hljs-number">0</span>, root)</div></div></div></div></body></html>

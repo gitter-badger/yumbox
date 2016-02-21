@@ -1,0 +1,90 @@
+.container-fluid(ng-controller='searchCtrl')
+  ol.breadcrumb
+    li 
+      a(ui-sref='home') Dashboard
+    li.active(ng-hide="scope") Search
+    li(ng-show="scope")
+      a(href='' ng-click="search.scope()") Search
+    li.active(ng-show="scope") {{scope}}
+    ul.actions.m-t--5.hidden-xs.pull-right
+      li
+        a(ui-sref="home") 
+          i.zmdi.zmdi-close
+  .container-fluid
+    .alert.alert-warning(role='alert' ng-show="noSearch") No match! Please type something...
+    div(ng-hide="noSearch")
+      .row(ng-show="results.guests && results.guests.total!=0")
+        .block-header
+          h2.p-l-15 Guests
+        .row
+          .col-sm-12
+            .col-sm-6.col-lg-4(ng-repeat="guest in results.guests.list")
+              .card
+                .card-body.card-padding
+                  .media
+                    .pull-left
+                      img.lv-img-md.border-blue-3.img-circle(ng-src="/cdn/user/{{guest.user_key}}/savatar.jpg" ui-sref="guest({ id: guest.doc_key, user_key: guest.user_key })")
+                    .pull-right.text-center
+                      .lv-bold
+                        h6 Check-in
+                        b {{guest.from | amCalendar}} 
+                      .lv-bold.p-t-10
+                        h6 Check-out
+                        b {{guest.to | amCalendar}} 
+                    .media-body
+                      .lv-title(ui-sref="guest({ id: guest.doc_key, user_key: guest.user_key })") {{guest.user.name}}
+                      small.lv-small {{guest.user.city}}, {{guest.user.country}}
+                      small.lv-small {{guest.user.age}}, {{['-', 'male', 'female'][guest.user.gender] || '-'}}
+                      small.lv-small {{guest.user.profile.email}}
+        p.c-gray.p-l-15.t--15(ng-show="results.guests.total>constants.limits.guests && !scope")
+          i.zmdi.zmdi-more.p-r-5.f-20.valign-middle
+          | {{results.guests.total}} guests matched. 
+          a(href="" ng-click="search.scope('guests')") view more
+      .row(ng-show="results.activities && results.activities.total!=0")
+        .block-header
+          h2.p-l-15 Activities
+        .row
+          #activities-list.col-sm-12
+            .col-md-3.col-sm-6(ng-repeat='activity in results.activities.list')
+              .dash-widget-item
+                .dash-widget-header
+                  .dash-widget-title {{activity.attendees.length || 0}} Going
+                  img(ng-src='/cdn/activity/{{activity.doc_key}}/main.jpg')
+                  .main-item
+                    small(am-time-ago='activity.at')
+                    h2 {{activity.title}}
+                    .actions.text-center
+                      button.btn.bgm-pink.btn-icon.btn-float.waves-circle.waves-effect(ui-sref="edit_activity({id:activity.doc_key})" ng-class="activity.is_draft ? 'bgm-pink' : 'bgm-green' ")
+                        i.zmdi(ng-class="activity.is_draft ? 'zmdi-edit' : 'zmdi-check' ")
+        p.c-gray.p-l-15.t--15(ng-show="results.activities.total>constants.limits.activities && !scope")
+          i.zmdi.zmdi-more.p-r-5.f-20.valign-middle
+          | {{results.activities.total}} activities matched. 
+          a(href="" ng-click="search.scope('activities')") view more
+      .row(ng-show="results.bookings && results.bookings.total!=0")
+        .block-header
+          h2.p-l-15 Bookings
+        .row
+          .col-sm-12
+            .col-sm-6.col-lg-4(ng-repeat="booking in results.bookings.list")
+              .card
+                .card-body.card-padding
+                  .media
+                    .pull-right.text-center
+                      .lv-bold
+                        h6 Check-in
+                        b {{booking.from | amCalendar}} 
+                      .lv-bold.p-t-10
+                        h6 Check-out
+                        b {{booking.to | amCalendar}} 
+                    .media-body
+                      .lv-title {{booking.email}}
+                      small.lv-small {{booking.source}}
+                      small.lv-small {{booking.reference_number}}
+                      small.lv-small {{booking.price}}
+        p.c-gray.p-l-15.t--15(ng-show="results.bookings.total>constants.limits.bookings && !scope")
+          i.zmdi.zmdi-more.p-r-5.f-20.valign-middle
+          | {{results.bookings.total}} bookings matched. 
+          a(href="" ng-click="search.scope('bookings')") view more
+      .row(ng-hide="scope")
+        .col-sm-12.p-b-10.text-center
+          small.c-gray Found {{results.guests.total}} guests, {{results.activities.total}} activities and {{results.bookings.total}} bookings.  

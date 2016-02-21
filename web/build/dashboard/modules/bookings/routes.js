@@ -1,0 +1,1 @@
+(function(){var n,e;n=window.sys.modules.bookings,e=function(e){return e.state(n.states.index.name,n.states.index.config)},e.$inject=["$stateProvider"],angular.module(n.name).config(e)}).call(this);

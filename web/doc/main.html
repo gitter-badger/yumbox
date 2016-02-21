@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="en"><head><title>main</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="main"><meta name="groc-project-path" content="src/main.coffee"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path">src/main.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper">Path = <span class="hljs-built_in">require</span> <span class="hljs-string">'path'</span>
+ 
+exports.register = <span class="hljs-function"><span class="hljs-params">(plugin, options, next)</span> -&gt;</span>
+  server = plugin.select <span class="hljs-string">'web'</span>
+  server.views {
+    <span class="hljs-attribute">engines</span>: {
+      <span class="hljs-attribute">jade</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'jade'</span>)
+    },
+    <span class="hljs-attribute">path</span>: Path.join(__dirname, <span class="hljs-string">'app'</span>)
+  }
+  server.register {
+      <span class="hljs-attribute">register</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'hapi-assets'</span>),
+      <span class="hljs-attribute">options</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./assets'</span>)
+    }, <span class="hljs-function"><span class="hljs-params">(err)</span> -&gt;</span>
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed loading plugin hapi-assets in web plugin'</span>) <span class="hljs-keyword">if</span>(err)
+  server.route <span class="hljs-built_in">require</span> <span class="hljs-string">'./routes'</span>
+  next()
+
+exports.register.attributes = {
+  <span class="hljs-attribute">pkg</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'../package.json'</span>)
+}</div></div></div></div></body></html>

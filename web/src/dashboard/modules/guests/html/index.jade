@@ -1,0 +1,69 @@
+.container-fluid(ng-controller='guestsIndexCtrl')
+  ol.breadcrumb
+    li 
+      a(ng-href='/#/') Dashboard
+    li.active Guests
+    ul.actions.m-t--5.hidden-xs.pull-right
+      li.dropdown
+        a(href="" data-toggle="dropdown" aria-expanded="true")
+          i.zmdi.zmdi-more-vert
+        ul.dropdown-menu.dm-icon.pull-right
+          li
+            a(href="") 
+              i.zmdi.zmdi-puzzle-piece
+              |  Connect to PMS
+      li
+        a(href="/#/") 
+          i.zmdi.zmdi-close
+  .container-fluid
+    .row
+      .col-sm-12
+        .guests-list.p-t-20
+          .media.z-depth-1-top.p-l-10.p-r-10.p-b-10.new(ng-repeat="guest in guests.upcomings.list")
+            h5(ui-sref="guest({ id: guest.doc_key, user_key: guest.user_key })") {{guest.user.name}}
+            .pull-left
+              img.avatar.img-circle(ng-src="/cdn/user/{{guest.user_key}}/savatar.jpg" ui-sref="guest({ id: guest.doc_key, user_key: guest.user_key })" err-src='/assets/img/defaultsavatar.jpg')
+            .media-body
+              .lv-title 
+                i.zmdi.zmdi-arrow-in
+                |  Check in: {{guest.from | amCalendar}} 
+              small.lv-small {{guest.user.city}}, {{guest.user.country}}
+              small.lv-small
+                span {{guest.user.age}}
+                span(ng-show='guest.user.age && guest.user.gender'), 
+                span  {{['male', 'female'][guest.user.gender] || '-'}}
+          .media.more.new(ng-if="guests.upcomings.total>guests.upcomings.list.length")
+            small {{guests.upcomings.total-guests.upcomings.list.length}} more
+            i.zmdi.zmdi-more-horiz(ng-click="more('upcomings')")
+          .media.p-l-10.p-r-10.p-b-10(ng-repeat="guest in guests.currents.list")
+            h5(ui-sref="guest({ id: guest.doc_key, user_key: guest.user_key })") {{guest.user.name}}
+            .pull-left
+              img.avatar.img-circle(ng-src="/cdn/user/{{guest.user_key}}/savatar.jpg" ui-sref="guest({ id: guest.doc_key, user_key: guest.user_key })" err-src='/assets/img/defaultsavatar.jpg')
+            .media-body
+              .lv-title 
+                i.zmdi.zmdi-check
+                |  Check out in {{guest.to | amDifference : null : 'days'}} days
+              small.lv-small {{guest.user.city}}, {{guest.user.country}}
+              small.lv-small 
+                span {{guest.user.age}}
+                span(ng-show='guest.user.age && guest.user.gender'), 
+                span  {{['male', 'female'][guest.user.gender] || '-'}}
+          .media.more(ng-if="guests.currents.total>guests.currents.list.length")
+            small {{guests.currents.total-guests.currents.list.length}} more
+            i.zmdi.zmdi-more-horiz(ng-click="more('currents')")
+          .media.p-l-10.p-r-10.p-b-10.invert(ng-repeat="guest in guests.pasts.list")
+            h5(ui-sref="guest({ id: guest.doc_key, user_key: guest.user_key })") {{guest.user.name}}
+            .pull-left
+              img.avatar.img-circle(ng-src="/cdn/user/{{guest.user_key}}/savatar.jpg" ui-sref="guest({ id: guest.doc_key, user_key: guest.user_key })" err-src='/assets/img/defaultsavatar.jpg')
+            .media-body
+              .lv-title 
+                i.zmdi.zmdi-arrow-out
+                |  Checked out: {{guest.to | amCalendar}}
+              small.lv-small {{guest.user.city}}, {{guest.user.country}}
+              small.lv-small
+                span {{guest.user.age}}
+                span(ng-show='guest.user.age && guest.user.gender'), 
+                span  {{['female', 'male'][guest.user.gender] || '-'}}
+          .media.more.invert(ng-if="guests.pasts.total>guests.pasts.list.length")
+            small {{guests.pasts.total-guests.pasts.list.length}} more
+            i.zmdi.zmdi-more-horiz(ng-click="more('pasts')")

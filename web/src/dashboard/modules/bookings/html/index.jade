@@ -1,0 +1,74 @@
+.container-fluid(ng-controller='bookingsIndexCtrl')
+  ol.breadcrumb
+    li 
+      a(ng-href='/#/') Dashboard
+    li.active Bookings
+    ul.actions.m-t--5.hidden-xs.pull-right
+      li
+        a(href="") 
+          i.zmdi.zmdi-puzzle-piece
+      li.dropdown
+        a(href="" data-toggle="dropdown" aria-expanded="true")
+          i.zmdi.zmdi-more-vert
+        ul.dropdown-menu.dm-icon.pull-right
+          li
+            a(href="") 
+              i.zmdi.zmdi-cloud-upload
+              |  Upload Bookings
+      li
+        a(href="/#/") 
+          i.zmdi.zmdi-close
+  .container-fluid
+    .row
+      .col-sm-12
+        .card
+          .card-header.bgm-bluegray.m-b-20
+            h2 Bookings
+            .row.p-t-10(ng-show="is_searching")
+              .col-sm-6
+                .input-group.form-group
+                  span.input-group-addon
+                    i.zmdi.zmdi-search.c-white
+                  .fg-line
+                    input.form-control(type="text" ng-model='search.name' placeholder="Find by email...")
+              .col-sm-3
+                .form-group
+                  .dropdown
+                    a#search_from.dropdown-toggle(data-toggle="dropdown")
+                      .input-group.form-group
+                        span.input-group-addon
+                          i.zmdi.zmdi-calendar.c-white
+                        .dtp-container.dropdown.fg-line
+                          input.form-control(type="text" value="{{search.from | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}" placeholder="From")
+                    ul.dropdown-menu(role='menu' aria-labelledby="dLabel")
+                      datetimepicker(ng-model="search.from" data-datetimepicker-config="{ dropdownSelector: '#search_from', startView:'day', minView:'minute' }" )
+              .col-sm-3
+                .form-group
+                  .dropdown
+                    a#search_to.dropdown-toggle(data-toggle="dropdown")
+                      .input-group.form-group
+                        span.input-group-addon
+                          i.zmdi.zmdi-calendar.c-white
+                        .dtp-container.dropdown.fg-line
+                          input.form-control(type="text" value="{{search.to | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}" placeholder="To")
+                    ul.dropdown-menu(role='menu' aria-labelledby="dLabel")
+                      datetimepicker(ng-model="search.to" data-datetimepicker-config="{ dropdownSelector: '#search_to', startView:'day', minView:'minute' }" )
+            button.btn.bgm-pink.btn-fab.waves-effect(ng-click='is_searching=true')
+              i.zmdi.zmdi-search
+          .card-body.table-responsive.p-b-20
+            table.table
+              thead
+                tr
+                  th Source
+                  th #
+                  th Email
+                  th Stay
+              tbody
+                tr(ng-repeat="booking in bookings.list")
+                  th {{booking.source}}
+                  th {{booking.reference_number}}
+                  th {{booking.email}}
+                  th {{booking.from | amCalendar}} - {{booking.to | amCalendar}}
+            .media.more.new(ng-if="bookings.total>bookings.list.length")
+              small {{bookings.total-bookings.list.length}} more
+              i.zmdi.zmdi-more-horiz(ng-click="more()")

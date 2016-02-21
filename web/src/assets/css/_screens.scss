@@ -1,0 +1,132 @@
+/*
+ * Login
+ */
+
+.login-page{
+  position: fixed;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  text-align: center;
+}
+.login-content #header{
+  height: 50%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #607D8B;
+  content: "";
+  z-index: 0;
+}
+#header *{
+  opacity: 0;
+}
+.logged-in-content #header *{
+  opacity: 100;
+}
+.login-page:after{
+  content: "";
+  vertical-align: middle;
+  display: inline-block;
+  width: 1px;
+  height: 100%;
+}
+.lc-block {
+  background: #fff;
+  box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+  border-radius: 2px;
+  padding: 35px 55px 35px;
+  width: 500px;
+  display: inline-block;
+  margin-top: -60px;
+  vertical-align: middle;
+  position: relative;
+}
+@media (max-width: 767px) {
+  .lc-block {
+    padding: 15px 35px 25px 20px;
+    width: calc(100% - 60px);
+  }
+}
+
+.lc-block .checkbox {
+  margin: 5px 0 0 50px;
+  text-align: left;
+}
+
+.lc-block .btn-login {
+  top: 50%;
+  margin-top: -25px;
+  right: -25px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+}
+
+.lc-block:not(.toggled) {
+  display: none;
+}
+
+.lc-block.toggled {
+  -webkit-animation-name: fadeInRight;
+  animation-name: fadeInRight;
+  -webkit-animation-duration: 200ms;
+  animation-duration: 200ms;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  z-index: 10;
+}
+
+.login-navigation {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  left: 0%;
+  bottom: -45px;
+}
+
+.login-navigation > li {
+  display: inline-block;
+  margin: 0 2px;
+  -webkit-transition: all;
+  -o-transition: all;
+  transition: all;
+  -webkit-transition-duration: 150ms;
+  transition-duration: 150ms;
+  cursor: pointer;
+  vertical-align: top;
+  color: #fff;
+  line-height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  text-transform: uppercase;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.login-navigation > li > span {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.login-navigation > li:not(:hover) {
+  font-size: 0px;
+  border-radius: 100%;
+}
+
+.login-navigation > li:hover {
+  border-radius: 10px;
+  padding: 0 5px;
+  font-size: 8px;
+}
+
+.login-navigation > li:hover > span {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+

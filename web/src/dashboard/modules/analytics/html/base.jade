@@ -1,0 +1,112 @@
+.container-fluid(ng-controller='analyticsCtrl')
+  .block-header.breadcrumbed
+    ol.breadcrumb
+      li 
+        a(ui-sref='home') Dashboard
+      li.active 
+        | Analytics
+    ul.actions
+      li
+        a
+          i.zmdi.zmdi-event
+      li.dropdown
+        a(data-toggle="dropdown")
+          i.zmdi.zmdi-more-vert
+  .row
+    .col-md-12
+      .card
+        .card-header
+          h2 
+            | Hostel Guests vs. City Guests
+            small Compare your performance to your city.
+        .card-body.card-padding.p-relative
+          chartist#guest-chart.ct-chart(chartist-data="guests" chartist-chart-type="Line" chartist-chart-options="{fullWidth: true, height: 400}" chartist-events="{draw: animate}")
+            #chart-tip.tooltip.top(role="tooltip")
+              .tooltip-arrow
+              .tooltip-inner
+  .row
+    .col-md-6
+      .card
+        .card-header
+          h2 
+            | Top Countries
+            small Learn where your travellers are coming from.
+        .card-body.card-padding
+          .row
+            .col-sm-6
+              chartist.ct-chart(chartist-data="countries" chartist-chart-type="Pie" chartist-chart-options="{fullWidth: true, height: 400}")
+            .col-sm-6.p-t-25.m-t-25
+              .table-responsive
+                table.table.table-striped.table-hover
+                  thead
+                    tr
+                      th #
+                      th Country
+                      th Bookings
+                  tbody
+                    tr(ng-repeat='country in countries.labels')
+                      td {{$index}}
+                      td {{country}}
+                      td {{countries.series[$index]}}
+    .col-md-6
+      .card
+        .card-header
+          h2 
+            | Booking Engines
+            small Learn which booking engine is serving you best and why.
+        .card-body.card-padding
+          .row
+            .col-sm-6
+              chartist.ct-chart(chartist-data="bookings" chartist-chart-type="Pie" chartist-chart-options="{fullWidth: true, donut: true, height: 400}")
+            .col-sm-6.p-t-25.m-t-25
+              .table-responsive
+                table.table.table-striped.table-hover
+                  thead
+                    tr
+                      th #
+                      th Engine
+                      th Bookings
+                  tbody
+                    tr(ng-repeat='booking in bookings.labels')
+                      td {{$index}}
+                      td {{booking}}
+                      td {{bookings.series[$index]}}
+  .row
+    .col-sm-12
+      .card
+        .card-header
+          h2 
+            | Activities
+            small Check how much profit you've made from activties and how many travellers have been engaged.
+        .card-body.card-padding
+          .row
+            .col-sm-8
+              chartist.ct-chart(chartist-data="activities" chartist-chart-type="Bar" chartist-chart-options="{fullWidth: true, height: 400}")
+            .col-sm-4
+              h4 Activity Types
+              small These are the types you've used when creating activities.
+              .p-t-5
+                .p-5
+                  span.legend
+                    i.zmdi.zmdi-circle.c-lime
+                    |  Party
+                .p-5
+                  span.legend
+                    i.zmdi.zmdi-circle.c-blue
+                    |  Free
+                .p-5
+                  span.legend
+                    i.zmdi.zmdi-circle.c-amber
+                    |  Paid
+                .p-5
+                  span.legend
+                    i.zmdi.zmdi-circle.c-deeporange
+                    |  Adrenalin
+                .p-5
+                  span.legend
+                    i.zmdi.zmdi-circle.c-deeppurple
+                    |  Indoor
+                .p-5
+                  span.legend
+                    i.zmdi.zmdi-circle.c-pink
+                    |  Travel

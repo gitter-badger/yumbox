@@ -1,0 +1,1 @@
+(function(){var e,a;e=window.sys.modules.home,a=function(){return{homeState:e.states.home.name}},a.$inject=e.services.base.inject,angular.module(e.name).factory(e.services.base.name,a)}).call(this);

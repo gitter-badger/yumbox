@@ -1,0 +1,34 @@
+aside#sidebar(data-ng-class="{ 'toggled': sidebarToggle.left === true }" ng-controller='sidebarCtrl')
+  .sidebar-inner
+    .si-inner
+      .profile-menu
+        a(ui-sref="settings" bg-image-path="/cdn/hostel/{{hostel.doc_key}}/:image" bg-image="{{hostel.images[0]}}" ng-click="hide()")
+          .profile-pic
+            img(ng-src="/cdn/hostel/{{hostel.doc_key}}/savatar.jpg" err-src='/assets/img/defaultsavatar.jpg')
+          .profile-info
+            | {{hostel.reception_name||"Forgot to set name?"}}
+      ul.main-menu
+        li(data-ui-sref-active="active")
+          a(ui-sref="home" ng-click="hide()")
+            i.zmdi.zmdi-view-dashboard
+            | Dashboard
+        li(data-ui-sref-active="active")
+          a(ui-sref='activities' ng-click="hide()")
+            i.zmdi.zmdi-calendar
+            | Activities
+        li(data-ui-sref-active="active")
+          a(ui-sref='analytics' ng-click="hide()")
+            i.zmdi.zmdi-trending-up
+            | Analytics
+        li(data-ui-sref-active="active")
+          a(ui-sref="settings" ng-click="hide()")
+            i.zmdi.zmdi-settings
+            | Settings
+        li(data-ui-sref-active="active")
+          a(ui-sref="console({key: hostel.server_api_key})" ng-click="hide()")
+            i.zmdi.zmdi-view-web
+            | Developer Console
+        li(data-ui-sref-active="active")
+          a(href="" ng-click="hide()")
+            i.zmdi.zmdi-comments
+            | Tipi Support

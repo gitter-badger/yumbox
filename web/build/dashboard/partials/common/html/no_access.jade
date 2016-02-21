@@ -1,0 +1,9 @@
+mixin noAccess(section, style)
+  .card(ng-if="views.#{section}.state == views.states.no_access")
+    .card-header.p-0.text-center(class="#{style}")
+      h2
+        | Oops...
+        small You cannot access this section. 
+    .card-body.p-10-0.text-center(class="#{style}")
+      p If you should have access, try to login again or ask your administrator to give you access.
+      a.waves-effect(ui-sref='login') Try to login

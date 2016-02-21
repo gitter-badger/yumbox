@@ -1,0 +1,1 @@
+(function(){var e;e=window.sys,e.partials.sidebar={name:"partials.sidebar",dependencies:[],controllers:{base:{name:"sidebarCtrl",inject:["$scope","$rootScope","$state",e.modules.auth.services.authentication,"$sessionStorage"]}}},angular.module(e.partials.sidebar.name,e.partials.sidebar.dependencies)}).call(this);

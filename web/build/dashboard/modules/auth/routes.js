@@ -1,0 +1,1 @@
+(function(){var t,e;t=window.sys.modules.auth,e=function(e){return e.state(t.states.login.name,t.states.login.config).state(t.states.forgot.name,t.states.forgot.config).state(t.states.register.name,t.states.register.config).state(t.states.unauthorised.name,t.states.unauthorised.config)},e.$inject=["$stateProvider"],angular.module(t.name).config(e)}).call(this);

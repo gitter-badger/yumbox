@@ -1,0 +1,15 @@
+doctype html
+html(lang="en" ng-app="tipi")
+  head
+    include header.jade
+  body(layout='row' ng-controller='ApplicationCtrl' ng-class="logged_in ? 'logged-in-content' : 'login-content'")
+    div(layout="column" layout-fill)
+      section(layout='row' flex)
+        div(layout='column' layout-fill role='main')
+          include partials/sidebar/sidebar.jade
+          include partials/toolbar/toolbar.jade
+          section#main
+            section#content
+              div(ui-view class='page-transition hero-transition')
+    include hotkeys.jade
+    include footer.jade

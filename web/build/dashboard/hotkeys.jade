@@ -1,0 +1,11 @@
+script(type="text/ng-template" id="hotkeys.html")
+  .modal-header
+    h4.modal-title Keyboard Shortcuts
+  .modal-body
+    .table-responsive
+      table.table.table-no-border
+        tbody
+          tr(ng-repeat="hotkey in hotkeys")
+            td.valign-middle.hotkeys-key
+              .key.bgm-bluegray {{hotkey.combo.join(' + ')}}
+            td.valign-middle.hotkeys-text.t-uppercase {{hotkey.description}}

@@ -1,0 +1,78 @@
+.login-page(ng-controller='loginCtrl' ng-hide='logged_in')
+  // Login
+  #l-login.lc-block(ng-class="state=='login' ? 'toggled' : ''")
+    p.alert.alert-danger.animated.flipInX(ng-show='failed') {{error}}
+    .p-10(role="alert" ng-hide="storage.account.email == null")
+      img.avatar.avatar-md.bordered.shadowed.img-circle(ng-src="/cdn/hostel/{{storage.account.doc_key}}/savatar.jpg" err-src='/assets/img/defaultsavatar.jpg')
+      h5.c-bluegray 
+        | {{user.email}}
+        small.small.block.p-t-5
+          | Not you? 
+          a(href="" ng-click='clear()') Try different account
+    form.form(ng-keyup="$event.which == 13 && login()")
+      .input-group.m-b-20(ng-class="{ 'has-error' : failed }" ng-show="storage.account.email == null")
+        span.input-group-addon
+          i.zmdi.zmdi-account.w-30
+        .fg-line
+          input.form-control(type='text', placeholder='Email' ng-model='user.email')
+        span.zmdi.zmdi-close.form-control-feedback(ng-show='failed')
+      .input-group.m-b-20(ng-class="{ 'has-error' : failed }")
+        span.input-group-addon
+          i.zmdi.zmdi-lock.w-30
+        .fg-line
+          input.form-control(type='password', placeholder='Password' ng-model='user.password')
+        span.zmdi.zmdi-close.form-control-feedback(ng-show='failed')
+      .clearfix
+      .checkbox
+        label
+          input(type='checkbox', value='')
+          i.input-helper
+          |                     Keep me signed in
+      a.btn.btn-login.btn-danger.btn-float.waves-effect.waves-circle(href='' ng-click='login()')
+        i.zmdi.zmdi-arrow-right
+      ul.login-navigation
+        li.bgm-red(ui-sref='register') Register
+        li.bgm-orange(ui-sref='forgot') Forgot Password?
+  // Register
+  #l-register.lc-block(ng-class="state=='register' ? 'toggled' : ''")
+    p.alert.alert-danger.animated.flipInX(ng-show='terms_failed') {{terms_failed}}
+    .input-group.m-b-20
+      span.input-group-addon
+        i.zmdi.zmdi-account.w-30
+      .fg-line
+        input.form-control(type='text', placeholder='Hostel Name' ng-model="user.name")
+    .input-group.m-b-20
+      span.input-group-addon
+        i.zmdi.zmdi-email.w-30
+      .fg-line
+        input.form-control(type='text', placeholder='Email Address' ng-model="user.email")
+    .input-group.m-b-20
+      span.input-group-addon
+        i.zmdi.zmdi-lock.w-30
+      .fg-line
+        input.form-control(type='password', placeholder='Password' ng-model="user.password")
+    .clearfix
+    .checkbox
+      label
+        input(type='checkbox', value='' ng-model="terms_accepted")
+        i.input-helper
+        |                     Accept the license agreement
+    a.btn.btn-login.btn-danger.btn-float.waves-effect.waves-circle(href='' ng-click="signup()")
+      i.zmdi.zmdi-arrow-right
+    ul.login-navigation
+      li.bgm-green(ui-sref='login') Login
+      li.bgm-orange(ui-sref='forgot') Forgot Password?
+  // Forgot Password
+  #l-forget-password.lc-block(ng-class="state=='forgot' ? 'toggled' : ''")
+    p.text-left
+      | Forgot your password? Enter your email address and we send you new password.
+    .input-group.m-b-20
+      span.input-group-addon
+        i.zmdi.zmdi-email.w-30
+      .fg-line
+        input.form-control(type='text', placeholder='Email Address' ng-model="user.email")
+    button.btn.btn-login.btn-danger.btn-float.waves-effect.waves-circle(href='')
+      i.zmdi.zmdi-arrow-forward
+    ul.login-navigation
+      li.bgm-green(ui-sref='login') Login
+      li.bgm-red(ui-sref='register') Register

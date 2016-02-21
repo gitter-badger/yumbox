@@ -1,0 +1,166 @@
+.container-fluid(ng-controller='guestsShowCtrl')
+  ol.breadcrumb
+    li 
+      a(ui-sref='home') Dashboard
+    li 
+      a(ui-sref='guests') Guests
+    li.active {{guest.user.name}}
+    ul.actions.m-t--5.hidden-xs.pull-right
+      li
+        a
+          i.zmdi.zmdi-apps
+      li
+        a(ui-sref='home')
+          i.zmdi.zmdi-close
+  .card-frame
+    .col-md-4
+      .card.profile-view
+        .pv-header(bg-image="{{guest.user.country}}" bg-image-path="/cdn/location/lo/:image.jpg")
+          img.pv-main(ng-src="/cdn/user/{{user_key}}/savatar.jpg" err-src='/assets/img/defaultsavatar.jpg')
+        .pv-body
+          h2 {{guest.user.name}}
+          small
+            span {{guest.user.city}}
+            span(ng-if='guest.user.country') , {{guest.user.country}}
+          .listview.text-left.p-b-10
+            .lv-item
+              .media
+                .pull-left
+                  i.zmdi.zmdi-calendar
+                .media-body
+                  .lv-title {{guest.user.age || '-'}}
+                  small.lv-small Age
+            .lv-item
+              .media
+                .pull-left
+                  i.zmdi.zmdi-email
+                .media-body
+                  .lv-title {{guest.user.email}}
+                  small.lv-small Email
+            .lv-item
+              .media
+                .pull-left
+                  i.zmdi.zmdi-face
+                .media-body
+                  .lv-title {{['female', 'male'][guest.user.gender] || '-'}}
+                  small.lv-small Gender
+          a.pv-follow-btn(href="") Message
+    .col-md-8
+      #profile-main.card
+        .pv-body
+          div(ng-if="guest.user!==undefined")
+            .alert.m-10.alert-warning.text-center(role="alert" ng-hide="reviews.list.indexOf(guest.user.passport.review.status) > -1") 
+              h4 Please verify these:
+              p You are the first hostel reviewing {{guest.user.name}}'s passport. 
+              .row
+                .col-md-6
+                  img.passport.p-t-10(ng-src='/cdn/user/{{guest.user_key}}/passport/{{guest.user.passport.uid}}.jpg')
+                .col-md-6.text-left
+                  .form(role='form')
+                    .checkbox.m-b-15.p-t-15
+                      label
+                        input(type='checkbox' ng-model='passport_review.correct_image')
+                        span.input-helper 
+                          | Does this image match {{guest.user.name}}'s passport?
+                    .checkbox.m-b-15.p-t-15
+                      label
+                        input(type='checkbox' ng-model='passport_review.correct_number')
+                        span.input-helper 
+                          | Is 
+                          strong {{guest.user.passport.number}} 
+                          | correct passport number?
+                    .form-group(ng-class="passport_review.correct_image && passport_review.correct_number ? 'passed' : 'failed'")
+                      button.btn.bgm-green.waves-effect.waves-button.waves-float.m-r-5.success.animated.flipInX(ng-click="passport_confirmation(reviews.approved)")
+                        i.zmdi.zmdi-check
+                        | It's Correct
+                      button.btn.bgm-red.waves-effect.waves-button.waves-float.failure.animated.flipInX(ng-click="passport_confirmation(reviews.rejected)")
+                        i.zmdi.zmdi-chevron-right
+                        | Not Correct, but we host {{guest.name}}
+            .p-t-15.animated.fadeInUp(ng-show="reviews.list.indexOf(guest.user.passport.review.status) > -1" ng-class="guest.user.passport.review.status == reviews.retry ? 'fadeOut' : ''")
+              .timeline
+                .t-view(data-tv-type="profile")
+                  .tv-header.media
+                    a.tvh-user.pull-left
+                      img.img-responsive(ng-src="/cdn/user/{{user_key}}/savatar.jpg" err-src='/assets/img/defaultsavatar.jpg')
+                    .media-body.p-t-5
+                      strong.d-block {{guest.user.name}}
+                      div(ng-if="guest.user.passport.review.status == reviews.approved")
+                        i.zmdi.zmdi-shield-check.c-green
+                        small.c-green  Passport is verified!
+                      div(ng-if="guest.user.passport.review.status != reviews.approved")
+                        i.zmdi.zmdi-shield-check.c-red
+                        small.c-red  Passport is rejected!
+                      div(ng-if="guest.user.email_is_verified")
+                        i.zmdi.zmdi-check.c-green
+                        small.c-gray  Email is verified!
+                      div(ng-if="guest.user.fb_token")
+                        i.zmdi.zmdi-check.c-green
+                        small.c-gray  Facebook is connected!
+                      div(ng-if="guest.user.g_token")
+                        i.zmdi.zmdi-check.c-green
+                        small.c-gray  Google is connected!
+                    .actions.button(ng-if='guest.user!==undefined')
+                      button.btn.bgm-green.waves-effect.waves-button.waves-float(ng-click="checkin()" ng-class="guest.checkedin_at==undefined ? 'ng-show': 'ng-hide'")
+                        i.zmdi.zmdi-call-arrow-in
+                        |  Check-in
+                      button.btn.bgm-blue.waves-effect.waves-button.waves-float(ng-click="checkout()" ng-if="guest.checkedin_at!==undefined && guest.checkedout_at==undefined")
+                        i.zmdi.zmdi-call-arrow-out
+                        |  Check-out
+                  .tv-body
+                    dl.dl-horizontal
+                      dt 
+                        i.zmdi.zmdi-arrow-in
+                        |  Check-in
+                      dd {{guest.from | amCalendar}}
+                    dl.dl-horizontal
+                      dt 
+                        i.zmdi.zmdi-arrow-out
+                        |  Check-out
+                      dd {{guest.to | amCalendar}}
+                    dl.dl-horizontal
+                      dt 
+                        i.zmdi.zmdi-lock-outline
+                        |  Passport
+                      dd 
+                        span {{guest.user.passport.number}} 
+                      small.c-gray(ng-show="guest.user.passport.number && guest.user.passport.review.status==reviews.rejected")
+                        | This passport was rejected by a hostel. Do you wanna verify it? 
+                        a(href="" ng-click="guest.user.passport.review.status=reviews.retry") verify now
+                .t-view(data-tv-type="interests")
+                  .tv-header.media
+                    .media-body.p-t-5
+                      strong.d-block Interests
+                      small.c-gray Understand how {{guest.user.name}} is:
+                  .tv-body
+                    .row.text-center
+                      .col-sm-3(ng-repeat="interest in guest.user.interests")
+                        img(ng-src='/assets/img/interests/{{interest}}.png')
+                        h4
+                          small {{interests[interest]}}
+                    .clearfix
+                .t-view(data-tv-type="activities")
+                  .tv-header.media
+                    .media-body.p-t-5
+                      strong.d-block Things {{guest.user.name}} May Like
+                  .tv-body
+                    .alert.alert-info(ng-if="activities.length==0")
+                      h5.c-blue No activity matched
+                      p
+                        small(ng-if="guest.user.interests.length>0")
+                          | You can create new activities matching 
+                          b(ng-repeat="interest in guest.user.interests") {{interests[interest]}}{{$last ? '' : ', '}}
+                          | interests.
+                        small(ng-if="guest.user.interests.length==0") Start creating new activities for {{guest.user.name}} and other guests.
+                      .text-right
+                        a.btn.btn-primary Try now!
+                    #activities.row
+                      .col-sm-4(ng-repeat='activity in activities')
+                        div(ng-if="$index % 3 == 0" class="clearfix")
+                        .dash-widget-item
+                          .dash-widget-header
+                            img.img-responsive(ng-src="/cdn/activity/{{activity.doc_key}}/main.jpg")
+                            .main-item
+                              small(am-time-ago="activity.at")
+                              h2 {{activity.title}}
+                            button.btn.bgm-pink.btn-float.waves-effect(ng-click="attend(activity)" ng-class="activity.has_attended ? 'animated bounceOut' : ''")
+                              i.zmdi.zmdi-plus

@@ -1,0 +1,33 @@
+extends ../layout.jade
+
+block title
+  title Tipi | Verify your email
+
+block content
+  header#header.bgm-bluegray
+    ul.header-inner
+      li.logo.hidden-xs
+        a(href="/") Tipi
+      li.pull-right
+        ul.top-menu
+          li
+            a(href="/") Home
+  section#main
+    section#content
+      .container-fluid
+        .col-md-6.col-md-offset-3
+          .card
+            .card-header
+              h2
+                | Verifying Email
+                small You are verifying #{email}
+            .card-body.card-padding
+              case error 
+                when 'AlreadyVerifiedError'
+                  .alert.alert-warning You cannot verify #{email}. It's verified previously by someone.
+                when 'CantVerify'
+                  .alert.alert-danger Email and verification token does not match. You can use your app to get a new verification email.
+                  h5 Don't have tipi?
+                  p Tipi is a social platform for travelers and backpackers. It is available for both ios and android devices. Download it now from below links:
+                default
+                  .alert.alert-success Thanks for verifying your email.

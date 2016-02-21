@@ -1,0 +1,99 @@
+.container-fluid(ng-controller='settingsProfileCtrl' nv-file-drop="" uploader="uploader")
+  ol.breadcrumb
+    li
+      a(ui-sref='home') Dashboard
+    li
+      a(ui-sref='settings') Settings
+    li.active Profile
+    ul.actions.m-t--5.hidden-xs.pull-right
+      li
+        a(ui-sref="settings")
+          i.zmdi.zmdi-close
+  .container-fluid
+    .row
+      .col-sm-6
+        .alert.alert-danger(role='alert' ng-show='error')
+          p {{error}}
+        .card
+          .card-header.m-b-20
+            h2 {{hostel.name ? hostel.name : '&nbsp;'}}
+            button.btn.btn-float.waves-effect.bgm-pink(ng-click='update()')
+              i.zmdi.zmdi-check
+          .card-body.card-padding
+            .form-group.fg-float
+              .fg-line(ng-class="hostel.name ? 'fg-toggled' : ''")
+                input.form-control.fg-input(type='text' ng-model="hostel.name")
+              label.fg-label Name
+            .form-group.fg-float
+              .fg-line(ng-class="hostel.reception_name ? 'fg-toggled' : ''")
+                input.form-control.fg-input(type='text' ng-model="hostel.reception_name")
+              label.fg-label Reception Name
+            .form-group.fg-float
+              .fg-line(ng-class="hostel.phone ? 'fg-toggled' : ''")
+                input.form-control.fg-input(type='text' ng-model="hostel.phone")
+              label.fg-label Phone
+            .form-group.fg-float
+              .fg-line(ng-class="hostel.description ? 'fg-toggled' : ''")
+                textarea.form-control.fg-input(rows=5 ng-model="hostel.description")
+              label.fg-label Description
+            .form-group.fg-float
+              label.label Country
+              .p-t-5.p-b-10
+                select(selectpicker='' title='Choose a country ...' ng-model='hostel.country')
+                  option(ng-repeat="(key, country) in countries" value="{{key}}") {{country}}
+            .form-group.fg-float
+              label.label City
+              .p-t-5.p-b-10
+                select(selectpicker='' title='Choose a city ...' ng-model='hostel.city')
+                  option(ng-repeat="(key, city) in cities" value="{{key}}") {{city}}
+            .form-group.fg-float
+              .fg-line(ng-class="hostel.address ? 'fg-toggled' : ''")
+                input.form-control.fg-input(type='text' ng-model="hostel.address")
+              label.fg-label Address
+              small.help-block latitude: {{hostel.location.latitude}}, longitude: {{hostel.location.longitude}}
+            map(zoom="13" scrollwheel='false')
+              marker(on-dragend='mark()' draggable="true")
+      .col-sm-6
+        .card(nv-file-drop="" uploader="avatar_uploader")
+          .card-header
+            h2
+              | Avatar
+              small Drop an image here to replace your reception avatar image
+          .card-body.card-padding.center
+            .drop-zone.inline-block.avatar.c-blue(nv-file-over="" uploader="avatar_uploader" over-class='dropping' options="{url: ''}")
+              .hint
+                img.img-circle.avatar-md.m-b-10(ng-src="{{avatar}}" alt="" err-src='/assets/img/defaultsavatar.jpg')
+                div
+                  span Drop your
+                  br
+                  b "JPG"
+                  br
+                  span images here
+            .progress.m-b-10.m-t-5
+              .progress-bar.progress-bar-success(role="progressbar" ng-style="{ 'width': avatar_uploader.progress + '%' }")
+        .card
+          .card-header
+            h2
+              | Images
+              small Add images of your hostel by drag and drop. Images go live as you drop and can be seen by your guests.
+          .card-body.card-padding
+            .drop-zone.c-blue(nv-file-over="" uploader="uploader" over-class='dropping')
+              .hint
+                i.zmdi.zmdi-cloud-upload
+                div
+                  span Drop your
+                  b  "JPG"
+                  span  images here ...
+            .progress.m-b-10.m-t-5
+              .progress-bar.progress-bar-success(role="progressbar" ng-style="{ 'width': uploader.progress + '%' }")
+            .row.lightbox
+              .col-sm-4.col-xs-6(ng-repeat='image in hostel.images')
+                .lightbox-item.m-t-5.m-b-5
+                  img(ng-src="/cdn/hostel/{{hostel.doc_key}}/{{image}}" alt="")
+                  i.zmdi.zmdi-check-all.as-default(ng-show="is_main(image)")
+                  .actions
+                    .btn-group
+                      button.btn.btn-default.waves-effect(ng-click="set_as_main($index)")
+                        i.zmdi.zmdi-check
+                      button.btn.btn-default.waves-effect(ng-click="remove($index)")
+                        i.zmdi.zmdi-close

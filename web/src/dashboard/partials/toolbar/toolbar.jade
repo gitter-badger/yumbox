@@ -1,0 +1,42 @@
+header#header.bgm-bluegray.hero(hero-id="toolbar" ng-controller='toolbarCtrl' ng-class="{ normal: '', search: 'search-toggled', console: 'console-toggled'}[state]")
+  ul.header-inner
+    li#menu-trigger.ng-isolate-scope(data-target="mainmenu" data-toggle-sidebar="" data-model-left="sidebarToggle.left" data-ng-class="{ 'open': sidebarToggle.left === true }" ng-click="menu($event)")
+      .line-wrap#menu-icon
+        .line.top
+        .line.center
+        .line.bottom
+    li.logo.hidden-xs
+      a(ui-sref="home") {{hostel.name}}
+    li.pull-right
+      ul.top-menu
+        li
+          a#search-btn.tm-search(href="" ng-click="search.open()")
+        li
+          a.tm-shoutout(ng-click="shoutout.show()" href="" data-snackbar snackbar-show="shoutout.sent" data-title="Shout Out: " data-message="your message is sent" data-type="inverse" data-animation-in="animated fadeInUp"  data-animation-Out="animated fadeOutUp")
+        li
+          a.tm-fullscreen(ng-click="fullscreen.toggle()" href="")
+        li
+          a.tm-logout(ng-click="logout()" href="")
+  #top-search-wrap.bgm-green(hotkey="{s: search.open}" hotkey-description="Search for guests or bookings")
+    input(type="text" placeholder='Search name, email, booking reference or ...' focus-on='search' ng-keyup="search.find($event)" ng-model="query")
+    i#top-search-close(ng-click='search.close()' hotkey="{esc: search.close}" hotkey-description="Hiding search bar") ×
+  #top-console-wrap.bgm-blue
+    input(type="text" placeholder='GET /v1/pms/bookings' ng-model="console.query" ng-keyup="console.find($event)")
+    i#top-console-close(ng-click='console.close()') ×
+    .list(ng-hide='console.hidden')
+      a( ng-repeat='api in matched_apis' href='' ng-click='console.choose($index)' )
+        i.zmdi.zmdi-code.p-r-5
+        |  {{api.url}}
+        small {{api.description}}
+  script#shoutoutModal(type="text/ng-template")
+    .modal-header
+      h3.modal-title Shout-out
+    .modal-body
+      p Send a notification message to all of your current guests. Keep it short and fun.
+      .form-group(ng-class="message.length>120 ? 'has-warning' : ''")
+        .fg-line
+          textarea.form-control(rows='5' placeholder='What do you want to say?' ng-trim="false" ng-model="message")
+        small.help-block ({{message.length}}/160)
+    .modal-footer
+      button.btn.btn-primary(type='button' ng-click='send()') Send
+      button.btn(type='button' ng-click='cancel()') Cancel

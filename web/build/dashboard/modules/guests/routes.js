@@ -1,0 +1,1 @@
+(function(){var t,s;t=window.sys.modules.guests,s=function(s){return s.state(t.states.index.name,t.states.index.config).state(t.states.show.name,t.states.show.config)},s.$inject=["$stateProvider"],angular.module(t.name).config(s)}).call(this);

@@ -1,0 +1,1 @@
+(function(){var n,s;n=window.sys.modules.console,s=function(s){return s.state(n.states.show.name,n.states.show.config)},s.$inject=["$stateProvider"],angular.module(n.name).config(s)}).call(this);

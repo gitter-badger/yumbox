@@ -1,0 +1,1 @@
+(function(){module.exports=function(n,s){var i;return i=require("../handler")(n,s),[{method:"GET",path:"/plugins.js",config:{handler:i.plugins.load,description:"Load hostel plugins",tags:["plugin"]}},{method:"GET",path:"/plugins/guests",config:{handler:i.plugins.guests,description:"Load guest plugin",tags:["plugin","guest"]}}]}}).call(this);
