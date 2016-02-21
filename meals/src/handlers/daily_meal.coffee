@@ -5,6 +5,8 @@ moment = require 'moment'
 
 module.exports = (server, options) ->
   DailyMeal = require('../models/daily_meal') server, options
+  MainDish = require('../modes/main_dish') server, options
+  SideDish = require('../modes/side_dish') server, options
 
   return
     create: (request, reply) ->
