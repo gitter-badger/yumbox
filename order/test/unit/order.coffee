@@ -86,18 +86,8 @@ context 'order', ->
                 result.doc.status.should.be.eq 'delivered'
                 result.doc.price.should.be.eq '22500'
 
-      it 'should delete a order', ->
-        order = null
-        data =
-          customer_key:  faker.random.uuid()
-          daily_meal_key:faker.random.number()
-          quantity:      faker.random.number()
-          at:            faker.date.recent()
-          status:        faker.hacker.phrase()
-          price:         faker.commerce.price()
- 
+      it 'should delete an order', ->
         order = new Order data
-
         key = order.key
         order.create()
           .then (result) ->
