@@ -8,7 +8,7 @@ moment   = require 'moment'
 chai.use chaiHttp
 
 describe 'meals', ->
-  URL    = 'http://localhost:3000'
+  URL    = 'http://localhost:3100'
 
   it "should get meals", ->
     chai.request(URL)
