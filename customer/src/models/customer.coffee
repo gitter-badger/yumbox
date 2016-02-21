@@ -22,6 +22,7 @@ module.exports = (server, options) ->
       customer_avatar: on
       dob: off
       orders: on
+      image_files: on
 
   before_save: ->
     delete @doc.customer_avatar?
