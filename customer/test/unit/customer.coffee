@@ -49,12 +49,16 @@ context 'Customer', ->
       it 'should not accept unknown props' , ->
         invalid_customer = new Customer
           unknown_prop: faker.name.firstName()
-
         invalid_customer.doc.should.not.have.key 'unknown_prop'
 
       it 'should have correct values set', ->
-        customer.doc.name.should.be.eq data.name
-        # to be completed for other fields..
+        customer.doc.name.should.be.eq                  data.name
+        customer.doc.location['latitude'].should.be.eq  data.location['latitude']
+        customer.doc.location['longitude'].should.be.eq data.location['longitude']
+        customer.doc.phone.should.be.eq                 data.phone
+        customer.doc.mobile.should.be.eq                data.mobile
+        #customer avatar                            
+        customer.doc.orders.should.be.deep.eq           data.orders
 
     describe 'Behavior', ->
       it 'should create a customer', ->
