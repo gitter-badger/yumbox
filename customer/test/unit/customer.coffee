@@ -11,7 +11,7 @@ Path = require 'path'
 Customer = require("../../src/models/customer") server,
 
 context 'Customer', ->
-  describe 'Souce Adapter', ->
+  describe 'Source Adapter', ->
     describe 'PREFIX', ->
       it 'should have PREFIX set to \'c\'', ->
         Customer::PREFIX.should.exist
@@ -24,8 +24,8 @@ context 'Customer', ->
       data =
         name:             faker.name.firstName()
         location:
-          latitude : faker.address.latitude()
-          longitude: faker.address.longitude()
+          latitude :      faker.address.latitude()
+          longitude:      faker.address.longitude()
         phone:            faker.phone.phoneNumberFormat()
         mobile:           faker.phone.phoneNumberFormat()
         email:            faker.internet.email()
@@ -38,8 +38,7 @@ context 'Customer', ->
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         customer.doc.should.contain.all.keys [
-          'location', 'mobile', 'phone', 'name'
-          'customer_avatar', 'orders'
+          'location', 'mobile', 'phone', 'name', 'customer_avatar', 'orders'
           ]
 
       it 'should not accept some props', ->

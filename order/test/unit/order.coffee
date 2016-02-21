@@ -11,7 +11,7 @@ Path = require 'path'
 Order = require("../../src/models/order") server,
 
 context 'order', ->
-  describe 'Souce Adapter', ->
+  describe 'Source Adapter', ->
     describe 'PREFIX', ->
       it 'should have PREFIX set to \'o\'', ->
         Order::PREFIX.should.exist
