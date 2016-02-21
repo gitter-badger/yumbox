@@ -23,7 +23,8 @@ module.exports = (server, options) ->
       description: off
       calories: off
       images: off
-     
+      images_file: on
+
   before_save: ->
       return true unless @doc.image_files?
       @image_files = @doc.image_files
@@ -35,15 +36,13 @@ module.exports = (server, options) ->
           true
 
  
-    _save_image: ->
-      @image_files  = [@image_files] unless _.isArray @image_files
+  _save_image: ->
+    @image_files  = [@image_files] unless _.isArray @image_files
 
-      savers = []
-      for file in @image_files
-        savers.push @save_image file, ShortID.generate(), MainDish::IMAGE.SIZE.MEDIUM
+    savers = []
+    for file in @image_files
+      savers.push @save_image file, ShortID.generate(), MainDish::IMAGE.SIZE.MEDIUM
 
-      Q.allSettled(savers)
-        .then (paths) ->
-          names = _.map paths, (path) -> _.last path.value.split "/"
-   
-   
+    Q.allSettled(savers)
+      .then (paths) ->
+        names = _.map paths, (path) -> _.last path.value.split "/"
