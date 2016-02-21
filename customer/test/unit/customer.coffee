@@ -113,7 +113,7 @@ context 'Customer', ->
           .then (result) ->
             result.should.be.an 'Error'
 
-      it "should remove image_files on create and update", ->
+      it "should remove image_files on create", ->
         customer.create()
           .then (o) ->
             Customer.get(customer.key)
@@ -121,10 +121,3 @@ context 'Customer', ->
                 obj.doc.should.have.property "customer_avatar"
                 obj.doc.should.not.have.property "image_files"
                 obj.doc.image_files = data.image_files
-                obj.update()
-                  .then (o) ->
-                    Customer.get(customer.key)
-                      .then (obj) ->
-                        obj.doc.should.not.have.property "image_files"
-
-
