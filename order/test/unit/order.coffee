@@ -28,7 +28,8 @@ context 'order', ->
         at:            "#{faker.date.recent()}"
         status:        faker.hacker.phrase()
         price:         faker.commerce.price()
-
+        isCanceld:     faker.random.boolean()
+      
       order = new Order data
 
     describe 'Properties', ->
@@ -50,6 +51,7 @@ context 'order', ->
         order.doc.at.should.be.eq             data.at
         order.doc.status.should.be.eq         data.status
         order.doc.price.should.be.eq          data.price
+        order.doc.isCanceled.should.be.eq     data.isCanceled
 
     describe 'Behavior', ->
       it 'should create an order', ->
@@ -70,24 +72,27 @@ context 'order', ->
           .then (result) ->
             old_order = result.doc
             updated_order = new Order result.doc.doc_key, {
-              customer_key : 'c_231934221'
+              customer_key :   'c_231934221'
               daily_meal_key : 'd_8374656'
-              quantity: '200'
-              at: 'Feb 20 2016 06:22:38 GMT+0330 (IRST)'
-              status: 'delivered'
-              price: '22500'
+              quantity:        '200'
+              at:              'Feb 20 2016 06:22:38 GMT+0330 (IRST)'
+              status:          'delivered'
+              price:           '22500'
+              isCanceld:       yes
             }
             updated_order.update()
           .then ->
             Order.get(key)
               .then (result) ->
                 old_order.should.not.be.eq result.doc
-                result.doc.customer_key.should.be.eq 'c_231934221'
+                result.doc.customer_key.should.be.eq   'c_231934221'
                 result.doc.daily_meal_key.should.be.eq 'd_8374656'
-                result.doc.quantity.should.be.eq '200'
-                result.doc.at.should.be.eq 'Feb 20 2016 06:22:38 GMT+0330 (IRST)'
-                result.doc.status.should.be.eq 'delivered'
-                result.doc.price.should.be.eq '22500'
+                result.doc.quantity.should.be.eq       '200'
+                result.doc.at.should.be.eq             'Feb 20 2016 06:22:38 GMT+0330 (IRST)'
+                result.doc.status.should.be.eq         'delivered'
+                result.doc.price.should.be.eq          '22500'
+                result.doc.isCanceled.should.be.eq     yes
+
 
       it 'should delete an order', ->
         order = new Order data
