@@ -6,12 +6,15 @@ moment = require 'moment'
 module.exports = (server, options) ->
   SideDish = require('../models/side_dish') server, options
 
-  return
+  return {
     dashboard:
       create: (request, reply) ->
         side_dish = new SideDish request.payload
+        side_dish.create(true)
+          .then (result) ->
+            reply.success result
 
-        console.log request.payload
+  }
 ###
       payload = request.payload
       console.log payload

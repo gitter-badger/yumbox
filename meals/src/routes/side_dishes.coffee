@@ -1,20 +1,20 @@
 SideDishValidator = require '../models/mainDishValidator'
 
 module.exports = (server, options) ->
-
-  SideDish = require('../handlers/side_dish') server, options
+  SideDish = require('../handlers/side_dishes') server, options
  
   return [
- 
-    #POST method for creating           
     {
       method: 'POST'
-      path: 'v1/dashboard/side_dishes'
+      path: '/v1/dashboard/side_dishes'
       config:
         handler: SideDish.dashboard.create
         validate: SideDishValidator::create
-        
+        payload:
+          output: 'stream'
     }
+  ]
+###
     {
       # GET method for reading side_dishes
       method: 'GET'
@@ -36,4 +36,4 @@ module.exports = (server, options) ->
       #  
     }
 
-
+###
