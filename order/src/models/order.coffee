@@ -15,4 +15,5 @@ module.exports = (server, options) ->
      at: on
      status: on
      price: on
+     isCanceled: on
 

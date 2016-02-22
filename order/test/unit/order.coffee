@@ -28,7 +28,7 @@ context 'order', ->
         at:            "#{faker.date.recent()}"
         status:        faker.hacker.phrase()
         price:         faker.commerce.price()
-        isCanceld:     faker.random.boolean()
+        isCanceled:    faker.random.boolean()
       
       order = new Order data
 
@@ -91,7 +91,7 @@ context 'order', ->
                 result.doc.at.should.be.eq             'Feb 20 2016 06:22:38 GMT+0330 (IRST)'
                 result.doc.status.should.be.eq         'delivered'
                 result.doc.price.should.be.eq          '22500'
-                result.doc.isCanceled.should.be.eq     yes
+                result.doc.isCanceled.should.be.equal  yes
 
 
       it 'should delete an order', ->
