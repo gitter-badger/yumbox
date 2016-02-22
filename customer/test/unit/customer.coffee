@@ -29,7 +29,7 @@ context 'Customer', ->
         phone:            faker.phone.phoneNumberFormat()
         mobile:           faker.phone.phoneNumberFormat()
         email:            faker.internet.email()
-        customer_avatar:  [ "#{__dirname}/images/example_image.jpg" ]
+        avatar:  [ "#{__dirname}/images/example_image.jpg" ]
         dob:              "#{faker.date.past()}"
         orders:           faker.company.suffixes()
         image_files:      []
@@ -39,7 +39,7 @@ context 'Customer', ->
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         customer.doc.should.contain.all.keys [
-          'location', 'mobile', 'phone', 'name', 'customer_avatar', 'orders', 'image_files'
+          'location', 'mobile', 'phone', 'name', 'avatar', 'orders', 'image_files'
           ]
 
       it 'should not accept some props', ->
@@ -85,7 +85,7 @@ context 'Customer', ->
                 longitude:'-17.9435'
               phone:      '02128024679'
               mobile:     '09128024679'
-              customer_avatar: 'adadq22e89v sfsDFS(fSDFVSFSD)TWB$<T$TBOWTKSMV GS$# &N# $  v'
+              avatar: 'adadq22e89v sfsDFS(fSDFVSFSD)TWB$<T$TBOWTKSMV GS$# &N# $  v'
               orders:     ['o_123', 'o_321', 'o_111']
             }
             updated_customer.update()
@@ -97,7 +97,7 @@ context 'Customer', ->
                 result.doc.location.longitude.should.be.eq '-17.9435'
                 result.doc.phone.should.be.eq '02128024679'
                 result.doc.mobile.should.be.eq '09128024679'
-                result.doc.customer_avatar.should.be.eq 'adadq22e89v sfsDFS(fSDFVSFSD)TWB$<T$TBOWTKSMV GS$# &N# $  v'
+                result.doc.avatar.should.be.eq 'adadq22e89v sfsDFS(fSDFVSFSD)TWB$<T$TBOWTKSMV GS$# &N# $  v'
                 result.doc.orders.should.be.deep.eq ['o_123', 'o_321', 'o_111']
  
       it 'should delete a customer', ->
@@ -118,6 +118,5 @@ context 'Customer', ->
           .then (o) ->
             Customer.get(customer.key)
               .then (obj) ->
-                obj.doc.should.have.property "customer_avatar"
+                obj.doc.should.have.property "avatar"
                 obj.doc.should.not.have.property "image_files"
-                obj.doc.image_files = data.image_files
