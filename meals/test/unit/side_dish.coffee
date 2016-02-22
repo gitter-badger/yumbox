@@ -32,9 +32,8 @@ context 'SideDish', ->
     beforeEach () ->
       data =
         name:        faker.name.firstName()
-        price:       faker.random.number()
         description: faker.hacker.phrase()
-        image:       [ "{#__dirname}/images/example_image.jpg" ]
+        images:       [ "{#__dirname}/images/example_image.jpg" ]
         image_files: []
         isAvailable:  faker.random.boolean()
 
@@ -58,10 +57,7 @@ context 'SideDish', ->
 
       it 'should have correct values set', ->
         side_dish.doc.name.should.be.eq        data.name
-        side_dish.doc.price.should.be.eq       data.price
-        side_dish.doc.description.should.be.eq data.description
-        side_dish.doc.image.should.be.deep.eq  data.image
-        side_dish.doc.isAvailable.should.be.eq data.isAvailable
+        side_dish.doc.images.should.be.deep.eq data.images
 
       describe 'Images', ->
         it 'should be saved with images', ->
@@ -92,8 +88,7 @@ context 'SideDish', ->
             updated_side_dish = new SideDish result.doc.doc_key, {
               name : 'french fries'
               price: '18000'
-              description: 'fresh meat'
-              image: [ "#{__dirname}/images/example_image_2.jpg" ]
+              images: [ "#{__dirname}/images/example_image_2.jpg" ]
               isAvailable: yes
             }
             updated_side_dish.update()
@@ -102,10 +97,7 @@ context 'SideDish', ->
               .then (result) ->
                 old_side_dish.should.not.be.eq result.doc
                 result.doc.name.should.be.eq        'french fries'
-                result.doc.price.should.be.eq       '18000'
-                result.doc.description.should.be    'fresh meat'
-                result.doc.image.should.be.deep.eq  [ "#{__dirname}/images/example_image_2.jpg" ]
-                result.doc.isAvailable.should.be.eq yes
+                result.doc.images.should.be.deep.eq  [ "#{__dirname}/images/example_image_2.jpg" ]
     
       it 'should delete a side_dish', ->
         side_dish = new SideDish data

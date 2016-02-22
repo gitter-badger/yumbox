@@ -51,7 +51,7 @@ context 'MainDish', ->
       it 'should not accept some props', ->
         main_dish.doc.should.not.contain.any.keys [
           'calories', 'description', 'contains', 'images', 'image_files'
-          isAvailable
+          'isAvailable'
           ]
       
       it 'should not accept unknown props' , ->
@@ -101,8 +101,8 @@ context 'MainDish', ->
                 old_main_dish.should.not.be.eq result.doc
                 result.doc.name.should.be.eq  'pizza'
                 result.doc.price.should.be.eq '24800'
-                result.doc.images.should.be.deep.eq [ "#{__dirname}/images/example_image.jpg" ]
-                result.doc.isAvailable.should.be.eq no
+                #images is off
+                #isAvailable is off
 
       it 'should delete a main_dish', ->
         key = main_dish.key
