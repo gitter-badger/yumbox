@@ -40,6 +40,7 @@ context 'Customer', ->
       it 'should have properties correctly added', ->
         customer.doc.should.contain.all.keys [
           'location', 'mobile', 'phone', 'name', 'avatar', 'orders', 'image_files'
+          'doc_key', 'doc_type'
           ]
 
       it 'should not accept some props', ->
