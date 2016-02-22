@@ -22,17 +22,17 @@ context 'Customer', ->
     data = null
     beforeEach () ->
       data =
-        name:             faker.name.firstName()
+        name:         faker.name.firstName()
         location:
-          latitude :      faker.address.latitude()
-          longitude:      faker.address.longitude()
-        phone:            faker.phone.phoneNumberFormat()
-        mobile:           faker.phone.phoneNumberFormat()
-        email:            faker.internet.email()
-        avatar:  [ "#{__dirname}/images/example_image.jpg" ]
-        dob:              "#{faker.date.past()}"
-        orders:           faker.company.suffixes()
-        image_files:      []
+          latitude :  faker.address.latitude()
+          longitude:  faker.address.longitude()
+        phone:        faker.phone.phoneNumberFormat()
+        mobile:       faker.phone.phoneNumberFormat()
+        email:        faker.internet.email()
+        avatar:       [ "#{__dirname}/images/example_image.jpg" ]
+        dob:          "#{faker.date.past()}"
+        orders:       faker.company.suffixes()
+        image_files:  []
 
       customer = new Customer data
 
@@ -58,10 +58,21 @@ context 'Customer', ->
         customer.doc.location['longitude'].should.be.eq data.location['longitude']
         customer.doc.phone.should.be.eq                 data.phone
         customer.doc.mobile.should.be.eq                data.mobile
-        #customer avatar                            
+        customer.doc.avatar.should.be.deep.eq           data.avatar
         customer.doc.orders.should.be.deep.eq           data.orders
 
-    describe 'Behavior', ->
+      describe 'avatar', ->
+        it "should be saved with avatar", ->
+          customer.create(true)
+            .then (res) ->
+              res.doc_key.should.be.equal customer.key
+              res.should.have.not.property 'avatar'
+              # note: get_full_path function...
+              # fs.existsSync(customer.get_full_path "savatar.jpg").should.be.true
+              # fs.existsSync(customer.get_full_path "mavatar.jpg").should.be.true
+              # fs.existsSync(customer.get_full_path "undefind.jpg").should.be.false
+   
+   describe 'Behavior', ->
       it 'should create a customer', ->
         key = customer.key
         customer.create(true)
@@ -85,8 +96,8 @@ context 'Customer', ->
                 longitude:'-17.9435'
               phone:      '02128024679'
               mobile:     '09128024679'
-              avatar: 'adadq22e89v sfsDFS(fSDFVSFSD)TWB$<T$TBOWTKSMV GS$# &N# $  v'
-              orders:     ['o_123', 'o_321', 'o_111']
+              avatar:     [ "#{__dirname}/image/example_image_2.jpg" ]
+              orders:     [ 'o_123', 'o_321', 'o_111' ]
             }
             updated_customer.update()
           .then ->
@@ -94,16 +105,15 @@ context 'Customer', ->
               .then (result) ->
                 old_customer.should.not.be.eq result.doc
                 result.doc.location['latitude'].should.be.eq '17.9435'
-                result.doc.location.longitude.should.be.eq '-17.9435'
-                result.doc.phone.should.be.eq '02128024679'
-                result.doc.mobile.should.be.eq '09128024679'
-                result.doc.avatar.should.be.eq 'adadq22e89v sfsDFS(fSDFVSFSD)TWB$<T$TBOWTKSMV GS$# &N# $  v'
-                result.doc.orders.should.be.deep.eq ['o_123', 'o_321', 'o_111']
+                result.doc.location.longitude.should.be.eq   '-17.9435'
+                result.doc.phone.should.be.eq                '02128024679'
+                result.doc.mobile.should.be.eq               '09128024679'
+                result.doc.avatar.should.be.deep.eq          [ "#{__dirname}/image/example_image_2.jpg" ]
+                result.doc.orders.should.be.deep.eq          [ 'o_123', 'o_321', 'o_111' ]
  
       it 'should delete a customer', ->
         customer = null
         customer = new Customer data
-
         key = customer.key
         customer.create()
           .then (result) ->
