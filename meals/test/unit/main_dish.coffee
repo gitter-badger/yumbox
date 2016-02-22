@@ -32,36 +32,43 @@ context 'MainDish', ->
     beforeEach () ->
       data =
         name:        faker.name.firstName()
-        side_dishes: faker.company.suffixes()
-        total:       faker.random.number()
-        remained:    faker.random.number()
         price:       faker.random.number()
         calories:    faker.random.number()
+        contains:    faker.company.suffixes()
         description: faker.hacker.phrase()
+        images:      [ "#{__dirname}/images/example_image.jpg" ]
+        image_files: []
+        isAvailable: faker.random.boolean()
 
       main_dish = new MainDish data
 
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         main_dish.doc.should.contain.all.keys [
-          'name','price'
-          'doc_key', 'doc_type'
+          'name','price', 'doc_key', 'doc_type'
           ]
 
       it 'should not accept some props', ->
         main_dish.doc.should.not.contain.any.keys [
-          'calories', 'description', 'total', 'remained'
+          'calories', 'description', 'contains', 'images', 'image_files'
+          'isAvailable'
           ]
       
       it 'should not accept unknown props' , ->
         invalid_main_dish = new MainDish
           unknown_prop: faker.name.firstName()
-
         invalid_main_dish.doc.should.not.have.key 'unknown_prop'
 
       it 'should have correct values set', ->
         main_dish.doc.name.should.be.eq data.name
-        # to be completed for other fields..
+        main_dish.doc.price.should.be.eq data.price
+
+      describe 'Images', ->
+        it 'should be saved with images', ->
+          main_dish.create(true)
+            .then (res) ->
+              res.doc_key.should.be.equal main_dish.key
+              res.should.have.not.property 'images'
 
     describe 'Behavior', ->
       it 'should create a main_dish', ->
@@ -82,30 +89,22 @@ context 'MainDish', ->
           .then (result) ->
             old_main_dish = result.doc
             updated_main_dish = new MainDish result.doc.doc_key, {
-              name : 'new_name'
-              price : 15000
+              name:  'pizza'
+              price: '24800'
+              images: [ "#{__dirname}/images/example_image_2.jpg" ]
+              isAvailable: no
             }
             updated_main_dish.update()
           .then ->
             MainDish.get(key)
               .then (result) ->
                 old_main_dish.should.not.be.eq result.doc
-                result.doc.name.should.be.eq 'new_name'
-                result.doc.price.should.be.eq 15000
-      
+                result.doc.name.should.be.eq  'pizza'
+                result.doc.price.should.be.eq '24800'
+                #images is off
+                #isAvailable is off
+
       it 'should delete a main_dish', ->
-        main_dish = null
-        data =
-          name:faker.name.firstName()
-          total: faker.random.number()
-          remained: faker.random.number()
-          price: faker.random.number()
-          calories: faker.random.number()
-          description:faker.hacker.phrase()
-
-        main_dish = new MainDish data
-
-
         key = main_dish.key
         main_dish.create()
           .then (result) ->

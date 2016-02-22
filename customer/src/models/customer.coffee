@@ -19,10 +19,10 @@ module.exports = (server, options) ->
       mobile: on
       email: off
       name: on
-      customer_avatar: on
+      avatar: on
       dob: off
       orders: on
-      image_files: on
+      images_file: on
 
   before_save: ->
     delete @doc.customer_avatar?

@@ -15,15 +15,16 @@ module.exports = (server, options) ->
         LARGE: [500, 400]
 
     props:
-      name: on
-      total: off
-      price: on
-      remained: off
-      contains: off
+      name:        on
+      total:       off
+      price:       on
+      remained:    off
+      contains:    off
       description: off
-      calories: off
-      images: off
+      calories:    off
+      images:      off
       images_file: on
+      isAvailable: off
 
   before_save: ->
       return true unless @doc.image_files?

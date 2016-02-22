@@ -32,11 +32,10 @@ context 'SideDish', ->
     beforeEach () ->
       data =
         name:        faker.name.firstName()
-        total:       faker.random.number()
-        remained:    faker.random.number()
-        price:       faker.random.number()
-        calories:    faker.random.number()
         description: faker.hacker.phrase()
+        images:       [ "{#__dirname}/images/example_image.jpg" ]
+        image_files: []
+        isAvailable:  faker.random.boolean()
 
       side_dish = new SideDish data
 
@@ -48,18 +47,25 @@ context 'SideDish', ->
 
       it 'should not accept some props', ->
         side_dish.doc.should.not.contain.any.keys [
-          'price', 'description', 'total', 'remained'
+          'price', 'description', 'image', 'image_files', 'isAvailable'
           ]
       
       it 'should not accept unknown props' , ->
         invalid_side_dish = new SideDish
           unknown_prop: faker.name.firstName()
-
         invalid_side_dish.doc.should.not.have.key 'unknown_prop'
 
       it 'should have correct values set', ->
-        side_dish.doc.name.should.be.eq data.name
-        # to be completed for other fields..
+        side_dish.doc.name.should.be.eq        data.name
+        side_dish.doc.images.should.be.deep.eq data.images
+
+      describe 'Images', ->
+        it 'should be saved with images', ->
+          side_dish.create(true)
+            .then (res) ->
+              res.doc_key.should.be.equal side_dish.key
+              res.should.have.not.property 'image'
+
 
     describe 'Behavior', ->
       it 'should create a side_dish', ->
@@ -80,29 +86,21 @@ context 'SideDish', ->
           .then (result) ->
             old_side_dish = result.doc
             updated_side_dish = new SideDish result.doc.doc_key, {
-              name : 'new_name'
-              price : 15000
+              name : 'french fries'
+              price: '18000'
+              images: [ "#{__dirname}/images/example_image_2.jpg" ]
+              isAvailable: yes
             }
             updated_side_dish.update()
           .then ->
             SideDish.get(key)
               .then (result) ->
                 old_side_dish.should.not.be.eq result.doc
-                result.doc.name.should.be.eq 'new_name'
-      
+                result.doc.name.should.be.eq        'french fries'
+                result.doc.images.should.be.deep.eq  [ "#{__dirname}/images/example_image_2.jpg" ]
+    
       it 'should delete a side_dish', ->
-        side_dish = null
-        data =
-          name:faker.name.firstName()
-          total: faker.random.number()
-          remained: faker.random.number()
-          price: faker.random.number()
-          calories: faker.random.number()
-          description:faker.hacker.phrase()
-
         side_dish = new SideDish data
-
-
         key = side_dish.key
         side_dish.create()
           .then (result) ->

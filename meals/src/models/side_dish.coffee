@@ -17,7 +17,7 @@ module.exports = (server, options) ->
     props:
       name: on
       images:  on
-     
+      isAvailable: off
 
   before_save: ->
       return true unless @doc.image_files?
