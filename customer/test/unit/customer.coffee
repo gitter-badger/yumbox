@@ -32,14 +32,14 @@ context 'Customer', ->
         avatar:       [ "#{__dirname}/images/example_image.jpg" ]
         dob:          "#{faker.date.past()}"
         orders:       faker.company.suffixes()
-        image_files:  []
+        images_file:  []
 
       customer = new Customer data
 
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         customer.doc.should.contain.all.keys [
-          'location', 'mobile', 'phone', 'name', 'avatar', 'orders', 'image_files'
+          'location', 'mobile', 'phone', 'name', 'avatar', 'orders', 'images_file'
           'doc_key', 'doc_type'
           ]
 
@@ -69,11 +69,11 @@ context 'Customer', ->
               res.doc_key.should.be.equal customer.key
               res.should.have.not.property 'avatar'
               # note: get_full_path function...
-              # fs.existsSync(customer.get_full_path "savatar.jpg").should.be.true
-              # fs.existsSync(customer.get_full_path "mavatar.jpg").should.be.true
-              # fs.existsSync(customer.get_full_path "undefind.jpg").should.be.false
+              fs.existsSync(customer.get_full_path "savatar.jpg").should.be.true
+              fs.existsSync(customer.get_full_path "mavatar.jpg").should.be.true
+              fs.existsSync(customer.get_full_path "undefind.jpg").should.be.false
    
-   describe 'Behavior', ->
+    describe 'Behavior', ->
       it 'should create a customer', ->
         key = customer.key
         customer.create(true)
