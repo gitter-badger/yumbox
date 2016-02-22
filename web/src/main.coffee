@@ -18,6 +18,8 @@ exports.register = (plugin, options, next) ->
       path: __dirname
     }
   server.route require('./routes/dashboard') server, options
+  server.route require('./routes/app') server, options
+  server.route require('./routes/plugin') server, options
   server.route require('./routes/main') server, options
   next()
 

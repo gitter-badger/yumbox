@@ -1,0 +1,40 @@
+{
+  "name": "yumbox.users",
+  "description": "YumBox Users System",
+  "version": "0.1.0",
+  "main": "init",
+  "engines": {
+    "node": "4.2.*"
+  },
+  "author": "Arash Karimzadeh",
+  "bugs": {
+    "url": "https://github.com/Tipime/API/issues"
+  },
+  "dependencies": {
+    "boom": "^2.7.1",
+    "joi": "^6.4.1",
+    "lodash": "^4.1.0",
+    "moment": "^2.10.3",
+    "node-uuid": "^1.4.3",
+    "q": "^1.4.0",
+    "request": "^2.67.0"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "chai-http": "^1.0.0",
+    "coffee-coverage": "^0.6.3",
+    "coffee-script": "^1.9.2",
+    "coveralls": "^2.11.4",
+    "faker": "^3.0.1",
+    "gulp": "^3.9.0",
+    "gulp-coffee": "^2.3.1",
+    "gulp-newer": "^0.5.0",
+    "gulp-util": "^3.0.4",
+    "mocha": "^2.2.4",
+    "mocha-lcov-reporter": "^1.0.0",
+    "sinon": "^1.15.4"
+  },
+  "scripts": {
+    
+  }
+}

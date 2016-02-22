@@ -1,0 +1,81 @@
+style.
+  h3.tipi-h3{
+    font-size: 18px;
+  }
+  #tipi-guests-block{width: 100%;}
+  #tipi-guests-block{
+    padding: 5px;
+  }
+  #tipi-guests-block .tipi-card{
+    margin-top: 3px;
+    padding: 8px;
+  }
+  #tipi-guests-block .tipi-card:first-child{
+    margin-top: 0px;
+  }
+  #tipi-guests-block.tipi-cards .tipi-card{
+    background: #fff;
+    overflow: hidden;
+    zoom: 1;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.35);
+    border-radius: 3px;
+  }
+  #tipi-guests-block.tipi-cards.tipi-dark .tipi-card{
+    background: #000;
+  }
+  #tipi-guests-block .tipi-left{
+    display: table-cell;
+    vertical-align: top;
+    padding-right: 8px;
+    text-align: right;
+  }
+  #tipi-guests-block .tipi-body{
+    text-align: left;
+    display: table-cell;
+    vertical-align: top;
+    width: 10000px;
+    overflow: hidden;
+    zoom: 1;
+    font-size: 12px;
+  }
+  #tipi-guests-block .tipi-title{
+    color: #555;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  #tipi-guests-block .tipi-small{
+    color: #555;
+    font-size: 12px;
+  }
+  #tipi-guests-block p{
+  }
+  #tipi-guests-block .tipi-clear{
+    clear: both;
+  }
+  #tipi-guests-block .tipi-circle{
+    border-radius: 50%;
+    width: 100%;
+    min-width: 50px;
+    max-width: 80px;
+  }
+  #tipi-guests-block.tipi-dark *,
+  #tipi-guests-block.tipi-dark .tipi-body,
+  #tipi-guests-block.tipi-dark .tipi-title{
+    color: #fff;
+  }
+div#tipi-guests-block(class={ cards: "tipi-cards", basic: "" }[configs.style] class=configs.dark ? "tipi-dark" : "")
+  h3.tipi-h3 Current Guests
+  if guests.list.length > 0
+    each guest in guests.list
+      .tipi-card
+        .tipi-left 
+          img.tipi-circle(src='#{url}/cdn/user/#{guest.user_key}/savatar.jpg')
+        .tipi-body
+          .tipi-title #{guest.user.name}
+          .tipi-small #{guest.user.city}, #{guest.user.country}
+        .tipi-clear
+  else
+    .tipi-card
+      No guest listed here
+
+

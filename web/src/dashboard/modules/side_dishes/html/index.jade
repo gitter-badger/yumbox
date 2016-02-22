@@ -1,0 +1,38 @@
+.container-fluid(ng-controller='side_dishesIndexCtrl')
+  ol.breadcrumb
+    li 
+      a(ui-sref='home') Dashboard
+    li.active Side Dishes
+    ul.actions.m-t--5.hidden-xs.pull-right
+      li
+        a(ui-sref="new_side_dish") 
+          i.zmdi.zmdi-plus.c-green
+      li
+        a(ui-sref="home") 
+          i.zmdi.zmdi-close
+  .container-fluid
+    .row
+      .col-sm-12
+        #side_dishes-list(infinite-scroll="more()" infinite-scroll-distance="3" infinite-scroll-disabled='side_dishes.disabled')
+          .col-md-3.col-sm-6
+            .dash-widget-item#new-side_dish-btn
+              .dash-widget-header
+                .new.bgm-blue.c-white
+                  .content(ui-sref='new_side_dish')
+                    .cell
+                      i.zmdi.zmdi-plus
+                      .title.p-t-5 NEW SIDE DISH
+                      small.animated click to create a side dish
+                .new-block
+          .col-md-3.col-sm-6(ng-repeat='side_dish in side_dishes.list')
+            div(ng-if="$index+1 % 4 == 0" class="clearfix")
+            .dash-widget-item
+              .dash-widget-header
+                img(ng-src='/cdn/side_dish/{{side_dish.doc_key}}/main.jpg?{{side_dish.cache_uid}}')
+                .main-item
+                  small(am-time-ago='side_dish.at')
+                  h2 {{side_dish.title}}
+                  .actions.text-center
+                    button.btn.bgm-pink.btn-icon.btn-float.waves-circle.waves-effect(ui-sref="edit_side_dish({id:side_dish.doc_key})" ng-class="side_dish.is_draft ? 'bgm-pink' : 'bgm-green' ")
+                      i.zmdi(ng-class="side_dish.is_draft ? 'zmdi-edit' : 'zmdi-check' ")
+        .clearfix

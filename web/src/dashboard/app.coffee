@@ -22,6 +22,8 @@ app = angular.module sys.modules.app.name, [
   sys.modules.guests.name
   sys.modules.bookings.name
   sys.modules.activities.name
+  sys.modules.main_dishes.name
+  sys.modules.side_dishes.name
   sys.modules.settings.name
   sys.modules.search.name
   sys.modules.console.name

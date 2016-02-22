@@ -1,0 +1,57 @@
+default:
+  app: tipi
+  admin:
+    username: admin
+    password: admin
+  server:
+    web:
+      port: 3000
+    api:
+      port: 3100
+    notification:
+      port: 3200
+      route_prefix: ns
+      namespace: ns
+      label: notification
+  databases:
+    application:
+      host: 127.0.0.1
+      mock: false
+    analytics: 
+      host: 127.0.0.1
+      name: analytics
+      mock: true
+  searchengine:
+    host: localhost
+    port: 9200
+    name: tipi
+    log: debug # error, warning, info, debug, trace
+  cache:
+    host: 0.0.0.0
+    port: 6379
+development:
+  databases:
+    application:
+      name: tipi
+  file:
+    path: /Users/arash/Projects/tipi/shared
+test:
+  databases:
+    application:
+      name: tipi
+      mock: true
+production:
+  server:
+    web:
+      port: 3000
+    api:
+      port: 3100
+  databases:
+    application:
+      name: default
+      host: 
+  cache:
+    host: 0.0.0.0
+    port: 6379
+  file:
+    path: 

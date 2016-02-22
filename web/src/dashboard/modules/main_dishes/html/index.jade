@@ -1,0 +1,38 @@
+.container-fluid(ng-controller='main_dishesIndexCtrl')
+  ol.breadcrumb
+    li 
+      a(ui-sref='home') Dashboard
+    li.active   Main Dishes
+    ul.actions.m-t--5.hidden-xs.pull-right
+      li
+        a(ui-sref="new_main_dish") 
+          i.zmdi.zmdi-plus.c-green
+      li
+        a(ui-sref="home") 
+          i.zmdi.zmdi-close
+  .container-fluid
+    .row
+      .col-sm-12
+        #main_dishes-list(infinite-scroll="more()" infinite-scroll-distance="3" infinite-scroll-disabled='main_dishes.disabled')
+          .col-md-3.col-sm-6
+            .dash-widget-item#new-main_dish-btn
+              .dash-widget-header
+                .new.bgm-blue.c-white
+                  .content(ui-sref='new_main_dish')
+                    .cell
+                      i.zmdi.zmdi-plus
+                      .title.p-t-5 NEW MAIN DISH
+                      small.animated click to create a main dish
+                .new-block
+          .col-md-3.col-sm-6(ng-repeat='main_dish in main_dishes.list')
+            div(ng-if="$index+1 % 4 == 0" class="clearfix")
+            .dash-widget-item
+              .dash-widget-header
+                img(ng-src='/cdn/main_dish/{{main_dish.doc_key}}/main.jpg?{{main_dish.cache_uid}}')
+                .main-item
+                  small(am-time-ago='main_dish.at')
+                  h2 {{main_dish.title}}
+                  .actions.text-center
+                    button.btn.bgm-pink.btn-icon.btn-float.waves-circle.waves-effect(ui-sref="edit_main_dish({id:main-dish.doc_key})" ng-class="main_dish.is_draft ? 'bgm-pink' : 'bgm-green' ")
+                      i.zmdi(ng-class="main_dish.is_draft ? 'zmdi-edit' : 'zmdi-check' ")
+        .clearfix

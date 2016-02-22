@@ -1,0 +1,97 @@
+.container-fluid(ng-controller='side_dishesFormCtrl' nv-file-drop="" uploader="uploader")
+  ol.breadcrumb
+    li 
+      a(ui-sref='home') Dashboard
+    li 
+      a(ui-sref='side_dishes') Side Dishes
+    li.active {{is_edit ? 'Edit' : 'New'}}
+    ul.actions.m-t--5.hidden-xs.pull-right
+      li
+        a(ui-sref="side_dishes") 
+          i.zmdi.zmdi-close
+  .container-fluid
+    .row
+      .col-sm-6
+        .alert.alert-danger(role='alert' ng-show='error')
+          p {{error}}
+        .card
+          .card-header.m-b-20
+            h2 {{side_dish.title ? side_dish.title : '&nbsp;'}}
+            button.btn.btn-float.waves-effect(ng-click="save()" ng-class="is_edit? 'bgm-pink' : 'bgm-blue'")
+              i.zmdi(ng-class="is_edit? 'zmdi-check' : 'zmdi-plus'")
+          .card-body.card-padding
+            .form-group.fg-float
+              .fg-line(ng-class="side-dish.title ? 'fg-toggled' : ''")
+                input.form-control.fg-input(type='text' ng-model="side_dish.title")
+              label.fg-label Name
+            .row
+              .col-sm-6
+                .form-group.fg-float
+                  .fg-line(ng-class="side_dish.price ? 'fg-toggled' : ''")
+                    input.form-control.fg-input(type='text' ng-model="side_dish.price")
+                  label.fg-label Price
+              .col-sm-6
+                .form-group
+                  .dropdown
+                    a#side_dish_at.dropdown-toggle(data-toggle="dropdown")
+                      .input-group.form-group
+                        span.input-group-addon
+                          i.zmdi.zmdi-calendar
+                        .dtp-container.dropdown.fg-line
+                          input.form-control(type="text" value="{{side_dish.at | amDateFormat:'dddd, MMMM Do YYYY, h:mm a'}}")
+                    ul.dropdown-menu(role='menu' aria-labelledby="dLabel")
+                      datetimepicker(ng-model="side_dish.at" data-datetimepicker-config="{ dropdownSelector: '#side_dish_at', startView:'day', minView:'minute' }" )
+            .form-group.fg-float
+              label.label Target
+              .p-t-5.p-b-25
+                select(selectpicker='' multiple title='Choose matching interests ...' ng-model='side_dish.interests')
+                  option(ng-repeat="(key, interest) in interests" value="{{key}}") {{interest}}
+            .form-group.fg-float
+              .fg-line(ng-class="side_dish.description ? 'fg-toggled' : ''")
+                textarea.form-control.fg-input(rows=5 ng-model="side_dish.description")
+              label.fg-label Description
+      .col-sm-6
+        .card(ng-hide="is_edit")
+          .card-header.ch-alt
+            h2 Help
+          .card-body.card-padding
+            p First save the basic information about this side dish using the form on the left. Once it is saved, you can add images and publish it.
+        div(ng-show="is_edit")
+          .card
+            .card-header.ch-alt
+              h2 
+                | Publish
+                small Once everything is ok and you have added images to the side dish, publish it. Published side dishes are available to all of your guests.
+            .card-body.card-padding
+              .row
+                .col-sm-12.m-b-20
+                  .toggle-switch(data-ts-color="blue")
+                    label.ts-label(for="ts3") Publish
+                    input#ts3(type="checkbox" hidden="hidden" ng-model="side_dish.is_draft" ng-false-value='true' ng-true-value='false')
+                    label.ts-helper(for="ts3")
+          .card
+            .card-header.ch-alt
+              h2 
+                | Images
+                small Add images to this side dish by drag and drop. Images go live as you drop and can be seen by your guests.
+            .card-body.card-padding
+              .drop-zone.c-blue(nv-file-over="" uploader="uploader" over-class='dropping')
+                .hint
+                  i.zmdi.zmdi-cloud-upload
+                  div 
+                    span Drop your 
+                    b "JPG" 
+                    span images here ...
+              .progress.m-b-10.m-t-5
+                .progress-bar.progress-bar-success(role="progressbar" ng-style="{ 'width': uploader.progress + '%' }")
+              .row.lightbox
+                .col-sm-4.col-xs-6(ng-repeat='image in side_dish.images')
+                  .lightbox-item.m-t-5.m-b-5
+                    img(ng-src="/cdn/side_dish/{{side_dish.doc_key}}/{{image}}" alt="")
+                    i.zmdi.zmdi-check-all.as-default(ng-show="is_main(image)")
+                    .actions
+                      .btn-group
+                        button.btn.btn-default.waves-effect(ng-click="set_as_main($index)")
+                          i.zmdi.zmdi-check
+                        button.btn.btn-default.waves-effect(ng-click="remove($index)")
+                          i.zmdi.zmdi-close

@@ -17,6 +17,14 @@ aside#sidebar(data-ng-class="{ 'toggled': sidebarToggle.left === true }" ng-cont
             i.zmdi.zmdi-calendar
             | Activities
         li(data-ui-sref-active="active")
+          a(ui-sref='main_dishes' ng-click="hide()")
+            i.zmdi.zmdi-calendar
+            | Main Dishes
+        li(data-ui-sref-active="active")
+          a(ui-sref='side_dishes' ng-click="hide()")
+            i.zmdi.zmdi-calendar
+            | Side Dishes
+        li(data-ui-sref-active="active")
           a(ui-sref='analytics' ng-click="hide()")
             i.zmdi.zmdi-trending-up
             | Analytics

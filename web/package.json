@@ -1,5 +1,5 @@
 {
-  "name": "tipi.web",
+  "name": "yumbox.web",
   "description": "Web UI of Tipi",
   "version": "0.1.0",
   "main": "build/main",

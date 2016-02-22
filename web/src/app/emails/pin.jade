@@ -1,0 +1,26 @@
+extends ../layout.jade
+
+block title
+  title Tipi | Your new PIN
+
+block content
+  header#header.bgm-bluegray
+    ul.header-inner
+      li.logo.hidden-xs
+        a(href="/") Tipi
+      li.pull-right
+        ul.top-menu
+          li
+            a(href="/") Home
+  section#main
+    section#content
+      .container-fluid
+        .col-md-6.col-md-offset-3
+          .card
+            .card-header
+              h2
+                | Your New PIN: #{pin}
+                small You've requested new PIN to login in Tipi
+            .card-body.card-padding
+              .alert.alert-success You can use "#{pin}" and your email to login into Tipi.
+              p Tipi is a social platform for travelers and backpackers. It is available for both ios and android devices. Download it now from below links:
