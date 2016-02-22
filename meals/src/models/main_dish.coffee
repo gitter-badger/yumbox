@@ -26,24 +26,29 @@ module.exports = (server, options) ->
       images_file: on
       isAvailable: off
 
-  before_save: ->
-      return true unless @doc.image_files?
-      @image_files = @doc.image_files
-      delete @doc.image_files
-      @doc.images ?= []
-      @_save_image()
-        .then (file_names) =>
-          @doc.images = _.union @doc.images, file_names
-          true
+    constructor: (key, doc, all) ->
+      super
+      doc = key if not doc? and key instanceof Object
+      @image_files = doc.image_files if doc.image_files?
+
+    before_save: ->
+        return true unless @doc.image_files?
+        @image_files = @doc.image_files
+        delete @doc.image_files
+        @doc.images ?= []
+        @_save_image()
+          .then (file_names) =>
+            @doc.images = _.union @doc.images, file_names
+            true
 
  
-  _save_image: ->
-    @image_files  = [@image_files] unless _.isArray @image_files
+    _save_image: ->
+      @image_files  = [@image_files] unless _.isArray @image_files
 
-    savers = []
-    for file in @image_files
-      savers.push @save_image file, ShortID.generate(), MainDish::IMAGE.SIZE.MEDIUM
+      savers = []
+      for file in @image_files
+        savers.push @save_image file, ShortID.generate(), MainDish::IMAGE.SIZE.MEDIUM
 
-    Q.allSettled(savers)
-      .then (paths) ->
-        names = _.map paths, (path) -> _.last path.value.split "/"
+      Q.allSettled(savers)
+        .then (paths) ->
+          names = _.map paths, (path) -> _.last path.value.split "/"

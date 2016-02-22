@@ -2,7 +2,6 @@ Joi = require 'joi'
 
 module.exports = class validator
   
-  main_dish:
     create:
       payload:
         name: Joi.string()
@@ -12,3 +11,16 @@ module.exports = class validator
         calories: Joi.number()
         description: Joi.string()
         images: Joi.array()
+
+    add_images:
+      payload:
+        images: Joi.array().items(
+          Joi.object().unknown().keys({
+            hapi: Joi.object().unknown().keys({
+              headers: Joi.object().unknown().keys(
+                { 'content-type' : 'image/jpeg' })
+            })
+          })
+        ).single()
+
+
