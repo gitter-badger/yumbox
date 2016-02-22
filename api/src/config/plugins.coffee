@@ -60,14 +60,14 @@ module.exports = (server) ->
        throw err if err
 
   server.select(['web', 'api']).register [
-   # {
-     #register: require('otolist.cars')
-     # options:
-     #   database: db
-     #   mobile: defaults.mobile
-     #   cars: defaults.cars
-     #   colors: defaults.colors
-   # }
+    {
+     register: require('yumbox.meals')
+      options:
+        database: db
+        mobile: defaults.mobile
+        cars: defaults.cars
+        colors: defaults.colors
+    }
   ], (err) ->
         throw err if err
       server.start () ->
