@@ -38,6 +38,7 @@ context 'MainDish', ->
         description: faker.hacker.phrase()
         images:      [ "#{__dirname}/images/example_image.jpg" ]
         image_files: []
+        isAvailable: faker.random.boolean()
 
       main_dish = new MainDish data
 
@@ -50,6 +51,7 @@ context 'MainDish', ->
       it 'should not accept some props', ->
         main_dish.doc.should.not.contain.any.keys [
           'calories', 'description', 'contains', 'images', 'image_files'
+          isAvailable
           ]
       
       it 'should not accept unknown props' , ->
@@ -90,6 +92,7 @@ context 'MainDish', ->
               name:  'pizza'
               price: '24800'
               images: [ "#{__dirname}/images/example_image_2.jpg" ]
+              isAvailable: no
             }
             updated_main_dish.update()
           .then ->
@@ -99,6 +102,7 @@ context 'MainDish', ->
                 result.doc.name.should.be.eq  'pizza'
                 result.doc.price.should.be.eq '24800'
                 result.doc.images.should.be.deep.eq [ "#{__dirname}/images/example_image.jpg" ]
+                result.doc.isAvailable.should.be.eq no
 
       it 'should delete a main_dish', ->
         key = main_dish.key

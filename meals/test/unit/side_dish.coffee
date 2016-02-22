@@ -36,6 +36,7 @@ context 'SideDish', ->
         description: faker.hacker.phrase()
         image:       [ "{#__dirname}/images/example_image.jpg" ]
         image_files: []
+        isAvailable:  faker.random.boolean()
 
       side_dish = new SideDish data
 
@@ -47,7 +48,7 @@ context 'SideDish', ->
 
       it 'should not accept some props', ->
         side_dish.doc.should.not.contain.any.keys [
-          'price', 'description', 'image', 'image_files'
+          'price', 'description', 'image', 'image_files', 'isAvailable'
           ]
       
       it 'should not accept unknown props' , ->
@@ -60,6 +61,7 @@ context 'SideDish', ->
         side_dish.doc.price.should.be.eq       data.price
         side_dish.doc.description.should.be.eq data.description
         side_dish.doc.image.should.be.deep.eq  data.image
+        side_dish.doc.isAvailable.should.be.eq data.isAvailable
 
       describe 'Images', ->
         it 'should be saved with images', ->
@@ -92,17 +94,19 @@ context 'SideDish', ->
               price: '18000'
               description: 'fresh meat'
               image: [ "#{__dirname}/images/example_image_2.jpg" ]
+              isAvailable: yes
             }
             updated_side_dish.update()
           .then ->
             SideDish.get(key)
               .then (result) ->
                 old_side_dish.should.not.be.eq result.doc
-                result.doc.name.should.be.eq 'french fries'
-                result.doc.price.should.be.eq '18000'
-                result.doc.description.should.be 'fresh meat'
-                result.doc.image.should.be.deep.eq [ "#{__dirname}/images/example_image_2.jpg" ]
-      
+                result.doc.name.should.be.eq        'french fries'
+                result.doc.price.should.be.eq       '18000'
+                result.doc.description.should.be    'fresh meat'
+                result.doc.image.should.be.deep.eq  [ "#{__dirname}/images/example_image_2.jpg" ]
+                result.doc.isAvailable.should.be.eq yes
+    
       it 'should delete a side_dish', ->
         side_dish = new SideDish data
         key = side_dish.key
