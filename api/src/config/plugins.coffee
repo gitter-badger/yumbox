@@ -61,12 +61,9 @@ module.exports = (server) ->
 
   server.select(['web', 'api']).register [
     {
-     register: require('yumbox.meals')
+      register: require('yumbox.meals')
       options:
         database: db
-        mobile: defaults.mobile
-        cars: defaults.cars
-        colors: defaults.colors
     }
   ], (err) ->
         throw err if err
