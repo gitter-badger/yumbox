@@ -8,11 +8,13 @@ controller = ($scope, $state, $http, $timeout, FileUploader) ->
       $scope.interests = sys.defaults.interests
       $scope.main_dish = {
         title: ''
-        address: ''
+        total: ''
+        contains: ''
         description: ''
+        calories: ''
+        remained: ''
         images: []
         at: moment()
-        interests: []
         price: ''
       }
 

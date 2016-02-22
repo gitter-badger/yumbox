@@ -16,7 +16,7 @@
           p {{error}}
         .card
           .card-header.m-b-20
-            h2 {{main_dish.title ? main_dish.title : '&nbsp;'}}
+            h2 {{main_dish.title ? main_dish.title : 'Main Dish Name'}}
             button.btn.btn-float.waves-effect(ng-click="save()" ng-class="is_edit? 'bgm-pink' : 'bgm-blue'")
               i.zmdi(ng-class="is_edit? 'zmdi-check' : 'zmdi-plus'")
           .card-body.card-padding
@@ -41,15 +41,31 @@
                           input.form-control(type="text" value="{{main_dish.at | amDateFormat:'dddd, MMMM Do YYYY, h:mm a'}}")
                     ul.dropdown-menu(role='menu' aria-labelledby="dLabel")
                       datetimepicker(ng-model="main_dish.at" data-datetimepicker-config="{ dropdownSelector: '#main_dish_at', startView:'day', minView:'minute' }" )
-            .form-group.fg-float
-              label.label Target
-              .p-t-5.p-b-25
-                select(selectpicker='' multiple title='Choose matching interests ...' ng-model='main_dish.interests')
-                  option(ng-repeat="(key, interest) in interests" value="{{key}}") {{interest}}
+             
+            .row
+              .col-sm-6
+                .form-group.fg-float
+                  .fg-line(ng-class="main_dish.total ? 'fg-toggled' : ''")
+                    input.form-control.fg-input(type='number' ng-model="main_dish.total")
+                  label.fg-label Total
+
+               
+              .col-sm-6
+                .form-group.fg-float
+                  .fg-line(ng-class="main_dish.calories ? 'fg-toggled' : ''")
+                    input.form-control.fg-input(type='number' ng-model="main_dish.calories")
+                  label.fg-label Calories
+
             .form-group.fg-float
               .fg-line(ng-class="main_dish.description ? 'fg-toggled' : ''")
                 textarea.form-control.fg-input(rows=5 ng-model="main_dish.description")
               label.fg-label Description
+ 
+            .form-group.fg-float
+              .fg-line(ng-class="main_dish.contains ? 'fg-toggled' : ''")
+                textarea.form-control.fg-input(rows=5 ng-model="main_dish.contains")
+              label.fg-label Contains of
+
       .col-sm-6
         .card(ng-hide="is_edit")
           .card-header.ch-alt
