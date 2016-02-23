@@ -21,8 +21,8 @@ resolvers =
       ]
     ]
 
-sys.modules.main_dishes =
-  name: 'main_dishes'
+sys.modules.daily_meal =
+  name: 'modules.daily_meal'
   dependencies: [
     'angularMoment'
     'angular-bootstrap-select'
@@ -33,56 +33,58 @@ sys.modules.main_dishes =
   constants: {}
   controllers:
     show:
-      name: 'main_dishesShowCtrl'
+      name: 'daily_mealShowCtrl'
       inject: ['$scope', '$stateParams', '$http']
     index:
-      name: 'main_dishesIndexCtrl'
+      name: 'daily_mealIndexCtrl'
       inject: ['$scope', '$stateParams', '$http']
     form:
-      name: 'main_dishesFormCtrl'
+      name: 'daily_mealFormCtrl'
       inject: ['$scope', '$state', '$http', '$timeout', 'FileUploader']
   services: {}
   directives: {}
   endpoints:
-    list: '/api/v1/dashboard/main_dishes'
-    create: '/api/v1/dashboard/main_dishes'
-    get: '/api/v1/dashboard/main_dishes/:id'
-    update: '/api/v1/dashboard/main_dishes/:id'
+    list: '/api/v1/dashboard/daily_meal'
+    create: '/api/v1/dashboard/daily_meal'
+    get: '/api/v1/dashboard/daily_meal/:id'
+    update: '/api/v1/dashboard/daily_meal/:id'
+    get_main_dishes: '/api/v1/dashboard/main_dishes'
+    get_side_dishes: '/api/v1/dashboard/side_dishes'
     images:
-      add: '/api/v1/dashboard/main_dishes/images'
-      remove: '/api/v1/dashboard/main_dishes/:id/images/:name'
-      main: '/api/v1/dashboard/main_dishes/:id/images/:name/main'
+      add: '/api/v1/dashboard/daily_meal/:id/images'
+      remove: '/api/v1/dashboard/daily_meal/:id/images/:name'
+      main: '/api/v1/dashboard/daily_meal/:id/images/:name/main'
   events: {}
   states:
     index:
-      name: 'main_dishes'
+      name: 'daily_meals'
       config:
         parent: sys.modules.app.states.app.name
         access: ['hostel']
-        url: '/main_dishes'
-        templateUrl: 'views/modules/main_dishes/html/index'
+        url: '/daily_meal'
+        templateUrl: 'views/modules/daily_meal/html/index'
     new:
-      name: 'new_main_dish'
+      name: 'new_daily_meal'
       config:
         parent: sys.modules.app.states.app.name
         access: ['hostel']
-        url: '/main_dishes/new'
-        templateUrl: 'views/modules/main_dishes/html/form'
+        url: '/daily_meal/new'
+        templateUrl: 'views/modules/daily_meal/html/form'
         resolve: resolvers.form
     show:
-      name: 'main_dish'
+      name: 'daily_meal'
       config:
         parent: sys.modules.app.states.app.name
         access: ['hostel']
-        url: '/main_dishes/:id'
-        templateUrl: 'views/modules/main_dishes/html/show'
+        url: '/daily_meal/:id'
+        templateUrl: 'views/modules/daily_meal/html/show'
     edit:
-      name: 'edit_main_dish'
+      name: 'edit_daily_meal'
       config:
         parent: sys.modules.app.states.app.name
         access: ['hostel']
-        url: '/main_dishes/:id/edit'
-        templateUrl: 'views/modules/main_dishes/html/form'
+        url: '/daily_meal/:id/edit'
+        templateUrl: 'views/modules/daily_meal/html/form'
         resolve: resolvers.form
 
-module = angular.module sys.modules.main_dishes.name, sys.modules.main_dishes.dependencies
+module = angular.module sys.modules.daily_meal.name, sys.modules.daily_meal.dependencies

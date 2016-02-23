@@ -7,17 +7,13 @@ controller = ($scope, $state, $http, $timeout, FileUploader) ->
       $scope.is_edit = $state.current.name == module.states.edit.name
       $scope.interests = sys.defaults.interests
       $scope.side_dish = {
-        title: ''
-        address: ''
-        description: ''
+        name: ''
         images: []
-        at: moment()
-        interests: []
-        price: ''
+      
       }
 
     clear: ->
-      jsonMask $scope.side_dish, 'title,description,at/*,interests,price,is_draft'
+      jsonMask $scope.side_dish, 'name,at/*,is_draft'
 
     events:
       assign: ->

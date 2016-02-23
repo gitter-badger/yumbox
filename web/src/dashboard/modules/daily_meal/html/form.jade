@@ -1,0 +1,71 @@
+.container-fluid(ng-controller='daily_mealFormCtrl' nv-file-drop="" uploader="uploader")
+  ol.breadcrumb
+    li 
+      a(ui-sref='home') Dashboard
+    li 
+      a(ui-sref='daily_meal') Daily Meal
+    li.active {{is_edit ? 'Edit' : 'New'}}
+    ul.actions.m-t--5.hidden-xs.pull-right
+      li
+        a(ui-sref="daily_meal") 
+          i.zmdi.zmdi-close
+  .container-fluid
+    .row
+      .col-sm-6
+        .alert.alert-danger(role='alert' ng-show='error')
+          p {{error}}
+        .card
+          .card-header.m-b-20
+            button.btn.btn-float.waves-effect(ng-click="save()" ng-class="is_edit? 'bgm-pink' : 'bgm-blue'")
+              i.zmdi(ng-class="is_edit? 'zmdi-check' : 'zmdi-plus'")
+          .card-body.card-padding
+            .row
+              .col-sm-6
+                .form-group.fg-float
+              label.label Main Dish
+              .p-t-5.p-b-25
+                select(selectpicker='' multiple title='Choose the main dish for today! ...' ng-model='daily_meal.main_dish')
+                  option(ng-repeat="(key, main_dish) in main_dishes" value="{{key}}") {{name}}
+              .col-sm-6
+                .form-group.fg-float
+              label.label Side Dish
+              .p-t-5.p-b-25
+                select(selectpicker='' multiple title='Choose the side dish for today! ...' ng-model='daily_meal.side_dish')
+           -----------------------------------
+           .row
+             .col-sm-6
+               .form-group.fg-float
+                 .fg-line(ng-class="daily_meal.total ? 'fg-toggled' : ''")
+                   input.form-control.fg-input(type='number' ng-model="daily_meal.total)
+                 label.fg-label Total
+             .col-sm-6
+                .form-group
+                  .dropdown
+                    a#daily_meal_at.dropdown-toggle(data-toggle="dropdown")
+                      .input-group.form-group
+                        span.input-group-addon
+                          i.zmdi.zmdi-calendar
+                        .dtp-container.dropdown.fg-line
+                          input.form-control(type="text" value="{{daily_meal.at | amDateFormat:'dddd, MMMM Do YYYY, h:mm a'}}")
+                    ul.dropdown-menu(role='menu' aria-labelledby="dLabel")
+                      datetimepicker(ng-model="daily_meal.at" data-datetimepicker-config="{ dropdownSelector: '#daily_meal_at', startView:'day', minView:'minute' }" )
+      
+      .col-sm-6
+        .card(ng-hide="is_edit")
+          .card-header.ch-alt
+            h2 Help
+          .card-body.card-padding
+            p First save the basic information about this activity using the form on the left. Once it is saved, you can add images and publish it to your guests.
+        div(ng-show="is_edit")
+          .card
+            .card-header.ch-alt
+              h2 
+                | Publish
+                small Once everything is ok and you have added images to the activity, publish it. Published activities are available to all of your guests.
+            .card-body.card-padding
+              .row
+                .col-sm-12.m-b-20
+                  .toggle-switch(data-ts-color="blue")
+                    label.ts-label(for="ts3") Publish
+                    input#ts3(type="checkbox" hidden="hidden" ng-model="daily_meal.is_draft" ng-false-value='true' ng-true-value='false')
+                    label.ts-helper(for="ts3")

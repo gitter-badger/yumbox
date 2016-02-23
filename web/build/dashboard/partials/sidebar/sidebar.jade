@@ -13,22 +13,18 @@ aside#sidebar(data-ng-class="{ 'toggled': sidebarToggle.left === true }" ng-cont
             i.zmdi.zmdi-view-dashboard
             | Dashboard
         li(data-ui-sref-active="active")
-          a(ui-sref='activities' ng-click="hide()")
+          a(ui-sref='daily_meal' ng-click="hide()")
             i.zmdi.zmdi-calendar
-            | Activities
+            | Daily Meal
         li(data-ui-sref-active="active")
-          a(ui-sref='analytics' ng-click="hide()")
-            i.zmdi.zmdi-trending-up
-            | Analytics
+          a(ui-sref='main_dishes' ng-click="hide()")
+            i.zmdi.zmdi-calendar
+            | Main Dishes
         li(data-ui-sref-active="active")
-          a(ui-sref="settings" ng-click="hide()")
-            i.zmdi.zmdi-settings
-            | Settings
+          a(ui-sref='side_dishes' ng-click="hide()")
+            i.zmdi.zmdi-calendar
+            | Side Dishes
         li(data-ui-sref-active="active")
           a(ui-sref="console({key: hostel.server_api_key})" ng-click="hide()")
             i.zmdi.zmdi-view-web
             | Developer Console
-        li(data-ui-sref-active="active")
-          a(href="" ng-click="hide()")
-            i.zmdi.zmdi-comments
-            | Tipi Support

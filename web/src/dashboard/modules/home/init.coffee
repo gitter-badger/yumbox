@@ -12,6 +12,12 @@ sys.modules.home = {
         disabled: 'Disabled'
       activities:
         state: 'hidden'
+      main_dishes:
+        state: 'hidden'
+      side_dishes:
+        state: 'hidden'
+      daily_meal:
+        state: 'hidden'
       guests:
         state: 'hidden'
       analytics:

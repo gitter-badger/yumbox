@@ -85,4 +85,4 @@ sys.modules.side_dishes =
         templateUrl: 'views/modules/side_dishes/html/form'
         resolve: resolvers.form
 
-module = angular.module sys.modules..name, sys.modules.side_dishes.dependencies
+module = angular.module sys.modules.side_dishes.name, sys.modules.side_dishes.dependencies

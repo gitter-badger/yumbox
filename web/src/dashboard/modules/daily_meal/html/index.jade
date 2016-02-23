@@ -1,0 +1,38 @@
+.container-fluid(ng-controller='daily_mealIndexCtrl')
+  ol.breadcrumb
+    li 
+      a(ui-sref='home') Dashboard
+    li.active Daily Meal
+    ul.actions.m-t--5.hidden-xs.pull-right
+      li
+        a(ui-sref="new_daily_meal") 
+          i.zmdi.zmdi-plus.c-green
+      li
+        a(ui-sref="home") 
+          i.zmdi.zmdi-close
+  .container-fluid
+    .row
+      .col-sm-12
+        #daily_meal-list(infinite-scroll="more()" infinite-scroll-distance="3" infinite-scroll-disabled='daily_meal.disabled')
+          .col-md-3.col-sm-6
+            .dash-widget-item#new-daily_meal-btn
+              .dash-widget-header
+                .new.bgm-blue.c-white
+                  .content(ui-sref='new_daily_meal')
+                    .cell
+                      i.zmdi.zmdi-plus
+                      .title.p-t-5 NEW DAILY MEAL
+                      small.animated click to create a daily meal
+                .new-block
+          .col-md-3.col-sm-6(ng-repeat='daily_meal in daily_meal.list')
+            div(ng-if="$index+1 % 4 == 0" class="clearfix")
+            .dash-widget-item
+              .dash-widget-header
+                img(ng-src='/cdn/daily_meal/{{daily_meal.doc_key}}/main.jpg?{{daily_meal.cache_uid}}')
+                .main-item
+                  small(am-time-ago='daily_meal.at')
+                  h2 {{main_dish.name}}
+                  .actions.text-center
+                    button.btn.bgm-pink.btn-icon.btn-float.waves-circle.waves-effect(ui-sref="edit_daily_meal({id:daily_meal.doc_key})" ng-class="daily_meal.is_draft ? 'bgm-pink' : 'bgm-green' ")
+                      i.zmdi(ng-class="daily_meal.is_draft ? 'zmdi-edit' : 'zmdi-check' ")
+        .clearfix
