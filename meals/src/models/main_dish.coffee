@@ -19,14 +19,12 @@ module.exports = (server, options) ->
     MAIN_IMAGE_EXT:       'jpg'
  
     props:
-      name:        on
-      total:       off
-      price:       on
-      remained:    off
-      contains:    off
-      description: off
-      calories:    off
-      images:      off
+      name: on
+      price: on
+      contains: on
+      description: on
+      calories: on
+      images: off
       images_file: on
       isAvailable: off
 
