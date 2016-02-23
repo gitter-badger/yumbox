@@ -13,7 +13,7 @@ module.exports = (server, options) ->
         payload:
           output: 'stream'
         description: 'Create a main meal.'
-        tags: ['meal','dashboard','main_dish']
+        tags: ['meal','dashboard','main_dish', 'create']
     }
     {
       method: 'PUT'

@@ -45,12 +45,13 @@ context 'MainDish', ->
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         main_dish.doc.should.contain.all.keys [
-          'name','price', 'doc_key', 'doc_type'
+          'name','price', 'doc_key', 'doc_type',
+          'calories', 'description', 'contains', 
           ]
 
       it 'should not accept some props', ->
         main_dish.doc.should.not.contain.any.keys [
-          'calories', 'description', 'contains', 'images', 'image_files'
+         'images', 'image_files'
           'isAvailable'
           ]
       
