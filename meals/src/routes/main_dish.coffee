@@ -16,16 +16,6 @@ module.exports = (server, options) ->
         tags: ['meal','dashboard','main_dish']
     }
     {
-      method: 'GET'
-      path: '/v1/dashboard/main_dishes'
-      config:
-        handler: MainDish.dashboard.get
-        payload:
-          output: 'stream'
-        description: 'get  main dishes'
-        tags: ['meal','dashboard','main_dish']
-    }
-    {
       method: 'PUT'
       path: '/v1/dashboard/main_dish/{key}'
       config:
@@ -33,6 +23,16 @@ module.exports = (server, options) ->
         validate: MainDishValidator::edit
         description: 'Updates maindish'
         tags: ['main_dish', 'update','edit']
+    }
+    {
+      method: 'DELETE'
+      path: '/v1/dashboard/main_dish/{key}'
+      config:
+        handler: MainDish.dashboard.remove
+        payload:
+          output: 'stream'
+        description: 'remove a main dish'
+        tags: ['meal','dashboard','main_dish', 'delete']
     }
     {
       method: 'POST'
