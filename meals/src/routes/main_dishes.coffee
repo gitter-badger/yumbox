@@ -2,12 +2,12 @@ MainDishValidator = require '../models/mainDishValidator'
 
 module.exports = (server, options) ->
 
-  MainDish = require('../handlers/main_dish') server, options
+  MainDish = require('../handlers/main_dishes') server, options
  
   return [
     {
       method: 'POST'
-      path: '/v1/dashboard/main_dish'
+      path: '/v1/dashboard/main_dishes'
       config:
         handler: MainDish.dashboard.create
         payload:
@@ -17,7 +17,7 @@ module.exports = (server, options) ->
     }
     {
       method: 'PUT'
-      path: '/v1/dashboard/main_dish/{key}'
+      path: '/v1/dashboard/main_dishes/{key}'
       config:
         handler: MainDish.dashboard.edit
         validate: MainDishValidator::edit
@@ -26,22 +26,20 @@ module.exports = (server, options) ->
     }
     {
       method: 'DELETE'
-      path: '/v1/dashboard/main_dish/{key}'
+      path: '/v1/dashboard/main_dishes/{key}'
       config:
         handler: MainDish.dashboard.remove
-        payload:
-          output: 'stream'
         description: 'remove a main dish'
         tags: ['meal','dashboard','main_dish', 'delete']
     }
     {
       method: 'POST'
-      path: '/v1/dashboard/images'
+      path: '/v1/dashboard/main_dishes/{key}/images'
       config:
         handler: MainDish.dashboard.add_images
         payload:
           output: 'stream'
-      #  validate: MainDishValidator::add_images
+        #validate: MainDish Validator::add_images
         description: 'adds some images to main dish'
         tags: ['main_dish', 'image']
     }

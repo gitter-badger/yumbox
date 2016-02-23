@@ -34,9 +34,8 @@ module.exports = (server, options) ->
         MainDish.get(main_dish_key)
           .then (main_dish) ->
             main_dish.doc.image_files = request.payload.images
-            main_dish.update true
+            main_dishes.update true
           .then (result) ->
             return reply.Boom.badImplementation "something's wrong" if result instanceof Error
             reply.nice result
-
   }

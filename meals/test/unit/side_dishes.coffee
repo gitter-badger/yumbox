@@ -1,4 +1,4 @@
-should = require('chai').should()
+hould = require('chai').should()
 moment = require 'moment'
 _      = require 'lodash'
 fs     = require 'fs-extra'
@@ -10,7 +10,7 @@ Path = require 'path'
 
 SideDish = require("../../src/models/side_dish") server,
 
-context 'SideDish', ->
+context 'SideDishes', ->
   describe 'Souce Adapter', ->
     describe 'PREFIX', ->
       it 'should have PREFIX set to \'s\'', ->
@@ -77,14 +77,14 @@ context 'SideDish', ->
             result.doc.should.be.deep.eq side_dish.doc
             key.should.be.eq side_dish.doc.doc_key
             
-      it 'should edit a side_dish', ->
+      it 'should edit a side_dishes', ->
         key = side_dish.key
         old_side_dish = null
         side_dish.create()
           .then ->
             SideDish.get(key)
           .then (result) ->
-            old_side_dish = result.doc
+            old_side_dish= result.doc
             updated_side_dish = new SideDish result.doc.doc_key, {
               name : 'french fries'
               price: '18000'

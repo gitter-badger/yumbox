@@ -40,4 +40,3 @@ module.exports = (server, options) ->
     Q.allSettled(savers)
       .then (paths) ->
         names = _.map paths, (path) -> _.last path.value.split "/"
- 

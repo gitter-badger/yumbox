@@ -31,12 +31,12 @@ context 'MainDish', ->
     data = null
     beforeEach () ->
       data =
-        name:        faker.name.firstName()
-        price:       faker.random.number()
-        calories:    faker.random.number()
-        contains:    faker.company.suffixes()
+        name: faker.name.firstName()
+        price: faker.random.number()
+        calories: faker.random.number()
+        contains: faker.company.suffixes()
         description: faker.hacker.phrase()
-        images:      [ "#{__dirname}/images/example_image.jpg" ]
+        images: [ "#{__dirname}/images/example_image.jpg" ]
         image_files: []
         isAvailable: faker.random.boolean()
 

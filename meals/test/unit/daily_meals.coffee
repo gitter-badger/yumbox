@@ -11,7 +11,7 @@ Path = require 'path'
 DailyMeal = require("../../src/models/daily_meal") server,
 
 context 'DailyMeal', ->
-  describe 'Souce Adapter', ->
+  describe 'Source Adapter', ->
     describe 'PREFIX', ->
       it 'should have PREFIX set to \'d\'', ->
         DailyMeal::PREFIX.should.exist
