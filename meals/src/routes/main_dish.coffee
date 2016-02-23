@@ -16,6 +16,25 @@ module.exports = (server, options) ->
         tags: ['meal','dashboard','main_dish']
     }
     {
+      method: 'GET'
+      path: '/v1/dashboard/main_dishes'
+      config:
+        handler: MainDish.dashboard.get
+        payload:
+          output: 'stream'
+        description: 'get  main dishes'
+        tags: ['meal','dashboard','main_dish']
+    }
+    {
+      method: 'PUT'
+      path: '/v1/dashboard/main_dish/{key}'
+      config:
+        handler: MainDish.dashboard.edit
+        validate: MainDishValidator::edit
+        description: 'Updates maindish'
+        tags: ['main_dish', 'update','edit']
+    }
+    {
       method: 'POST'
       path: '/v1/dashboard/images'
       config:
@@ -26,4 +45,5 @@ module.exports = (server, options) ->
         description: 'adds some images to main dish'
         tags: ['main_dish', 'image']
     }
+
   ]
