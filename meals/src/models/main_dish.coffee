@@ -36,7 +36,9 @@ module.exports = (server, options) ->
       @image_files = doc.image_files if doc.image_files?
 
     before_save: ->
+        delete @doc.images
         return true unless @doc.image_files?
+
         @image_files = @doc.image_files
         delete @doc.image_files
         @doc.images ?= []
@@ -44,7 +46,6 @@ module.exports = (server, options) ->
           .then (file_names) =>
             @doc.images = _.union @doc.images, file_names
             true
-
  
     _save_image: ->
       @image_files  = [@image_files] unless _.isArray @image_files
