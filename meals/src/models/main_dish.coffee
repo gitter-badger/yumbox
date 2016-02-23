@@ -49,7 +49,6 @@ module.exports = (server, options) ->
       @image_files  = [@image_files] unless _.isArray @image_files
       has_main = (_.find @doc.images, (img)-> img.split('.')[0] is MainDish::MAIN_IMAGE_NAME)?
 
-
       savers = []
       savers.push @save_image _.pullAt(@image_files, 0)[0], MainDish::MAIN_IMAGE_NAME, MainDish::IMAGE.SIZE.MEDIUM unless has_main
       for file in @image_files

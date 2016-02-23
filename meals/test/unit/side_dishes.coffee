@@ -86,7 +86,7 @@ context 'SideDishes', ->
           .then (result) ->
             old_side_dish= result.doc
             updated_side_dish = new SideDish result.doc.doc_key, {
-              name : 'french fries'
+              name : 'sidedish'
               price: '18000'
               images: [ "#{__dirname}/images/example_image_2.jpg" ]
               isAvailable: yes
@@ -96,7 +96,7 @@ context 'SideDishes', ->
             SideDish.get(key)
               .then (result) ->
                 old_side_dish.should.not.be.eq result.doc
-                result.doc.name.should.be.eq        'french fries'
+                result.doc.name.should.be.eq        'sidedish'
                 result.doc.images.should.be.deep.eq  [ "#{__dirname}/images/example_image_2.jpg" ]
     
       it 'should delete a side_dish', ->
