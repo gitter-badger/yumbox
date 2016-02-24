@@ -1,4 +1,4 @@
-exports.register = require('./src/main')
+exports.register = require('./build/main')
 
 exports.register.attributes = {
   pkg: require('./package.json')
