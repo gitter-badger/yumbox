@@ -20,7 +20,8 @@ module.exports = (server, options) ->
 
     props:
       name: on
-      images:  on
+      images:  off
+      images_file:on
       isAvailable: off
 
     constructor: (key, doc, all) ->
@@ -31,6 +32,7 @@ module.exports = (server, options) ->
     before_save: ->
       delete @doc.images
       return true unless @doc.image_files?
+
       @image_files = @doc.image_files
       delete @doc.image_files
       @doc.images ?= []

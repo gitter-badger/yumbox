@@ -5,7 +5,6 @@ ShortID = require 'shortid'
 
 module.exports = (server, options) ->
   return class MainDish extends server.methods.model.Base()
-    
     PREFIX: 'm'
 
     IMAGE:
@@ -34,17 +33,17 @@ module.exports = (server, options) ->
       @image_files = doc.image_files if doc.image_files?
 
     before_save: ->
-        delete @doc.images
-        return true unless @doc.image_files?
+      delete @doc.images
+      return true unless @doc.image_files?
 
-        @image_files = @doc.image_files
-        delete @doc.image_files
-        @doc.images ?= []
-        @_save_image()
-          .then (file_names) =>
-            @doc.images = _.union @doc.images, file_names
-            true
- 
+      @image_files = @doc.image_files
+      delete @doc.image_files
+      @doc.images ?= []
+      @_save_image()
+        .then (file_names) =>
+          @doc.images = _.union @doc.images, file_names
+          true
+
     _save_image: ->
       @image_files  = [@image_files] unless _.isArray @image_files
       has_main = (_.find @doc.images, (img)-> img.split('.')[0] is MainDish::MAIN_IMAGE_NAME)?

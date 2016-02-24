@@ -30,11 +30,11 @@ module.exports = (server, options) ->
             reply.nice result
 
       add_images: (request, reply) ->
-        side_dish_key = request.payload.doc_key
+        side_dish_key = request.params.key
         SideDish.get(side_dish_key)
           .then (side_dish) ->
             side_dish.doc.image_files = request.payload.images
-            side_dishes.update true
+            side_dish.update true
           .then (result) ->
             return reply.Boom.badImplementation "something's wrong" if result instanceof Error
             reply.nice result
