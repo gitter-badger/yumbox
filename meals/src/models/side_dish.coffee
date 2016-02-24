@@ -46,6 +46,8 @@ module.exports = (server, options) ->
       has_main = (_.find @doc.images, (img)-> img.split('.')[0] is SideDish::MAIN_IMAGE_NAME)?
 
       savers = []
+      savers.push @save_image _.pullAt(@image_files, 0)[0], SideDish::MAIN_IMAGE_NAME, SideDish::IMAGE.SIZE.MEDIUM unless has_main
+ 
       for file in @image_files
         savers.push @save_image file, ShortID.generate(), SideDish::IMAGE.SIZE.MEDIUM
 
