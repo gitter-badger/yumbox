@@ -1,6 +1,6 @@
 {
   "name": "yumbox.order",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "yumbox daily meal",
   "main": "init",
   "scripts": {
