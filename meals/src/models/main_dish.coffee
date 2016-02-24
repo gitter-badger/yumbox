@@ -24,8 +24,8 @@ module.exports = (server, options) ->
       description: on
       calories: on
       images: off
-      images_file: on
-      isAvailable: off
+      image_files: on
+      isAvailable: on
 
     constructor: (key, doc, all) ->
       super
