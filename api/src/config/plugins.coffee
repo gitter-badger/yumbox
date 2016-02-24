@@ -65,7 +65,6 @@ module.exports = (server) ->
       options:
         database: db
     }
-  server.select(['web', 'api']).register [
     {
       register: require('yumbox.order')
       options:
