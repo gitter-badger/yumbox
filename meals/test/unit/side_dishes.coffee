@@ -32,22 +32,21 @@ context 'SideDishes', ->
     beforeEach () ->
       data =
         name:        faker.name.firstName()
-        description: faker.hacker.phrase()
-        images:       [ "{#__dirname}/images/example_image.jpg" ]
-        image_files: []
-        isAvailable:  faker.random.boolean()
-
+        images:      []
+        image_files: [ "#{__dirname}/images/example_image.jpg" ]
+        isAvailable: faker.random.boolean()
+      
       side_dish = new SideDish data
 
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         side_dish.doc.should.contain.all.keys [
-          'name', 'doc_key', 'doc_type'
+          'name', 'image_files', 'isAvailable', 'doc_key', 'doc_type'
           ]
 
       it 'should not accept some props', ->
         side_dish.doc.should.not.contain.any.keys [
-          'price', 'description', 'image', 'image_files', 'isAvailable'
+          'images'
           ]
       
       it 'should not accept unknown props' , ->
@@ -56,11 +55,12 @@ context 'SideDishes', ->
         invalid_side_dish.doc.should.not.have.key 'unknown_prop'
 
       it 'should have correct values set', ->
-        side_dish.doc.name.should.be.eq        data.name
-        side_dish.doc.images.should.be.deep.eq data.images
+        side_dish.doc.name.should.be.eq data.name
 
       describe 'Images', ->
         it 'should be saved with images', ->
+          side_dish.image_files = fs.readFileSync side_dish.image_files[0]
+
           side_dish.create(true)
             .then (res) ->
               res.doc_key.should.be.equal side_dish.key
@@ -96,8 +96,8 @@ context 'SideDishes', ->
             SideDish.get(key)
               .then (result) ->
                 old_side_dish.should.not.be.eq result.doc
-                result.doc.name.should.be.eq        'sidedish'
-                result.doc.images.should.be.deep.eq  [ "#{__dirname}/images/example_image_2.jpg" ]
+                result.doc.name.should.be.eq 'sidedish'
+                result.doc.images.should.be.deep.eq ["sidedish.jpg"] 
     
       it 'should delete a side_dish', ->
         side_dish = new SideDish data
