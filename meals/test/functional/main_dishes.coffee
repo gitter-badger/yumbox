@@ -32,4 +32,3 @@ context 'Main Dishes functional', ->
         .field('contains', MAIN_DISHES.description)
           .then (main_dishes) ->
             main_dishes.should.have.status 200
-            console.log main_dishes.body.data.success , 'manin_dishhhhhhhhhhhhhhhh'

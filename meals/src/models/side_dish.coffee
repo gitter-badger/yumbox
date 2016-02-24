@@ -22,7 +22,7 @@ module.exports = (server, options) ->
       name: on
       images:  off
       images_file:on
-      isAvailable: off
+      isAvailable: on
 
     constructor: (key, doc, all) ->
       super

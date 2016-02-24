@@ -42,12 +42,12 @@ context 'SideDishes', ->
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         side_dish.doc.should.contain.all.keys [
-          'name', 'doc_key', 'doc_type'
+          'name', 'doc_key', 'doc_type', 'isAvailable'
           ]
 
       it 'should not accept some props', ->
         side_dish.doc.should.not.contain.any.keys [
-          'price', 'description', 'image', 'image_files', 'isAvailable'
+          'images'
           ]
       
       it 'should not accept unknown props' , ->
