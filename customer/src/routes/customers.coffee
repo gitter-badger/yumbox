@@ -1,4 +1,4 @@
-UserValidator = require '../models/customerValidator'
+CustomerValidator = require '../models/customerValidator'
 
 module.exports = (server, options) ->
   
@@ -40,7 +40,7 @@ module.exports = (server, options) ->
       path: '/v1/customers'
       config:
         handler: Customers.app.create
-        validate: UserValidator::create
+        validate: CustomerValidator::create
         auth:
           mode: 'try',
           strategy: 'session'
@@ -52,7 +52,7 @@ module.exports = (server, options) ->
       path: '/v1/customers/login'
       config:
         handler: Customers.app.login
-        validate: UserValidator::login
+        validate: CustomerValidator::login
         auth:
           mode: 'try',
           strategy: 'session'
@@ -86,7 +86,7 @@ module.exports = (server, options) ->
       config:
         pre: me_before_handler
         handler: Customers.app.phone
-        validate: UserValidator::phone
+        validate: CustomerValidator::phone
         auth:
           strategy: 'session'
         description: "Attach a phone to user"
@@ -98,10 +98,10 @@ module.exports = (server, options) ->
       config:
         pre: me_before_handler
         handler: Customers.app.verify
-        validate: UserValidator::verify
+        validate: CustomerValidator::verify
         auth:
           strategy: 'session'
-        description: "Verify user's phone"
+        description: "Verify customer's phone"
         tags: ['user', 'device']
     }
     {
@@ -112,7 +112,7 @@ module.exports = (server, options) ->
         handler: Customers.app.feed
         auth:
           strategy: 'session'
-        description: "Get user's feed"
+        description: "Get customer's feed"
         tags: ['feed']
     }
   ]

@@ -70,6 +70,11 @@ module.exports = (server) ->
       options:
         database: db
     }
+    {
+      register: require('yumbox.customer')
+      options:
+        database: db
+    }
   ], (err) ->
         throw err if err
       server.start () ->
