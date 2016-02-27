@@ -1,0 +1,53 @@
+{
+  "template" : "yumbox*",
+  "order" : 10,
+  "mappings" : {
+    "main_dish" : {
+      "_source" : {
+        "includes" : ["doc.*", "name"]
+      },
+      "properties" : {
+        "doc": {
+          "properties" : {
+            "doc_key": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        }
+      }
+    },
+    "side_dish" : {
+      "_source" : {
+        "includes" : ["doc.*", "name"]
+      },
+      "properties" : {
+        "doc": {
+          "properties" : {
+            "doc_key": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        }
+      }
+    },
+    "couchbaseCheckpoint" : {
+      "_source" : {
+        "includes" : ["doc.*"]
+      },
+      "dynamic_templates": [
+        {
+          "store_no_index": {
+            "match": "*",
+            "mapping": {
+              "store" : "no",
+              "index" : "no",
+              "include_in_all" : false
+            }
+          }
+        }
+      ]
+    }
+  }
+}
