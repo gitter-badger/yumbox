@@ -1,3 +1,4 @@
 plugins:
-#  web: otolist.web
   meals: yumbox.meals
+  order: yumbox.order
+  customer: yumbox.customer

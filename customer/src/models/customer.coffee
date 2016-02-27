@@ -5,7 +5,7 @@ ShortID = require 'shortid'
 
 module.exports = (server, options) ->
 
-  return class Customer extends server.methods.model.Base()
+  return class Customer extends require('./customer_base')(server, options)
     
     PREFIX: 'c'
 

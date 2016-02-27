@@ -21,7 +21,7 @@ module.exports = (server, options) ->
     props:
       name: on
       images:  off
-      images_file:on
+      image_files:on
       isAvailable: on
 
     constructor: (key, doc, all) ->
@@ -30,7 +30,6 @@ module.exports = (server, options) ->
       @image_files = doc.image_files if doc.image_files?
 
     before_save: ->
-      delete @doc.images
       return true unless @doc.image_files?
 
       @image_files = @doc.image_files
@@ -43,10 +42,8 @@ module.exports = (server, options) ->
 
     _save_image: ->
       @image_files  = [@image_files] unless _.isArray @image_files
-      has_main = (_.find @doc.images, (img)-> img.split('.')[0] is SideDish::MAIN_IMAGE_NAME)?
-
       savers = []
-      savers.push @save_image _.pullAt(@image_files, 0)[0], SideDish::MAIN_IMAGE_NAME, SideDish::IMAGE.SIZE.MEDIUM unless has_main
+      savers.push @save_image _.pullAt(@image_files, 0)[0], SideDish::MAIN_IMAGE_NAME, SideDish::IMAGE.SIZE.MEDIUM
  
       for file in @image_files
         savers.push @save_image file, ShortID.generate(), SideDish::IMAGE.SIZE.MEDIUM
