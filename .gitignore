@@ -38,3 +38,6 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# Ignorring Test Files (images)
+test_files/*
