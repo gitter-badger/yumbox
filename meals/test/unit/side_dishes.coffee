@@ -64,7 +64,7 @@ context 'SideDishes', ->
           side_dish.create(true)
             .then (res) ->
               res.doc_key.should.be.equal side_dish.key
-              res.should.have.not.property 'image'
+              res.should.have.not.property 'images'
 
 
     describe 'Behavior', ->
