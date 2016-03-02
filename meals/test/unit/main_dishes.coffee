@@ -67,7 +67,7 @@ context 'MainDish', ->
           main_dish.create(true)
             .then (res) ->
               res.doc_key.should.be.equal main_dish.key
-              console.log res #.doc.should.have.not.property 'images'
+              res.should.have.property 'images'
 
     describe 'Behavior', ->
       it 'should create a main_dish', ->

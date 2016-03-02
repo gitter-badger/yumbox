@@ -1,4 +1,4 @@
-hould = require('chai').should()
+should = require('chai').should()
 moment = require 'moment'
 _      = require 'lodash'
 fs     = require 'fs-extra'
@@ -37,7 +37,6 @@ context 'SideDishes', ->
         isAvailable: faker.random.boolean()
       
       side_dish = new SideDish data
-
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         side_dish.doc.should.contain.all.keys [
