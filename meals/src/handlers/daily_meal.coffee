@@ -4,6 +4,7 @@ _ = require 'lodash'
 module.exports = (server, options) ->
   DailyMeal = require('../models/daily_meal') server, options
   MainDish = require('../models/main_dish') server, options 
+  SideDish = require('../models/side_dish') server, options 
 
   return {
     dashboard:
@@ -22,13 +23,17 @@ module.exports = (server, options) ->
       get_detail: (request, reply) ->
         key = request.params.key
         DailyMeal.get(key)
-          .then (dailymeal) ->
-            main_dish_key = dailymeal.doc.main_dish
-            MainDish.get(main_dish_key)
-              .then (result) ->
-                reply result
-            
-
+          .then (meal) ->
+            main_dish_key = meal.doc.main_dish
+            side_dishes_key = meal.doc.side_dishes
+            SideDish.get(side_dishes_key)
+              .then (sidedishes) ->
+                MainDish.get(main_dish_key)
+                 .then (maindish) ->
+                   meal.doc.main_dish = maindish.doc
+                   meal.doc.side_dishes = sidedishes.doc
+                   reply meal.doc
+                
       edit: (request, reply) ->
         payload = request.payload
         daily_meal_key = request.params.key
