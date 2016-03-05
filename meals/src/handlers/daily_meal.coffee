@@ -14,24 +14,18 @@ module.exports = (server, options) ->
           .then (result) ->
             reply.success result
 
-
-    #detail : (key) ->
-    #  get
-    #  main dish -> main dish
-    #  side_dish -> side dishes
-
       get_detail: (request, reply) ->
         key = request.params.key
         DailyMeal.get(key)
           .then (meal) ->
             main_dish_key = meal.doc.main_dish
             side_dishes_key = meal.doc.side_dishes
-            SideDish.get(side_dishes_key)
+            SideDish.find(side_dishes_key)
               .then (sidedishes) ->
-                MainDish.get(main_dish_key)
+                MainDish.find(main_dish_key)
                  .then (maindish) ->
-                   meal.doc.main_dish = maindish.doc
-                   meal.doc.side_dishes = sidedishes.doc
+                   meal.doc.main_dish = maindish
+                   meal.doc.side_dishes = sidedishes
                    reply meal.doc
                 
       edit: (request, reply) ->
