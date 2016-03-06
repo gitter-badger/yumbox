@@ -16,4 +16,4 @@ module.exports = (server, options) ->
       total: on
       remained: off
 
-    _mask: 'main_dish,side_dishes,at,total'
+    _mask: 'main_dish,side_dishes,at,total,doc_key'

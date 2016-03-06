@@ -27,7 +27,7 @@ module.exports = (server, options) ->
       image_files: on
       isAvailable: on
 
-    _mask: 'name,price,contains,description,calories,images,isAvailable'
+    _mask: 'doc_key,name,price,contains,description,calories,images,isAvailable'
 
     constructor: (key, doc, all) ->
       super
