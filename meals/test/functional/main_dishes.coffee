@@ -39,5 +39,6 @@ context 'Main Dishes functional', ->
             main_dish.body.data.success.should.contains.key "doc_key"
             main_dish.body.data.success.should.contains.key "doc_type"
 
-    it 'should edit a main dish', ->
-      chai.request(URL)
+    it 'should edit a main dish'
+    it 'should delete a main dish'
+    it 'should save with images'

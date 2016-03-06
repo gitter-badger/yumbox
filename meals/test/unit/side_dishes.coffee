@@ -63,8 +63,7 @@ context 'SideDishes', ->
           side_dish.create(true)
             .then (res) ->
               res.doc_key.should.be.equal side_dish.key
-              res.should.have.not.property 'images'
-
+              res.should.be.deep.equal side_dish.doc
 
     describe 'Behavior', ->
       it 'should create a side_dish', ->
