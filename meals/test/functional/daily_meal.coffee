@@ -94,7 +94,6 @@ context 'Daily Meal functional', ->
                 chai.request(URL)
                  .get('/v1/dashboard/daily_meal/'+daily_meal.body.data.success.doc_key)
                 .then (dailymeal) ->
-                  delete main_dish.body.data.success.doc_key
                   delete main_dish.body.data.success.doc_type
                   dailymeal.body.main_dish.should.be.deep.eq main_dish.body.data.success
                   dailymeal.body.side_dishes[0].name.should.be.deep.eq side_dishes[0].name
