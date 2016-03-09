@@ -2,7 +2,7 @@ CustomerValidator = require '../models/customerValidator'
 
 module.exports = (server, options) ->
   
-  Customers = require('../handlers/customers') server, options
+  Customers = require('../handlers/customer') server, options
 
   me_before_handler = [
     {

@@ -1,5 +1,5 @@
 module.exports = (plugin, options, next) ->
   server = plugin.select 'api'
 
-  server.route require('./routes/customers') server, options
+  server.route require('./routes/order') server, options
   next()

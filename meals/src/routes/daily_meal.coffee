@@ -1,4 +1,4 @@
-#DailyMealValidator = require '../models/dailyMealValidator'
+DailyMealValidator = require '../models/dailyMealValidator'
 
 module.exports = (server, options) ->
 
@@ -32,7 +32,6 @@ module.exports = (server, options) ->
         description: 'remove a daily meal'
         tags: ['meal','dashboard','daily_meal', 'delete']
    }
- 
    {
       method: 'GET'
       path: '/v1/dashboard/daily_meal/{key}'

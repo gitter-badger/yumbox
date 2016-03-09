@@ -62,6 +62,16 @@
         options: {
           database: db
         }
+      }, {
+        register: require('yumbox.orders'),
+        options: {
+          database: db
+        }
+      }, {
+        register: require('yumbox.customers'),
+        options: {
+          database: db
+        }
       }
     ], function(err) {
       if (err) {

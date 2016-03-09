@@ -66,12 +66,12 @@ module.exports = (server) ->
         database: db
     }
     {
-      register: require('yumbox.order')
+      register: require('yumbox.orders')
       options:
         database: db
     }
     {
-      register: require('yumbox.customer')
+      register: require('yumbox.customers')
       options:
         database: db
     }
