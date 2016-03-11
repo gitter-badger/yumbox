@@ -20,7 +20,7 @@ context 'Daily Meal functional', ->
     calories:    faker.random.number()
     contains:    faker.lorem.sentence()
     description: faker.lorem.sentence()
-    isAvailable: faker.random.boolean()
+    isAvailable: "#{faker.random.boolean()}"
 
 
   describe 'daily meal', ->

@@ -10,7 +10,7 @@ chai.use chaiHttp
 context 'Main Dishes functional', ->
   get_dish = ->
     name:        faker.name.firstName()
-    price:       faker.random.number() 
+    price:       faker.random.number()
     calories:    faker.random.number()
     contains:    faker.lorem.sentence()
     description: faker.lorem.sentence()
