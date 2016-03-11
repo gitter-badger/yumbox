@@ -6,7 +6,7 @@ module.exports = class DailyMealValidator
     payload:
       main_dish: Joi.string().required()
       side_dishes: Joi.array().items(Joi.string().required())
-      at: Joi.date().min('now').format('YYYY-MM-DD').required()
+      at: Joi.date().iso().min('now')
       total: Joi.number().required()
 
   get_detail:
@@ -16,5 +16,5 @@ module.exports = class DailyMealValidator
     payload:
       main_dish: Joi.string()
       side_dishes: Joi.array().items(Joi.string()).required()
-      at: Joi.date().min('now').format('YYYY-MM-DD')
+      at: Joi.date().iso().min('now')
       total: Joi.number()

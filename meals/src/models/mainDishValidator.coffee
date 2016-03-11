@@ -1,6 +1,6 @@
 Joi = require 'joi'
 
-module.exports = class Validator
+module.exports = class MainDishValidator
   
   create:
     payload:
