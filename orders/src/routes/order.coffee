@@ -28,7 +28,7 @@ module.exports = (server, options) ->
       path: '/v1/app/orders/{key}'
       config:
         handler: Order.app.edit
-        validate: OrderValidator::edit
+        validate: OrderValidator::get_detail
         description: 'Updates order'
         tags: ['order', 'update','edit']
     }

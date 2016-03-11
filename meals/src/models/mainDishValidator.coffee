@@ -4,18 +4,23 @@ module.exports = class Validator
   
   create:
     payload:
-      name: Joi.string().min(2).required()
+      name: Joi.string().required()
       price: Joi.number().required()
-      contains: Joi.string().min(2).required()
-      description: Joi.string().min(2).required()
+      contains: Joi.string().required()
+      description: Joi.string().required()
       calories: Joi.number().required()
+      isAvailable: Joi.boolean().required()
 
   edit:
     payload:
-      name: Joi.string().min(1)
-      description: Joi.string().min(1)
- 
-
+      name: Joi.string()
+      price: Joi.number()
+      contains: Joi.string()
+      description: Joi.string()
+      calories: Joi.number()
+      isAvailable: Joi.boolean()
+    params:
+      key: Joi.string()
 
   add_images:
     payload:

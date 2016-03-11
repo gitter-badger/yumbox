@@ -21,7 +21,6 @@ server = new Hapi.Server
 ###  
 server.connection { port: Number(config.server.api.port), labels: 'api' }
 server.connection { port: Number(config.server.web.port), labels: 'web' }
-server.connection { port: Number(config.server.notification.port), labels: 'notification' }
 
 load = ->
   require("#{__dirname}/methods/model")(server, config)

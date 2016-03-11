@@ -9,16 +9,15 @@ chai.use chaiHttp
 
 context 'Daily Meal functional', ->
   get_daily_meal = ->
-    main_dish: faker.random.uuid()
+    main_dish: "#{faker.random.uuid()}"
     side_dishes: [faker.random.uuid(), faker.random.uuid(), faker.random.uuid()]
-    at: moment(). format()
-    total: "#{faker.random.number() }"
-    #remained is off
+    at:  moment("2016-03-20").format('YYYY-MM-DD')  
+    total: faker.random.number()
 
   get_dish = ->
     name:        faker.name.firstName()
-    price:       "#{faker.random.number()}"
-    calories:    "#{faker.random.number()}"
+    price:       faker.random.number()
+    calories:    faker.random.number()
     contains:    faker.lorem.sentence()
     description: faker.lorem.sentence()
     isAvailable: faker.random.boolean()
@@ -56,7 +55,7 @@ context 'Daily Meal functional', ->
         .field('calories', dish.calories)
         .field('contains', dish.contains)
         .field('description', dish.description)
-        .field('isAvailable', "#{dish.isAvailable}")
+        .field('isAvailable', dish.isAvailable)
       .then (main_dish) ->
         main_dish.should.have.status 200
         side_dishes = []
@@ -64,7 +63,7 @@ context 'Daily Meal functional', ->
           .post('/v1/dashboard/side_dishes')
           .field('name', dish.name)
           .field('description', dish.description)
-          .field('isAvailable', "#{dish.isAvailable}")
+          .field('isAvailable', dish.isAvailable)
         .then (side_dish) ->
           side_dishes.push side_dish.body.data.success
           chai.request(URL)
@@ -78,7 +77,7 @@ context 'Daily Meal functional', ->
             .post('/v1/dashboard/side_dishes')
             .field('name', dish.name)
             .field('description', dish.description)
-            .field('isAvailable', "#{dish.isAvailable}")
+            .field('isAvailable', dish.isAvailable)
           .then (side_dish) ->
             side_dishes.push side_dish.body.data.success
             chai.request(URL)

@@ -10,6 +10,7 @@ module.exports = (server, options) ->
       path: '/v1/dashboard/daily_meal'
       config:
         handler: DailyMeal.dashboard.create
+        validate: DailyMealValidator::create
         payload:
           output: 'stream'
         description: 'Create a daily meal.'
@@ -20,7 +21,7 @@ module.exports = (server, options) ->
       path: '/v1/dashboard/daily_meal/{key}'
       config:
         handler: DailyMeal.dashboard.edit
-        #validate: DailyMealValidator::edit
+        validate: DailyMealValidator::edit
         description: 'Updates maindish'
         tags: ['meal','daily_meal', 'update','edit']
    }
