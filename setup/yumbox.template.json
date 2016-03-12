@@ -32,6 +32,36 @@
         }
       }
     },
+    "daily_meal" : {
+      "_source" : {
+        "includes" : ["doc.*", "name"]
+      },
+      "properties" : {
+        "doc": {
+          "properties" : {
+            "doc_key": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        }
+      }
+    },
+    "order" : {
+      "_source" : {
+        "includes" : ["doc.*", "name"]
+      },
+      "properties" : {
+        "doc": {
+          "properties" : {
+            "doc_key": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        }
+      }
+    },
     "couchbaseCheckpoint" : {
       "_source" : {
         "includes" : ["doc.*"]

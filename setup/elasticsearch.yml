@@ -2,24 +2,7 @@
 #couchbase.password: 123abc # UNCOMMENT & CHANGE THIS TO YOUR PASSWORD
 
 couchbase.typeSelector: org.elasticsearch.transport.couchbase.capi.RegexTypeSelector
-couchbase.typeSelector.documentTypesRegex.user: ^u_[^:]+$
-couchbase.typeSelector.documentTypesRegex.user_profile: ^u_.+:profile$
-couchbase.typeSelector.documentTypesRegex.email: ^e:(.)+$
-couchbase.typeSelector.documentTypesRegex.country: ^country_(.)+$
-couchbase.typeSelector.documentTypesRegex.booking: ^b:(.)+$
-couchbase.typeSelector.documentTypesRegex.guest: ^g_(.)+$
-couchbase.typeSelector.documentTypesRegex.activity: ^(analytics:)?a_(.)+$
-couchbase.typeSelector.documentTypesRegex.hostel: ^(analytics:h_(.)+)|^(h_[^:]+)$
-couchbase.typeSelector.documentTypesRegex.hostel_chat: ^h_.+:chat$
-couchbase.typeSelector.documentTypesRegex.top_thing: ^top_(.)+$
-couchbase.typeSelector.documentTypesRegex.hostel_review: ^hr:(.)+$
-couchbase.typeSelector.documentTypesRegex.hostel_email: ^he:(.)+$
-couchbase.typeSelector.documentTypesRegex.chat: ^chat:(.)+$
-couchbase.typeSelector.documentTypesRegex.pm: ^pm:(.)+$
-
-couchbase.typeSelector.documentTypesRegex.hostel: ^analytics:h:(.)+$
-couchbase.typeSelector.documentTypesRegex.activity: ^analytics:a:(.)+$
-
-# map parent fields for some types
-couchbase.parentSelector: org.elasticsearch.transport.couchbase.capi.DefaultParentSelector
-couchbase.parentSelector.documentTypeParentFields.guest: doc.user_key
+couchbase.typeSelector.documentTypesRegex.side_dish: ^s_[^:]+$
+couchbase.typeSelector.documentTypesRegex.main_dish: ^m_[^:]+$
+couchbase.typeSelector.documentTypesRegex.daily_meal: ^d_[^:]+$
+couchbase.typeSelector.documentTypesRegex.order: ^o_[^:]+$
