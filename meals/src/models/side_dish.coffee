@@ -24,6 +24,8 @@ module.exports = (server, options) ->
       image_files:on
       isAvailable: on
 
+    _mask: 'doc_key,name,images,isAvailable'
+
     constructor: (key, doc, all) ->
       super
       doc = key if not doc? and key instanceof Object

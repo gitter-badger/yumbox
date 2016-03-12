@@ -1,25 +1,24 @@
 {
-  "name": "otolist",
+  "name": "yumbox",
   "version": "1.0.0",
-  "description": "Car Sales System",
+  "description": "Meal Sales System",
   "main": "src/server",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:tectual/otolist.git"
   },
   "keywords": [
-    "tipi"
+    "yumbox"
   ],
-  "author": "Arash Kay <a.karimzadeh@gmail.com> (http://tectual.com.au/)",
+  "author": "GeekHouseteam",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tectual/otolist/issues"
+    "url": "https://github.com/geekhouseteam/yumbox/issues"
   },
-  "homepage": "https://github.com/tectual/otolist",
+  "homepage": "https://github.com",
   "dependencies": {
     "boom": "^2.7.2",
     "catbox-redis": "^1.0.4",

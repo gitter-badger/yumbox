@@ -36,8 +36,8 @@ context 'MainDish', ->
         calories: faker.random.number()
         contains: faker.company.suffixes()
         description: faker.hacker.phrase()
-        images: [ "#{__dirname}/images/example_image.jpg" ]
-        image_files: []
+        image_files: [ "#{__dirname}/images/example_image.jpg" ]
+        images: []
         isAvailable: faker.random.boolean()
 
       main_dish = new MainDish data
@@ -45,15 +45,12 @@ context 'MainDish', ->
     describe 'Properties', ->
       it 'should have properties correctly added', ->
         main_dish.doc.should.contain.all.keys [
-          'name','price', 'doc_key', 'doc_type',
-          'calories', 'description', 'contains'
+          'name','price', 'doc_key', 'doc_type', 'image_files',
+          'calories', 'description', 'contains', 'isAvailable'
           ]
 
       it 'should not accept some props', ->
-        main_dish.doc.should.not.contain.any.keys [
-         'images', 'image_files'
-          'isAvailable'
-          ]
+        main_dish.doc.should.not.contain.any.keys ['images']
       
       it 'should not accept unknown props' , ->
         invalid_main_dish = new MainDish
@@ -66,10 +63,11 @@ context 'MainDish', ->
 
       describe 'Images', ->
         it 'should be saved with images', ->
+          main_dish.image_files = fs.readFileSync main_dish.image_files[0]
           main_dish.create(true)
             .then (res) ->
               res.doc_key.should.be.equal main_dish.key
-              res.should.have.not.property 'images'
+              res.should.have.property 'images'
 
     describe 'Behavior', ->
       it 'should create a main_dish', ->
@@ -93,7 +91,7 @@ context 'MainDish', ->
               name:  'pizza'
               price: '24800'
               images: [ "#{__dirname}/images/example_image_2.jpg" ]
-              isAvailable: no
+              isAvailable: yes 
             }
             updated_main_dish.update()
           .then ->
@@ -103,7 +101,6 @@ context 'MainDish', ->
                 result.doc.name.should.be.eq  'pizza'
                 result.doc.price.should.be.eq '24800'
                 #images is off
-                #isAvailable is off
 
       it 'should delete a main_dish', ->
         key = main_dish.key

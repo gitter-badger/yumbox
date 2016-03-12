@@ -12,6 +12,13 @@ module.exports = (server, options) ->
           .then (result) ->
             reply.success result
            
+      get_detail: (request, reply) ->
+        key = request.params.key
+        MainDish.find(key)
+          .then (maindish) ->
+            return reply.Boom.badImplementation "something's wrong" if result instanceof Error
+            reply.success maindish
+
       edit: (request, reply) ->
         payload = request.payload
         main_dish_key = request.params.key

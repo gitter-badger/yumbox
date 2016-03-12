@@ -1,7 +1,7 @@
 {
-  "name": "yumbox.order",
-  "version": "1.0.0",
-  "description": "yumbox daily meal",
+  "name": "yumbox.customers",
+  "version": "0.0.0",
+  "description": "yumbox customer",
   "main": "init",
   "scripts": {
     "test": "NODE_ENV=test mocha"
@@ -27,6 +27,7 @@
     "hapi": "^13.0.0",
     "joi": "^8.0.2",
     "lodash": "^4.4.0",
+    "node-uuid": "^1.4.7",
     "odme": "^1.1.2",
     "q": "^1.4.1",
     "shortid": "^2.2.4"

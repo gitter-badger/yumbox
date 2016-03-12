@@ -5,7 +5,8 @@ logs
 snapshots
 
 api/src/config/config.yml
-api/build/config/config.yml
+api/build/*
+meal/build/*
 api/tasks/deploy.yml
 test/*
 

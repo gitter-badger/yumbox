@@ -1,16 +1,26 @@
 Joi = require 'joi'
 
-module.exports = class Validator
+module.exports = class MainDishValidator
   
   create:
     payload:
+      name: Joi.string().required()
+      price: Joi.number().required()
+      contains: Joi.string().required()
+      description: Joi.string().required()
+      calories: Joi.number().required()
+      isAvailable: Joi.boolean().required()
+
+  edit:
+    payload:
       name: Joi.string()
-      remained: Joi.number()
-      total: Joi.number().min(1)
       price: Joi.number()
-      calories: Joi.number()
+      contains: Joi.string()
       description: Joi.string()
-      images: Joi.array()
+      calories: Joi.number()
+      isAvailable: Joi.boolean()
+    params:
+      key: Joi.string()
 
   add_images:
     payload:

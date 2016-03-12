@@ -2,6 +2,7 @@ Boom    = require 'boom'
 _       = require 'lodash'
 Q       = require 'q'
 ShortID = require 'shortid'
+moment =  require 'moment'
 
 module.exports = (server, options) ->
   return class DailyMeal extends server.methods.model.Base()
@@ -14,4 +15,5 @@ module.exports = (server, options) ->
       at: on
       total: on
       remained: off
- 
+
+    _mask: 'main_dish,side_dishes,at,total,doc_key'
