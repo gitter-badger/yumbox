@@ -1,18 +1,28 @@
 default:
-  app: tipi
+  app: yumbox
+  url: http://www.yumbox.com
   admin:
     username: admin
     password: admin
   server:
     web:
+      host: http://localhost
       port: 3000
+      timeout: 3000
     api:
+      host: http://localhost
       port: 3100
-    notification:
-      port: 3200
-      route_prefix: ns
-      namespace: ns
-      label: notification
+      timeout: 3000
+  mail:
+    root: /home/mahdie/Projects/yumbox/mails
+    from: Yumbox <mailgun@sandbox160d2d4a33b0442b9190fbb60b17dbca.mailgun.org>
+    domain: sandbox160d2d4a33b0442b9190fbb60b17dbca.mailgun.org
+    api_key: key-86caf4edcfa6928f62c98183649ff8cc
+    trace: false
+    dump: false
+  error:
+    reporting:
+      api_key: b7b4bb934c5f41a89d90ab09479fb019
   databases:
     application:
       host: 127.0.0.1
@@ -22,36 +32,85 @@ default:
       name: analytics
       mock: true
   searchengine:
-    host: localhost
-    port: 9200
-    name: tipi
-    log: debug # error, warning, info, debug, trace
+    application:
+      host: localhost
+      port: 9200
+      name: yumbox
+      log: error # error, warning, info, debug, trace
   cache:
     host: 0.0.0.0
     port: 6379
 development:
+  url: http://localhost:3000
+  mail:
+    mock: true
+    dump: true
+    trace: true
   databases:
     application:
-      name: tipi
+      name: yumbox
   file:
-    path: /Users/arash/Projects/tipi/shared
+    path: /home/mahdie/Projects/yumbox/shared
 test:
+  mail:
+    mock: true
+    trace: false
+    dump: false
+    root: /home/mahdie/Projects/tipi/mails
   databases:
     application:
-      name: tipi
+      name: yumbox
       mock: true
+  file:
+    path: /home/mahdie/Projects/yumbox/test_files
 production:
   server:
     web:
       port: 3000
     api:
       port: 3100
+  mail:
+    root: /var/www/yumbox/current/mails
+    from: Yumbox <team@yumbox.com>
+    domain: tipi.me
+    api_key: key-86caf4edcfa6928f62c98183649ff8cc
   databases:
     application:
       name: default
+      host: 
+  searchengine:
+    application:
+      host: 
+    analytics:
       host: 
   cache:
     host: 0.0.0.0
     port: 6379
   file:
     path: 
+staging:
+  url: http://localhost:3000
+  server:
+    web:
+      port: 3000
+    api:
+      port: 3100
+  mail:
+    root: /var/www/yumbox.com/current/mails
+    from: Yumbox <team@yumbox.com>
+    domain: yumbox.com
+    api_key: key-86caf4edcfa6928f62c98183649ff8cc
+  databases:
+    application:
+      name: yumbox
+      host: 
+  searchengine:
+    application:
+      host: 
+    analytics:
+      host: 
+  cache:
+    host: 0.0.0.0
+    port: 6379
+  file:
+    path: /var/www/yumbox.com/shared

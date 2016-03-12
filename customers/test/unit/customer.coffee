@@ -124,10 +124,9 @@ context 'Customer', ->
           .then (result) ->
             result.should.be.an 'Error'
 
-      it "should remove image_files on create", ->
+      it "should remove avatar on create", ->
         customer.create()
           .then (o) ->
             Customer.get(customer.key)
               .then (obj) ->
                 obj.doc.should.have.property "avatar"
-                obj.doc.should.not.have.property "image_files"
