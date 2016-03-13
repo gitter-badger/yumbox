@@ -12,13 +12,29 @@ module.exports = (server, options) ->
           .then (result) ->
             reply.success result
            
-      get_detail: (request, reply) ->
+      toggle_availabilitty: (request, reply) ->
         key = request.params.key
-        MainDish.find(key)
-          .then (maindish) ->
-            return reply.Boom.badImplementation "something's wrong" if result instanceof Error
-            reply.success maindish
+        MainDish.get(key)
+          .then (main_dish) ->
+            main_dish.doc.is_available = not main_dish.doc.is_available
+            main_dish.update()
+          .then (result) ->
+            return reply Boom.badImplementation "something's wrong" if result instanceof Error
+            reply.nice result
 
+      detail: (request, reply) ->
+        key = request.params.key
+        MainDish.get(key)
+          .then (main_dish) ->
+            return reply Boom.badImplementation "something's wrong" if main_dish instanceof Error
+            reply.success main_dish.mask()
+
+      list_all: (request, reply) ->
+        MainDish.list_all()
+          .then (results) ->
+            return reply Boom.badImplementation "something's wrong" if results instanceof Error
+            reply.nice results
+      
       edit: (request, reply) ->
         payload = request.payload
         main_dish_key = request.params.key

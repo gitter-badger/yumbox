@@ -45,8 +45,8 @@ module.exports = (server, options) ->
       path: '/v1/dashboard/side_dishes/{key}/toggle'
       config:
         handler: SideDish.dashboard.toggle_availabilitty
-        description: 'sidedish'
-        tags: ['side_dish', 'update','edit','unavailable']
+        description: 'toggle sidedish availability'
+        tags: ['side_dish', 'update','toggle','unavailable', 'available']
     }
     {
       method: 'DELETE'
@@ -61,6 +61,8 @@ module.exports = (server, options) ->
       path: '/v1/dashboard/side_dishes/{key}/photo'
       config:
         handler: SideDish.dashboard.add_photo
+        payload:
+          output: 'stream'
         description: 'add a photo to side dish'
         tags: ['meal','dashboard','side_dish', 'photo']
     }

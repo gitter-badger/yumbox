@@ -10,104 +10,96 @@ Path = require 'path'
 
 MainDish = require("../../src/models/main_dish") server,
 
-context 'MainDish', ->
-  describe 'Souce Adapter', ->
-    describe 'PREFIX', ->
-      it 'should have PREFIX set to \'m\'', ->
-        MainDish::PREFIX.should.exist
-        MainDish::PREFIX.should.be.eq 'm'
- 
-    describe 'IMAGE', ->
-      it 'should be an Object', ->
-        MainDish::IMAGE.should.be.an 'Object'
+describe 'MainDish', ->
+  main_dish = null
+  data = null
 
-      it 'should have SMALL, MEDIUM, LARGE set with an array', ->
-        MainDish::IMAGE.SIZE.SMALL.should.be.an 'Array'
-        MainDish::IMAGE.SIZE.MEDIUM.should.be.an 'Array'
-        MainDish::IMAGE.SIZE.LARGE.should.be.an 'Array'
+  beforeEach () ->
+    data =
+      name:         faker.name.firstName()
+      is_available: faker.random.boolean()
+      price: faker.random.number()
+      calories: faker.random.number()
+      contains: faker.company.suffixes()
+      description: faker.hacker.phrase()
+    
+    main_dish = new MainDish data
+
+  it 'should have PREFIX set to \'m\'', ->
+    MainDish::PREFIX.should.exist
+    MainDish::PREFIX.should.be.eq 'm'
+   
+  it 'should have properties correctly added', ->
+    main_dish.doc.should.contain.all.keys [
+      'name', 'is_available', 'doc_key', 'doc_type'
+      'price', 'calories', 'contains', 'description'
+      ]
+
+  it 'should not accept some props', ->
+    main_dish.doc.should.not.contain.any.keys [
+      'images'
+      ]
   
-  describe 'Structure', ->
-    main_dish = null
-    data = null
-    beforeEach () ->
-      data =
-        name: faker.name.firstName()
-        price: faker.random.number()
-        calories: faker.random.number()
-        contains: faker.company.suffixes()
-        description: faker.hacker.phrase()
-        image_files: [ "#{__dirname}/images/example_image.jpg" ]
-        images: []
-        isAvailable: faker.random.boolean()
+  it 'should not accept unknown props' , ->
+    invalid_main_dish = new MainDish
+      unknown_prop: faker.name.firstName()
+    invalid_main_dish.doc.should.not.have.key 'unknown_prop'
 
-      main_dish = new MainDish data
+  it 'should have correct values set', ->
+    main_dish.doc.name.should.be.eq data.name
 
-    describe 'Properties', ->
-      it 'should have properties correctly added', ->
-        main_dish.doc.should.contain.all.keys [
-          'name','price', 'doc_key', 'doc_type', 'image_files',
-          'calories', 'description', 'contains', 'isAvailable'
-          ]
+  it 'should create a main_dish', ->
+    key = main_dish.key
+    main_dish.create(true)
+      .then (result) ->
+        MainDish.get(key)
+      .then (result) ->
+        result.doc.should.be.deep.eq main_dish.doc
+        key.should.be.eq main_dish.doc.doc_key
+        
+  it 'should add photo', ->
+    photo = "#{__dirname}/images/example_image.jpg"
+    key = main_dish.key
+    main_dish.create(true)
+      .then (result) ->
+        main_dish.photo = photo
+        main_dish.update(true)
+      .then (result) ->
+        fs.existsSync(main_dish.get_full_path "small.jpg").should.be.true
+        fs.existsSync(main_dish.get_full_path "medium.jpg").should.be.true
+        fs.existsSync(main_dish.get_full_path "large.jpg").should.not.be.true
 
-      it 'should not accept some props', ->
-        main_dish.doc.should.not.contain.any.keys ['images']
-      
-      it 'should not accept unknown props' , ->
-        invalid_main_dish = new MainDish
-          unknown_prop: faker.name.firstName()
-        invalid_main_dish.doc.should.not.have.key 'unknown_prop'
-
-      it 'should have correct values set', ->
-        main_dish.doc.name.should.be.eq data.name
-        main_dish.doc.price.should.be.eq data.price
-
-      describe 'Images', ->
-        it 'should be saved with images', ->
-          main_dish.image_files = fs.readFileSync main_dish.image_files[0]
-          main_dish.create(true)
-            .then (res) ->
-              res.doc_key.should.be.equal main_dish.key
-              res.should.have.property 'images'
-
-    describe 'Behavior', ->
-      it 'should create a main_dish', ->
-        key = main_dish.key
-        main_dish.create()
-          .then (result) ->
-            MainDish.get(key)
-          .then (result) ->
-            result.doc.should.be.deep.eq main_dish.doc
-            key.should.be.eq main_dish.doc.doc_key
-            
-      it 'should edit a main_dish', ->
-        key = main_dish.key
-        old_main_dish = null
-        main_dish.create()
-          .then ->
-            MainDish.get(key)
-          .then (result) ->
-            old_main_dish = result.doc
-            updated_main_dish = new MainDish result.doc.doc_key, {
-              name:  'pizza'
-              price: '24800'
-              images: [ "#{__dirname}/images/example_image_2.jpg" ]
-              isAvailable: yes
-            }
-            updated_main_dish.update()
-          .then ->
-            MainDish.get(key)
-              .then (result) ->
-                old_main_dish.should.not.be.eq result.doc
-                result.doc.name.should.be.eq  'pizza'
-                result.doc.price.should.be.eq '24800'
-                #images is off
-
-      it 'should delete a main_dish', ->
-        key = main_dish.key
-        main_dish.create()
-          .then (result) ->
-            MainDish.remove(key)
-          .then (is_deleted) ->
+  it 'should edit a main_dishes', ->
+    key = main_dish.key
+    old_main_dish = null
+    main_dish.create()
+      .then ->
+        MainDish.get(key)
+      .then (result) ->
+        old_main_dish = result.doc
+        updated_main_dish = new MainDish result.doc.doc_key, {
+          name : 'maindish'
+          is_available: yes
+        }
+        updated_main_dish.update()
+      .then ->
         MainDish.get(key)
           .then (result) ->
-            result.should.be.an 'Error'
+            old_main_dish.should.not.be.eq result.doc
+            result.doc.name.should.be.eq 'maindish'
+
+  it 'should delete a main_dish', ->
+    main_dish = new MainDish data
+    key = main_dish.key
+    main_dish.create()
+      .then (result) ->
+        MainDish.remove(key)
+      .then (is_deleted) ->
+    MainDish.get(key)
+      .then (result) ->
+        result.should.be.an 'Error'
+
+  it 'should list all available main dishes', (done) ->
+    MainDish.list_all()
+      .then (results) ->
+        done()

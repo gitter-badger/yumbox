@@ -35,7 +35,7 @@ module.exports = (server, options) ->
           side_dish.photo= request.payload.photo
           side_dish.update true
         .then (result) ->
-          return reply.Boom.badImplementation "something's wrong" if result instanceof Error
+          return reply Boom.badImplementation "something's wrong" if result instanceof Error
           reply.nice result
     toggle_availabilitty: (request, reply) ->
       key = request.params.key
@@ -44,13 +44,14 @@ module.exports = (server, options) ->
           side_dish.doc.is_available = not side_dish.doc.is_available
           side_dish.update()
         .then (result) ->
-          console.log result
           return reply Boom.badImplementation "something's wrong" if result instanceof Error
           reply.nice result
+
     detail: (request, reply) ->
       key = request.params.key
       SideDish.get(key)
         .then (side_dish) ->
+          return reply Boom.badImplementation "something's wrong" if side_dish instanceof Error
           reply.nice side_dish.mask()
     list_all: (request, reply) ->
       SideDish.list_all()

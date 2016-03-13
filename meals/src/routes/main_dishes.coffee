@@ -18,11 +18,31 @@ module.exports = (server, options) ->
     }
     {
       method: 'GET'
+      path: '/v1/dashboard/main_dishes'
+      config:
+        handler: MainDish.dashboard.list_all
+        validate: MainDishValidator::get
+        payload:
+        description: 'list main dishes.'
+        tags: ['meal','dashboard','main_dish', 'list']
+    }
+    {
+      method: 'GET'
       path: '/v1/dashboard/main_dishes/{key}'
       config:
-        handler: MainDish.dashboard.get_detail
+        handler: MainDish.dashboard.detail
+        validate: MainDishValidator::detail
         description: 'get datail of a main meal.'
-        tags: ['meal','dashboard','main_dish', 'get']
+        tags: ['meal','dashboard','main_dish', 'detail']
+    }
+    {
+      method: 'PUT'
+      path: '/v1/dashboard/main_dishes/{key}/toggle'
+      config:
+        handler: MainDish.dashboard.toggle_availabilitty
+        validate: MainDishValidator::toggle
+        description: 'toggle maindish availability'
+        tags: ['main_dish', 'update','toggle', 'unavailable', 'available']
     }
     {
       method: 'PUT'
@@ -38,19 +58,19 @@ module.exports = (server, options) ->
       path: '/v1/dashboard/main_dishes/{key}'
       config:
         handler: MainDish.dashboard.remove
+        validate: MainDishValidator::delete
         description: 'remove a main dish'
         tags: ['meal','dashboard','main_dish', 'delete']
     }
     {
       method: 'POST'
-      path: '/v1/dashboard/main_dishes/{key}/images'
+      path: '/v1/dashboard/main_dishes/{key}/photo'
       config:
-        handler: MainDish.dashboard.add_images
+        handler: MainDish.dashboard.add_photo
+        validate: MainDishValidator::add_photo
         payload:
           output: 'stream'
-        validate: MainDishValidator::add_images
-        description: 'adds some images to main dish'
-        tags: ['main_dish', 'image']
+        description: 'add a photo to main dish'
+        tags: ['meal','dashboard','main_dish', 'photo']
     }
-
   ]

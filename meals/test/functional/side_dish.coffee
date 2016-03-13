@@ -33,7 +33,6 @@ describe 'Side dish', ->
       .then (response) ->
         response.body.data.should.be.instanceof Array
 
-
   it 'should be able to toggle side dish availability', ->
     chai.request(URL)
       .post('/v1/dashboard/side_dishes')
