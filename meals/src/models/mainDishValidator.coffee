@@ -6,10 +6,9 @@ module.exports = class MainDishValidator
     payload:
       name: Joi.string().required()
       price: Joi.number().required()
-      contains: Joi.string().required()
-      description: Joi.string().required()
-      calories: Joi.number().required()
-      isAvailable: Joi.boolean().required()
+      contains: Joi.string()
+      description: Joi.string()
+      calories: Joi.number()
 
   edit:
     payload:
@@ -18,7 +17,6 @@ module.exports = class MainDishValidator
       contains: Joi.string()
       description: Joi.string()
       calories: Joi.number()
-      isAvailable: Joi.boolean()
     params:
       key: Joi.string()
 
