@@ -6,13 +6,29 @@ module.exports = (server, options) ->
  
   return [
     {
+      method: 'GET'
+      path: "/v1/dashboard/side_dishes/{key}"
+      config:
+        handler: SideDish.dashboard.detail
+        description: 'get details of a side dish'
+        tags: ['meal','dashboard','side_dish', 'detail']
+    }
+    {
+      method: 'GET'
+      path: '/v1/dashboard/side_dishes'
+      config:
+        handler: SideDish.dashboard.list_all
+        description: 'List all available side dishes.'
+        tags: ['meal','dashboard','side_dish', 'list']
+    }
+    {
       method: 'POST'
       path: '/v1/dashboard/side_dishes'
       config:
         handler: SideDish.dashboard.create
         payload:
           output: 'stream'
-        description: 'Create a side meal.'
+        description: 'Create a side dish.'
         tags: ['meal','dashboard','side_dish', 'create']
     }
     {
@@ -25,6 +41,14 @@ module.exports = (server, options) ->
         tags: ['side_dish', 'update','edit']
     }
     {
+      method: 'PUT'
+      path: '/v1/dashboard/side_dishes/{key}/toggle'
+      config:
+        handler: SideDish.dashboard.toggle_availabilitty
+        description: 'sidedish'
+        tags: ['side_dish', 'update','edit','unavailable']
+    }
+    {
       method: 'DELETE'
       path: '/v1/dashboard/side_dishes/{key}'
       config:
@@ -34,14 +58,10 @@ module.exports = (server, options) ->
     }
     {
       method: 'POST'
-      path: '/v1/dashboard/side_dishes/{key}/images'
+      path: '/v1/dashboard/side_dishes/{key}/photo'
       config:
-        handler: SideDish.dashboard.add_images
-        payload:
-          output: 'stream'
-        #validate: SideDish Validator::add_images
-        description: 'adds some images to side dish'
-        tags: ['side_dish', 'image']
+        handler: SideDish.dashboard.add_photo
+        description: 'add a photo to side dish'
+        tags: ['meal','dashboard','side_dish', 'photo']
     }
-
   ]

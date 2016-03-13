@@ -91,7 +91,7 @@ context 'MainDish', ->
               name:  'pizza'
               price: '24800'
               images: [ "#{__dirname}/images/example_image_2.jpg" ]
-              isAvailable: yes 
+              isAvailable: yes
             }
             updated_main_dish.update()
           .then ->

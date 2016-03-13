@@ -6,16 +6,6 @@ module.exports = (server, options) ->
  
   return [
     {
-      method: 'GET'
-      path: '/v1/dashboard/main_dishes'
-      config:
-        handler: MainDish.dashboard.create
-        payload:
-          output: 'stream'
-        description: 'List main dishes.'
-        tags: ['dashboard','main_dish', 'list']
-    }
-    {
       method: 'POST'
       path: '/v1/dashboard/main_dishes'
       config:
