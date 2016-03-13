@@ -41,7 +41,7 @@ module.exports = (server, options) ->
         main_dish = new MainDish main_dish_key, payload
         main_dish.update(true)
           .then (result) ->
-            return reply.Boom.badImplementation "something's wrong" if result instanceof Error
+            return reply Boom.badImplementation "something's wrong" if result instanceof Error
             reply.success true, result
           .done()
 
