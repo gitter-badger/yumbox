@@ -50,5 +50,3 @@ module.exports = class MainDishValidator
         })
       ).single()
     query: {}
-
-
