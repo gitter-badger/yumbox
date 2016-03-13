@@ -22,7 +22,6 @@ module.exports = (server, options) ->
       config:
         handler: MainDish.dashboard.list_all
         validate: MainDishValidator::get
-        payload:
         description: 'list main dishes.'
         tags: ['meal','dashboard','main_dish', 'list']
     }
@@ -68,7 +67,6 @@ module.exports = (server, options) ->
       config:
         handler: MainDish.dashboard.add_photo
         validate: MainDishValidator::add_photo
-        payload:
           output: 'stream'
         description: 'add a photo to main dish'
         tags: ['meal','dashboard','main_dish', 'photo']
