@@ -3,8 +3,8 @@ _ = require 'lodash'
 
 module.exports = (server, options) ->
   DailyMeal = require('../models/daily_meal') server, options
-  MainDish = require('../models/main_dish') server, options 
-  SideDish = require('../models/side_dish') server, options 
+  MainDish = require('../models/main_dish') server, options
+  SideDish = require('../models/side_dish') server, options
 
   return {
     dashboard:

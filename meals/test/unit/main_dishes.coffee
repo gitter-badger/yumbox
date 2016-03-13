@@ -16,7 +16,7 @@ describe 'MainDish', ->
 
   beforeEach () ->
     data =
-      name:         faker.name.firstName()
+      name: faker.name.firstName()
       is_available: faker.random.boolean()
       price: faker.random.number()
       calories: faker.random.number()

@@ -67,6 +67,7 @@ module.exports = (server, options) ->
       config:
         handler: MainDish.dashboard.add_photo
         validate: MainDishValidator::add_photo
+        payload:
           output: 'stream'
         description: 'add a photo to main dish'
         tags: ['meal','dashboard','main_dish', 'photo']

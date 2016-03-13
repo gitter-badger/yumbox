@@ -22,13 +22,13 @@ module.exports = class MainDishValidator
     params:
       key: Joi.string()
 
-  add_images:
+  add_photo:
     payload:
-      images: Joi.array().items(
+      photo: Joi.array().items(
         Joi.object().unknown().keys({
           hapi: Joi.object().unknown().keys({
             headers: Joi.object().unknown().keys(
-              { 'content-type' : 'image/jpeg' })
+              { 'content-type' : 'photo/jpeg' })
           })
         })
       ).single()

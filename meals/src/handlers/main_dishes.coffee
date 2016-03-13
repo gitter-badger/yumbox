@@ -41,7 +41,7 @@ module.exports = (server, options) ->
         main_dish = new MainDish main_dish_key, payload
         main_dish.update(true)
           .then (result) ->
-            return reply.Boom.badImplementation "something's wrong" if result instanceof Error
+            return reply Boom.badImplementation "something's wrong" if result instanceof Error
             reply.success true, result
           .done()
 
@@ -52,13 +52,13 @@ module.exports = (server, options) ->
             return reply Boom.badImplementation "something's wrong" if result instanceof Error
             reply.nice result
 
-      add_images: (request, reply) ->
+      add_photo: (request, reply) ->
         main_dish_key = request.params.key
         MainDish.get(main_dish_key)
           .then (main_dish) ->
-            main_dish.doc.image_files = request.payload.images
+            main_dish.doc.photo_files = request.payload.photo
             main_dish.update true
           .then (result) ->
-            return reply.Boom.badImplementation "something's wrong" if result instanceof Error
+            return reply Boom.badImplementation "something's wrong" if result instanceof Error
             reply.nice result
   }

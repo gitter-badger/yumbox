@@ -10,8 +10,8 @@ module.exports = (server, options) ->
     PREFIX: 'd'
 
     props:
-      main_dish: on
-      side_dishes: on
+      main_dish_key: on
+      side_dish_keys: on
       at: on
       total: on
       remained: off
