@@ -7,9 +7,9 @@ module.exports = (server, options) ->
   return [
     {
       method: 'GET'
-      path: '/v1/app/daily_meal/{key}'
+      path: '/v1/app/main_dishes/{key}'
       config:
-        handler: DailyMeal.app.detail
+        handler: MainDish.app.detail
         description: 'get details of meal'
         tags: ['meal', 'feed']
    }
