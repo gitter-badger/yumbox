@@ -37,13 +37,21 @@ module.exports = (server, options) ->
       method: 'GET'
       path: '/v1/dashboard/daily_meals/{key}'
       config:
-        handler: DailyMeal.dashboard.get_detail
+        handler: DailyMeal.dashboard.detail
         description: 'get detail of daily meal'
         tags: ['meal','dashboard','daily_meal', 'get']
    }
    {
       method: 'GET'
-      path: '/v1/feed'
+      path: '/v1/app/daily_meal/{key}'
+      config:
+        handler: DailyMeal.app.detail
+        description: 'get details of meal'
+        tags: ['meal', 'feed']
+   }
+   {
+      method: 'GET'
+      path: '/v1/app/feed'
       config:
         handler: DailyMeal.app.feed
         description: 'get upcoming meals'

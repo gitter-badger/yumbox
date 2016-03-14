@@ -7,8 +7,27 @@ module.exports = (server, options) ->
   MainDish = require('../models/main_dish') server, options
   SideDish = require('../models/side_dish') server, options
 
+  privates =
+    detail: (request, reply) ->
+      key = request.params.key
+      DailyMeal.get(key)
+        .then (meal) ->
+          main_dish_key = meal.doc.main_dish
+          side_dishes_key = meal.doc.side_dishes
+          SideDish.find(side_dishes_key)
+            .then (side_dishes) ->
+              return reply Boom.badImplementation "something's wrong" if side_dishes instanceof Error
+              MainDish.find(main_dish_key)
+                .then (main_dish) ->
+                   return reply Boom.badImplementation "something's wrong" if main_dish instanceof Error
+                   meal.doc.main_dish = main_dish
+                   meal.doc.side_dishes = side_dishes
+                   reply.nice meal.mask()
   return {
     app:
+      detail: (request, reply) ->
+        privates.detail(request, reply)
+
       feed: (request, reply) ->
         feed = []
         promises = []
@@ -33,9 +52,8 @@ module.exports = (server, options) ->
             # find main dish detail
             # find each side dish detail
             # combine them together
-            
             # return
-        
+
     dashboard:
       create: (request, reply) ->
         daily_meal = new DailyMeal request.payload
@@ -43,20 +61,15 @@ module.exports = (server, options) ->
           .then (result) ->
             reply.success result
 
-      get_detail: (request, reply) ->
-        key = request.params.key
-        DailyMeal.get(key)
-          .then (meal) ->
-            main_dish_key = meal.doc.main_dish
-            side_dishes_key = meal.doc.side_dishes
-            SideDish.find(side_dishes_key)
-              .then (sidedishes) ->
-                MainDish.find(main_dish_key)
-                 .then (maindish) ->
-                   meal.doc.main_dish = maindish
-                   meal.doc.side_dishes = sidedishes
-                   reply meal.doc
-                
+      detail: (request, reply) ->
+        privates.detail(request, reply)
+
+      list_all: (request, reply) ->
+        DailyMeal.list_all()
+          .then (results) ->
+            return reply Boom.badImplementation "something's wrong" if results instanceof Error
+            reply.nice results
+ 
       edit: (request, reply) ->
         payload = request.payload
         daily_meal_key = request.params.key
