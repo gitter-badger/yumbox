@@ -5,7 +5,7 @@ module.exports = class Validator
   create:
     payload:
       name: Joi.string().required()
-      photo: Joi.array()
+
     query: {}
 
   get:{}

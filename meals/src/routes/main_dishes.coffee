@@ -10,6 +10,7 @@ module.exports = (server, options) ->
       path: '/v1/app/main_dishes/{key}'
       config:
         handler: MainDish.app.detail
+        validate: MainDishValidator::detail
         description: 'get details of meal'
         tags: ['meal', 'feed']
    }
