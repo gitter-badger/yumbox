@@ -53,7 +53,7 @@ describe 'daily meal', ->
 
   it "should create a daily meal", ->
     chai.request(URL)
-      .post('/v1/dashboard/daily_meal')
+      .post('/v1/dashboard/daily_meals')
       .field('main_dish_key', main_dish.doc_key)
       .field('side_dish_keys', side_dish.doc_key)
       .field('side_dish_keys', side_dish.doc_key)

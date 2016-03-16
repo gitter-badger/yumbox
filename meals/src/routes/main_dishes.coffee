@@ -6,6 +6,15 @@ module.exports = (server, options) ->
  
   return [
     {
+      method: 'GET'
+      path: '/v1/app/main_dishes/{key}'
+      config:
+        handler: MainDish.app.detail
+        validate: MainDishValidator::detail
+        description: 'get details of meal'
+        tags: ['meal', 'feed']
+   }
+   {
       method: 'POST'
       path: '/v1/dashboard/main_dishes'
       config:

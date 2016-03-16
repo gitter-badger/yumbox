@@ -4,7 +4,19 @@ _ = require 'lodash'
 module.exports = (server, options) ->
   MainDish = require('../models/main_dish') server, options
 
+  privates =
+    detail: (request, reply) ->
+      key = request.params.key
+      MainDish.get(key)
+        .then (main_dish) ->
+          return reply Boom.badImplementation "something's wrong" if main_dish instanceof Error
+          reply.success main_dish.mask()
+
   return {
+    app:
+      detail: (request, reply) ->
+        privates.detail(request, reply)
+
     dashboard:
       create: (request, reply) ->
         main_dish = new MainDish request.payload
@@ -23,11 +35,7 @@ module.exports = (server, options) ->
             reply.nice result
 
       detail: (request, reply) ->
-        key = request.params.key
-        MainDish.get(key)
-          .then (main_dish) ->
-            return reply Boom.badImplementation "something's wrong" if main_dish instanceof Error
-            reply.success main_dish.mask()
+        privates.detail(request, reply)
 
       list_all: (request, reply) ->
         MainDish.list_all()
@@ -56,7 +64,7 @@ module.exports = (server, options) ->
         main_dish_key = request.params.key
         MainDish.get(main_dish_key)
           .then (main_dish) ->
-            main_dish.doc.photo_files = request.payload.photo
+            main_dish.photo = request.payload.photo
             main_dish.update true
           .then (result) ->
             return reply Boom.badImplementation "something's wrong" if result instanceof Error

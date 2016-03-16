@@ -6,9 +6,21 @@ module.exports = class MainDishValidator
     payload:
       name: Joi.string().required()
       price: Joi.number().required()
-      contains: Joi.string()
-      description: Joi.string()
-      calories: Joi.number()
+      contains: Joi.string().required()
+      description: Joi.string().required()
+      calories: Joi.number().required()
+
+  get:{}
+  
+  detail:
+    params:
+      key: Joi.string().required()
+    query: {}
+
+  toggle:
+    params:
+      key: Joi.string().required()
+    query: {}
 
   edit:
     payload:
@@ -17,8 +29,15 @@ module.exports = class MainDishValidator
       contains: Joi.string()
       description: Joi.string()
       calories: Joi.number()
+
     params:
       key: Joi.string()
+    query: {}
+
+  delete:
+    params:
+      key: Joi.string().required()
+    query: {}
 
   add_photo:
     payload:
@@ -30,5 +49,4 @@ module.exports = class MainDishValidator
           })
         })
       ).single()
-
-
+    query: {}
