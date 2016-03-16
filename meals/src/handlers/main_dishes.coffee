@@ -33,7 +33,7 @@ module.exports = (server, options) ->
         MainDish.list_all()
           .then (results) ->
             return reply Boom.badImplementation "something's wrong" if results instanceof Error
-            reply.nice results
+            reply.nice(results).header("Authorization", request.headers.authorization)
       
       edit: (request, reply) ->
         payload = request.payload

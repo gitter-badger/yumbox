@@ -1,4 +1,3 @@
 plugins:
   meals: yumbox.meals
-  orders: yumbox.orders
   customers: yumbox.customers

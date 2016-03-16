@@ -1,6 +1,6 @@
 {
   "script": "build/server",
-  "watch": ["../api", "../cars"],
+  "watch": ["../api", "../meals", "../customers"],
   "ignore": ["build/", "node_modules/"],
   "ext": "js coffee jade yml json scss"
 }

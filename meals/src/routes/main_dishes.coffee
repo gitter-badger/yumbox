@@ -23,6 +23,7 @@ module.exports = (server, options) ->
         handler: MainDish.dashboard.list_all
         validate: MainDishValidator::get
         description: 'list main dishes.'
+        auth: 'jwt'
         tags: ['meal','dashboard','main_dish', 'list']
     }
     {

@@ -3,7 +3,7 @@ util       = require 'gulp-util'
 newer      = require 'gulp-newer'
 coffee     = require 'gulp-coffee'
 
-gulp.task 'customers:build', ->
+gulp.task 'auth:build', ->
   
   src = 'src/**'
   dest = 'build'

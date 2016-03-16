@@ -18,7 +18,8 @@ server = new Hapi.Server
       port:   config.cache.port
     }
   }
-###  
+###
+
 server.connection { port: Number(config.server.api.port), labels: 'api' }
 server.connection { port: Number(config.server.web.port), labels: 'web' }
 
