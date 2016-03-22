@@ -1,2 +1,2 @@
 module.exports = (redis) ->
-  require('./auth_jwt_validate') server, options
+  require('./auth_jwt_validate') redis

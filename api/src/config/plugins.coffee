@@ -8,12 +8,11 @@ module.exports = (server) ->
   db        = require('puffer').instances[config.databases.application.name]
   analytics = require('puffer').instances[config.databases.analytics.name]
   redis     = require('redis').createClient config.cache.port, config.cache.host
-  auth      = require('../../../auth')
-
+  auth      = require('../../../auth') redis
+  
   api = server.select 'api'
   web = server.select 'web'
 
-  console.log auth
   redis.get "#{config.app}.cacheserver", (err, res) ->
     if err
       console.warn 'Cache server is not working ...'
@@ -45,12 +44,11 @@ module.exports = (server) ->
     }
     ], (err) ->
         throw err if err
-        server.auth.strategy('jwt', 'jwt',
-            {
-              key: '49668235E3E74EEEDA09369EECC7CC59258EFACF90595C2CE37A61A0080DE389'
-              validateFunc: -> 
-              verifyOptions: { algorithms: [ 'HS256' ] }   #pick a strong algorithm 
-            })
+        server.auth.strategy 'jwt', 'jwt',
+          key: config.jwt.key
+          validateFunc: auth
+          verifyOptions:
+            algorithms: [ 'HS256' ]
 
   server.register [
     {
@@ -61,6 +59,15 @@ module.exports = (server) ->
           strategy: 'session'
         connectionLabel: 'api'
     }
+    {
+      register: require('hapi-redis')
+      options:
+        host: config.cache.host
+        port: config.cache.port
+        opts:
+          parser: "javascript"
+    }
+
   ], (err) ->
        throw err if err
 
@@ -74,6 +81,9 @@ module.exports = (server) ->
       register: require('yumbox.customers')
       options:
         database: db
+        defaults: defaults
+        secure_key: config.jwt.key
+        sms: config.sms
     }
   ], (err) ->
         throw err if err

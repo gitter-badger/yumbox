@@ -1,15 +1,32 @@
 module.exports = (server, options) ->
   
-  Customers = require('./handlers/main') server, options
+  Customers = require('./handlers/customers') server, options
+  CustomerValidator = require './models/customerValidator'
 
   return [
     {
-      method: 'GET'
-      path: '/v1/customers'
-      config: {
-        handler: Customers.list
-        description: 'TODO: System generated this'
-        tags: ['system', 'TODO']
-      }
+      method: 'POST'
+      path: '/v1/customers/signup'
+      config:
+        handler: Customers.app.sign_up
+        description:'customer sign up'
+        tags: ['customer', 'signup']
+    }
+    {
+      method: 'POST'
+      path: '/v1/customers/signin_request'
+      config:
+        handler: Customers.app.request_verification_pin
+        description:'customer sign in request'
+        tags: ['customer', 'signin']
+    }
+    {
+      method: 'POST'
+      path: '/v1/customers/signin'
+      config:
+        validate: CustomerValidator::app.verify_pin
+        handler: Customers.app.verify_pin
+        description:'customer sign in'
+        tags: ['customer', 'signin']
     }
   ]

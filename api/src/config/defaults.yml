@@ -1,4 +1,6 @@
 default:
+  verification:
+    try: 5
   web:
     title: 'Tipi: Travel Experiences Shared'
     description: 'Tipi helps you meet new people & share tips while you travel. And discover nearby travel experiences in all countries.'

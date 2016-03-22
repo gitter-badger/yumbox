@@ -1,6 +1,9 @@
 Boom = require 'boom'
 
 module.exports = (server) ->
+  server.decorate 'reply', 'sign', (token) ->
+    this.header('Authorization', token)
+
   server.decorate 'reply', 'nice', (data) ->
     return this.response( { data: data , error: null } )
 
@@ -8,6 +11,12 @@ module.exports = (server) ->
     return this.nice { success: bool } unless data?
     data.success = bool
     this.nice data
+
+  server.decorate 'reply', 'bad_request', (message) ->
+    return this.response Boom.badRequest message
+
+  server.decorate 'reply', 'unauthorized', (message) ->
+    return this.response Boom.unauthorized message
 
   server.decorate 'reply', 'conflict', (message) ->
     return this.response Boom.conflict message
