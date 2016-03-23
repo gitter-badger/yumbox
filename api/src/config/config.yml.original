@@ -13,13 +13,6 @@ default:
       host: http://localhost
       port: 3100
       timeout: 3000
-  mail:
-    root: /home/mahdie/Projects/yumbox/mails
-    from: Yumbox <mailgun@sandbox160d2d4a33b0442b9190fbb60b17dbca.mailgun.org>
-    domain: sandbox160d2d4a33b0442b9190fbb60b17dbca.mailgun.org
-    api_key: key-86caf4edcfa6928f62c98183649ff8cc
-    trace: false
-    dump: false
   error:
     reporting:
       api_key: b7b4bb934c5f41a89d90ab09479fb019
@@ -32,14 +25,22 @@ default:
       name: analytics
       mock: true
   searchengine:
-    application:
-      host: localhost
-      port: 9200
-      name: yumbox
-      log: error # error, warning, info, debug, trace
+    host: localhost
+    port: 9200
+    name: yumbox
+    log: error # error, warning, info, debug, trace
   cache:
     host: 0.0.0.0
     port: 6379
+  jwt:
+    key: A4DB12A0D351B71C7465EC0C9F48CE33A1040A37FCF0DEE6B157BFF4FDD09DCE
+  sms:
+    provider: 'textsms'
+    auth:
+      username: rezaowliaei
+      password: 9erih-delete
+    panel:
+      number: 500021919016
 development:
   url: http://localhost:3000
   mail:
@@ -49,68 +50,23 @@ development:
   databases:
     application:
       name: yumbox
+      mock: false
+  searchengine:
+    host: 127.0.0.1
+    port: 9200
+    name: yumbox
+    log: error # error, warning, info, debug, trace
   file:
-    path: /home/mahdie/Projects/yumbox/shared
+    path: /home/reza/Projects/yumbox/shared
 test:
   mail:
     mock: true
     trace: false
     dump: false
-    root: /home/mahdie/Projects/tipi/mails
+    root: /home/reza/Projects/tipi/mails
   databases:
     application:
       name: yumbox
       mock: true
   file:
-    path: /home/mahdie/Projects/yumbox/test_files
-production:
-  server:
-    web:
-      port: 3000
-    api:
-      port: 3100
-  mail:
-    root: /var/www/yumbox/current/mails
-    from: Yumbox <team@yumbox.com>
-    domain: tipi.me
-    api_key: key-86caf4edcfa6928f62c98183649ff8cc
-  databases:
-    application:
-      name: default
-      host: 
-  searchengine:
-    application:
-      host: 
-    analytics:
-      host: 
-  cache:
-    host: 0.0.0.0
-    port: 6379
-  file:
-    path: 
-staging:
-  url: http://localhost:3000
-  server:
-    web:
-      port: 3000
-    api:
-      port: 3100
-  mail:
-    root: /var/www/yumbox.com/current/mails
-    from: Yumbox <team@yumbox.com>
-    domain: yumbox.com
-    api_key: key-86caf4edcfa6928f62c98183649ff8cc
-  databases:
-    application:
-      name: yumbox
-      host: 
-  searchengine:
-    application:
-      host: 
-    analytics:
-      host: 
-  cache:
-    host: 0.0.0.0
-    port: 6379
-  file:
-    path: /var/www/yumbox.com/shared
+    path: /home/reza/Projects/yumbox/test_files
