@@ -26,7 +26,6 @@ module.exports = (server, options) ->
           return customer if customer is no
           return no unless customer.doc.recovery?
           customer.doc.recovery.tries += 1
-          console.log customer.doc.recovery.tries, options.defaults.verification.try
           if pin is customer.doc.recovery.pin and customer.doc.recovery.tries < options.defaults.verification.try
             delete customer.doc.recovery
             customer.update yes
