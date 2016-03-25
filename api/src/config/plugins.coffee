@@ -70,7 +70,6 @@ module.exports = (server) ->
 
   ], (err) ->
        throw err if err
-
   server.select(['web', 'api']).register [
     {
       register: require('yumbox.meals')
@@ -84,6 +83,13 @@ module.exports = (server) ->
         defaults: defaults
         secure_key: config.jwt.key
         sms: config.sms
+    }
+    {
+      register: require('yumbox.admins')
+      options:
+        database: db
+        admin: config.admin
+        secure_key: config.jwt.key
     }
   ], (err) ->
         throw err if err

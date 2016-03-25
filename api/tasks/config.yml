@@ -1,3 +1,4 @@
 plugins:
   meals: yumbox.meals
   customers: yumbox.customers
+  admins: yumbox.admins
