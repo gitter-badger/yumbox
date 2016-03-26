@@ -23,7 +23,8 @@ module.exports = (server, options) ->
         payload:
           output: 'stream'
         description: 'Create a main meal.'
-        tags: ['meal','dashboard','main_dish', 'create']
+        auth: 'jwt'
+        tags: ['meal', 'dashboard', 'main_dish', 'create']
     }
     {
       method: 'GET'
@@ -33,7 +34,7 @@ module.exports = (server, options) ->
         validate: MainDishValidator::get
         description: 'list main dishes.'
         auth: 'jwt'
-        tags: ['meal','dashboard','main_dish', 'list']
+        tags: ['meal', 'dashboard', 'main_dish', 'list']
     }
     {
       method: 'GET'
@@ -42,7 +43,8 @@ module.exports = (server, options) ->
         handler: MainDish.dashboard.detail
         validate: MainDishValidator::detail
         description: 'get datail of a main meal.'
-        tags: ['meal','dashboard','main_dish', 'detail']
+        auth: 'jwt'
+        tags: ['meal', 'dashboard', 'main_dish', 'detail']
     }
     {
       method: 'PUT'
@@ -51,7 +53,8 @@ module.exports = (server, options) ->
         handler: MainDish.dashboard.toggle_availabilitty
         validate: MainDishValidator::toggle
         description: 'toggle maindish availability'
-        tags: ['main_dish', 'update','toggle', 'unavailable', 'available']
+        auth: 'jwt'
+        tags: ['main_dish', 'update', 'toggle', 'unavailable', 'available']
     }
     {
       method: 'PUT'
@@ -60,6 +63,7 @@ module.exports = (server, options) ->
         handler: MainDish.dashboard.edit
         validate: MainDishValidator::edit
         description: 'Updates maindish'
+        auth: 'jwt'
         tags: ['main_dish', 'update','edit']
     }
     {
@@ -69,6 +73,7 @@ module.exports = (server, options) ->
         handler: MainDish.dashboard.remove
         validate: MainDishValidator::delete
         description: 'remove a main dish'
+        auth: 'jwt'
         tags: ['meal','dashboard','main_dish', 'delete']
     }
     {
@@ -80,6 +85,7 @@ module.exports = (server, options) ->
         payload:
           output: 'stream'
         description: 'add a photo to main dish'
+        auth: 'jwt'
         tags: ['meal','dashboard','main_dish', 'photo']
     }
   ]
