@@ -7,8 +7,8 @@ module.exports = class DailyMealValidator
     payload:
       main_dish_key: Joi.string()
       side_dish_keys: Joi.array().items(Joi.string())
-      at: Joi.date().format('YYYY-MM-DD').min(moment().add(-1, 'd').format()).required()
-      total: Joi.number().required()
+      at: Joi.date().format('YYYY-MM-DD').min(moment().add(-1, 'd').format())
+      total: Joi.number()
 
     params:
       key: Joi.string()
