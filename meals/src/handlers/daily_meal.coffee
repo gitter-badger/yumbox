@@ -49,6 +49,7 @@ module.exports = (server, options) ->
             Q.all(promises)
               .then (result) ->
                 reply.nice result
+            # what we done:
             # find main dish detail
             # find each side dish detail
             # combine them together

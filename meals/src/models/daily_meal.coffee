@@ -49,3 +49,18 @@ module.exports = (server, options) ->
             ids.push daily_meal._id
             
           @find(ids, true)
+
+     @list_all: ->
+      query =
+        body:
+          size: 1000
+          query:
+            match:
+              "doc.is_available": true
+
+      @search('daily_meal', query)
+        .then (results) ->
+           ids = []
+           _.each results.hits.hits, (result) ->
+             ids.push result._id
+           Daily_meal.find ids, 'doc_key,name'

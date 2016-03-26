@@ -21,7 +21,7 @@ module.exports = (server, options) ->
       method: 'GET'
       path: '/v1/dashboard/daily_meals'
       config:
-        handler: (request, response) -> true #TODO "<<<<<<<<<<<<<<"
+        handler: DailyMeal.dashboard.list_all
         description: 'list daily meal'
         auth: 'jwt'
         tags: ['meal','dashboard','daily_meal', 'list']
