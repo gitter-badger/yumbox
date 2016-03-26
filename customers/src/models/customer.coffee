@@ -10,13 +10,19 @@ module.exports = (server, options) ->
       name: on
       mobile: on
       address: on
+      orders: off
+
+    add_order: (order) ->
+      @doc.orders?= []
+      @doc.orders.push order.doc_key
+      @update()
 
     @generate_pin: (mobile) ->
       @_get_by_mobile(mobile)
         .then (customer) ->
           return customer if customer is no
           pin = _.random(1000, 9999)
-          customer.doc.recovery = { pin: pin , tries: 0 }
+          customer.doc.recovery = pin: pin , tries: 0
           customer.update()
             .then -> pin
 
@@ -42,4 +48,4 @@ module.exports = (server, options) ->
       @search('customer', query)
         .then (answers) =>
           return Q no if answers.hits.total < 1
-          @get(answers.hits.hits[0]._id)
+          @get answers.hits.hits[0]._id

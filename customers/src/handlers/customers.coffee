@@ -9,7 +9,7 @@ module.exports = (server, options) ->
     sign: (request, customer) ->
       payload =
         jti : aguid()
-        customer: customer.doc
+        customer: customer
       server.plugins['hapi-redis'].client
         .set payload.jti, JSON.stringify payload
       jwt.sign payload, options.secure_key
@@ -42,4 +42,4 @@ module.exports = (server, options) ->
           return reply.unauthorized customer if customer instanceof Error
           return reply.bad_request "sign in request is not submited" if customer is no
           reply.success(true)
-            .header('Authorization', privates.sign(request, customer))
+            .header 'Authorization', privates.sign(request, customer)

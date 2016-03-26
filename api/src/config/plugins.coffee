@@ -85,6 +85,14 @@ module.exports = (server) ->
         sms: config.sms
     }
     {
+      register: require('yumbox.orders')
+      options:
+        database: db
+        defaults: defaults
+        secure_key: config.jwt.key
+        sms: config.sms
+    }
+    {
       register: require('yumbox.admins')
       options:
         database: db

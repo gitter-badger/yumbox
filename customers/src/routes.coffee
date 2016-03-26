@@ -6,7 +6,7 @@ module.exports = (server, options) ->
   return [
     {
       method: 'POST'
-      path: '/v1/customers/signup'
+      path: '/v1/app/customers/signup'
       config:
         handler: Customers.app.sign_up
         description:'customer sign up'
@@ -14,7 +14,7 @@ module.exports = (server, options) ->
     }
     {
       method: 'POST'
-      path: '/v1/customers/signin_request'
+      path: '/v1/app/customers/signin_request'
       config:
         handler: Customers.app.request_verification_pin
         description:'customer sign in request'
@@ -22,7 +22,7 @@ module.exports = (server, options) ->
     }
     {
       method: 'POST'
-      path: '/v1/customers/signin'
+      path: '/v1/app/customers/signin'
       config:
         validate: CustomerValidator::app.verify_pin
         handler: Customers.app.verify_pin

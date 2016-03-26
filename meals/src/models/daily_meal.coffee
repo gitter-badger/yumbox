@@ -17,7 +17,17 @@ module.exports = (server, options) ->
       remained: on
 
     _mask: 'main_dish,side_dishes,at,total,doc_key'
+    
 
+    register_order: (order) ->
+      count = order.quantity
+      @doc.remaineds = @doc.remaineds - count
+      return Boom.resourceGone("This meal is not available anymore") unless @doc.remaineds > 0
+      @doc.orders ?= []
+      @doc.orders.push order.doc_key
+      @update(true)
+        .then (result) ->
+          result
     @get_upcomings: ->
       query =
         body:
