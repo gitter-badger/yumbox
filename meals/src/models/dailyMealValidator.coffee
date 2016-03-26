@@ -2,6 +2,19 @@ Joi = require 'joi'
 moment = require 'moment'
 
 module.exports = class DailyMealValidator
+
+  edit:
+    payload:
+      main_dish_key: Joi.string()
+      side_dish_keys: Joi.array().items(Joi.string())
+      at: Joi.date().format('YYYY-MM-DD').min(moment().add(-1, 'd').format())
+      total: Joi.number()
+
+    params:
+      key: Joi.string()
+
+    query: {}
+
   create:
     payload:
       main_dish_key: Joi.string().required()
@@ -9,12 +22,17 @@ module.exports = class DailyMealValidator
       at: Joi.date().format('YYYY-MM-DD').min(moment().add(-1, 'd').format()).required()
       total: Joi.number().required()
 
-  get_detail:
+  detail:
     params:
       key: Joi.string().required()
     
-    payload:
-      main_dish_key: Joi.string()
-      side_dishe_keys: Joi.array().items(Joi.string()).required()
-      at: Joi.date().iso().min('now')
-      total: Joi.number()
+    query: {}
+    
+  get: {}
+
+  delete:
+    params:
+      key: Joi.string()
+    query: {}
+
+

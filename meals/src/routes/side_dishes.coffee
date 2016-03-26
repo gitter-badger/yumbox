@@ -12,6 +12,7 @@ module.exports = (server, options) ->
         handler: SideDish.dashboard.detail
         validate: SideDishValidator::detail
         description: 'get details of a side dish'
+        auth: 'jwt'
         tags: ['meal','dashboard','side_dish', 'detail']
     }
     {
@@ -21,6 +22,7 @@ module.exports = (server, options) ->
         handler: SideDish.dashboard.list_all
         validate: SideDishValidator::get
         description: 'List all available side dishes.'
+        auth: 'jwt'
         tags: ['meal','dashboard','side_dish', 'list']
     }
     {
@@ -32,6 +34,7 @@ module.exports = (server, options) ->
         payload:
           output: 'stream'
         description: 'Create a side dish.'
+        auth: 'jwt'
         tags: ['meal','dashboard','side_dish', 'create']
     }
     {
@@ -41,6 +44,7 @@ module.exports = (server, options) ->
         handler: SideDish.dashboard.edit
         validate: SideDishValidator::edit
         description: 'Updates sidedish'
+        auth: 'jwt'
         tags: ['side_dish', 'update','edit']
     }
     {
@@ -50,6 +54,7 @@ module.exports = (server, options) ->
         handler: SideDish.dashboard.toggle_availabilitty
         validate: SideDishValidator::toggle
         description: 'toggle sidedish availability'
+        auth: 'jwt'
         tags: ['side_dish', 'update','toggle','unavailable', 'available']
     }
     {
@@ -59,6 +64,7 @@ module.exports = (server, options) ->
         handler: SideDish.dashboard.remove
         validate: SideDishValidator::delete
         description: 'remove a side dish'
+        auth: 'jwt'
         tags: ['meal','dashboard','side_dish', 'delete']
     }
     {
@@ -70,6 +76,7 @@ module.exports = (server, options) ->
         payload:
           output: 'stream'
         description: 'add a photo to side dish'
+        auth: 'jwt'
         tags: ['meal','dashboard','side_dish', 'photo']
     }
   ]
