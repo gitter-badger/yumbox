@@ -2,8 +2,10 @@ default:
   app: yumbox
   url: http://www.yumbox.com
   admin:
-    username: admin
-    password: admin
+    jti: admin_yumbox
+    credentials:
+      username: admin
+      password: admin
   server:
     web:
       host: http://localhost
