@@ -41,6 +41,7 @@ module.exports = (server, options) ->
       path: '/v1/dashboard/daily_meals/{key}'
       config:
         handler: DailyMeal.dashboard.remove
+        validate: DailyMealValidator::delete
         description: 'remove a daily meal'
         auth: 'jwt'
         tags: ['meal','dashboard','daily_meal', 'delete']
@@ -50,6 +51,7 @@ module.exports = (server, options) ->
       path: '/v1/dashboard/daily_meals/{key}'
       config:
         handler: DailyMeal.dashboard.detail
+        validate: DailyMealValidator::detail
         description: 'get detail of daily meal'
         auth: 'jwt'
         tags: ['meal','dashboard','daily_meal', 'get']
@@ -59,6 +61,7 @@ module.exports = (server, options) ->
       path: '/v1/app/daily_meal/{key}'
       config:
         handler: DailyMeal.app.detail
+        validate: DailyMealValidator::detail
         description: 'get details of meal'
         tags: ['app','daily_meal','meal', 'detail']
     }
@@ -67,6 +70,7 @@ module.exports = (server, options) ->
       path: '/v1/app/feed'
       config:
         handler: DailyMeal.app.feed
+        validate: DailyMealValidator::get
         description: 'get upcoming meals'
         tags: ['app','daily_meal','meal', 'feed']
     }
