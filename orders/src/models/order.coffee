@@ -14,6 +14,7 @@ module.exports = (server, options) ->
       quantity: on
       at: off
       status: off
+      price: off
     
     before_create: ->
       @doc.at = moment().format()

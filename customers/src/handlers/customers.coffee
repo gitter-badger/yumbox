@@ -1,3 +1,4 @@
+Q = require 'q'
 jwt = require 'jsonwebtoken'
 aguid = require 'aguid'
 module.exports = (server, options) ->
@@ -13,7 +14,13 @@ module.exports = (server, options) ->
       server.plugins['hapi-redis'].client
         .set payload.jti, JSON.stringify payload
       jwt.sign payload, options.secure_key
-
+  before_handler:
+    me: (request, reply) ->
+      Q.ninvoke(server.plugins['hapi-redis'].client, "get", request.auth.credentials.jti)
+        .then (customer) ->
+          key = JSON.parse(customer).customer.doc_key
+          return reply Boom.unauthorized "unauthorized access" unless key?
+          reply key
   app:
     sign_up: (request, reply) ->
       customer = new Customer request.payload
@@ -43,3 +50,13 @@ module.exports = (server, options) ->
           return reply.bad_request "sign in request is not submited" if customer is no
           reply.success(true)
             .header 'Authorization', privates.sign(request, customer)
+
+    orders:
+      history: (request, reply) ->
+        me = request.pre.me
+        Customer.get(me)
+          .then (customer) ->
+            server.methods.order.find(customer.doc.orders)
+          .then (orders) ->
+            console.log orders
+          .done()
