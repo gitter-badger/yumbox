@@ -6,7 +6,8 @@ moment =  require 'moment'
 
 module.exports = (server, options) ->
   return class DailyMeal extends server.methods.model.Base()
-    
+    SideDish = require('./side_dish') server, options
+    MainDish = require('./main_dish') server, options
     PREFIX: 'd'
 
     props:
@@ -53,14 +54,33 @@ module.exports = (server, options) ->
      @list_all: ->
       query =
         body:
-          size: 1000
+          sort:
+            at:
+              order: "desc"
           query:
-            match:
-              "doc.is_available": true
+            match_all: {}
 
       @search('daily_meal', query)
-        .then (results) ->
-           ids = []
-           _.each results.hits.hits, (result) ->
-             ids.push result._id
-           Daily_meal.find ids, 'doc_key,name'
+        .then (results) =>
+          daily_meals = []
+          promises = []
+          _.each results.hits.hits, (result) =>
+            promises.push Q.fcall =>
+              doc = result._source.doc
+              main_dish_key = doc.main_dish_key
+              side_dishes_key = doc.side_dish_keys
+              SideDish.find(side_dishes_key)
+                .then (side_dishes) ->
+                  return Boom.badImplementation "something's wrong" if side_dishes instanceof Error
+                  MainDish.find(main_dish_key)
+                    .then (main_dish) ->
+                       return Boom.badImplementation "something's wrong" if main_dish instanceof Error
+                       doc.main_dish = main_dish
+                       doc.side_dishes = side_dishes
+                       delete doc.main_dish_key
+                       delete doc.side_dish_keys
+                       daily_meals.push doc
+
+          Q.all(promises)
+            .then (result) ->
+              daily_meals
